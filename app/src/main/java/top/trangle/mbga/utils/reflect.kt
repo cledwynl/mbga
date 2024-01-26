@@ -1,3 +1,5 @@
+package top.trangle.mbga.utils
+
 import java.lang.reflect.Modifier
 import java.util.LinkedList
 
