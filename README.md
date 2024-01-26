@@ -2,7 +2,7 @@
 
 ## 功能
 
-目前只支持国际版(com.bilibili.app.in)
+目前只支持国际版(com.bilibili.app.in)，兼容性见文末
 
 ### 首页
 
@@ -36,3 +36,10 @@
 * [Yuki Hook API](https://github.com/HighCapable/YukiHookAPI)
 * [FuckBilibiliVote](https://github.com/zerorooot/FuckBilibiliVote)
 * [不要竖屏](https://github.com/WankkoRee/Portrait2Landscape)
+
+## 兼容性
+
+下面仅列出测试过的版本，相近版本大概率能兼容
+
+* MBGA v1.0.0
+  * 兼容国际版3.18.2

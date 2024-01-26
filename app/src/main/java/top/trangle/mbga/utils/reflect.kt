@@ -1,7 +1,10 @@
 import java.lang.reflect.Modifier
 import java.util.LinkedList
 
-fun reflectionToString(obj: Any?, indent: Int): String {
+fun reflectionToString(
+    obj: Any?,
+    indent: Int,
+): String {
     if (obj == null) {
         return "null"
     }

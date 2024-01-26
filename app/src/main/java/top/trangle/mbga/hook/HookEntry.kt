@@ -13,21 +13,23 @@ import com.highcapable.yukihookapi.hook.xposed.proxy.IYukiHookXposedInit
 
 @InjectYukiHookWithXposed
 class HookEntry : IYukiHookXposedInit {
-    override fun onInit() = configs {
-        debugLog {
-            tag = "MBGA"
-            isEnable = true
+    override fun onInit() =
+        configs {
+            debugLog {
+                tag = "MBGA"
+                isEnable = true
+            }
         }
-    }
 
-    override fun onHook() = encase {
-        loadApp(name = "com.bilibili.app.in") {
-            loadHooker(CommandDmsHooker)
-            loadHooker(VideoDescLabelHooker)
-            loadHooker(SettingEntryHooker)
-            loadHooker(CommentViewHooker)
-            loadHooker(HomeViewHooker)
-            loadHooker(SearchViewHooker)
+    override fun onHook() =
+        encase {
+            loadApp(name = "com.bilibili.app.in") {
+                loadHooker(CommandDmsHooker)
+                loadHooker(VideoDescLabelHooker)
+                loadHooker(SettingEntryHooker)
+                loadHooker(CommentViewHooker)
+                loadHooker(HomeViewHooker)
+                loadHooker(SearchViewHooker)
+            }
         }
-    }
 }
