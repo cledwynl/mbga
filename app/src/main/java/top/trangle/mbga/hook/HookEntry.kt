@@ -1,6 +1,7 @@
 package top.trangle.mbga.hook
 
 import CommandDmsHooker
+import CommentViewHooker
 import SettingEntryHooker
 import VideoDescLabelHooker
 import com.highcapable.yukihookapi.annotation.xposed.InjectYukiHookWithXposed
@@ -22,6 +23,7 @@ class HookEntry : IYukiHookXposedInit {
             loadHooker(CommandDmsHooker)
             loadHooker(VideoDescLabelHooker)
             loadHooker(SettingEntryHooker)
+            loadHooker(CommentViewHooker)
         }
     }
 }
