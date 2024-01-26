@@ -12,7 +12,6 @@ object SettingEntryHooker : YukiBaseHooker() {
         val BiliPreferencesActivity =
                 "com.bilibili.app.preferences.BiliPreferencesActivity".toClass()
         val onCreate = BiliPreferencesActivity.method { name = "onCreate" }
-        YLog.debug("onCreate found")
         onCreate.hook {
             after {
                 val activity = instance as Activity
