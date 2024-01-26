@@ -1,3 +1,5 @@
+package top.trangle.mbga.hook
+
 import android.app.Activity
 import android.view.Gravity
 import android.view.ViewGroup
