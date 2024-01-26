@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.preference:preference-ktx:1.2.1")
     compileOnly(de.robv.android.xposed.api)
     implementation(com.highcapable.yukihookapi.api)
     ksp(com.highcapable.yukihookapi.ksp.xposed)
@@ -56,6 +57,7 @@ dependencies {
     implementation(com.google.android.material.material)
     implementation(androidx.constraintlayout.constraintlayout)
     implementation(com.google.code.gson.gson)
+    implementation(androidx.preference.preference.ktx)
     testImplementation(junit.junit)
     androidTestImplementation(androidx.test.ext.junit)
     androidTestImplementation(androidx.test.espresso.espresso.core)
