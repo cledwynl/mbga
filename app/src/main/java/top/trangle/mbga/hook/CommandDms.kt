@@ -11,7 +11,7 @@ object CommandDmsHooker : YukiBaseHooker() {
         hookDmReply()
     }
 
-    fun hookOldVersion() {
+    private fun hookOldVersion() {
         val ViewProgressReply = "com.bapis.bilibili.app.view.v1.ViewProgressReply".toClass()
         val getVideoGuide = ViewProgressReply.method { name = "getVideoGuide" }
 
@@ -37,7 +37,7 @@ object CommandDmsHooker : YukiBaseHooker() {
         }
     }
 
-    fun hookNewVersion() {
+    private fun hookNewVersion() {
         val DmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
         val getCommand = DmViewReply.method { name = "getCommand" }
 
@@ -53,7 +53,7 @@ object CommandDmsHooker : YukiBaseHooker() {
         }
     }
 
-    fun hookDmReply() {
+    private fun hookDmReply() {
         val DmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
         val clearActivityMeta = DmViewReply.method { name = "clearActivityMeta" }
 
