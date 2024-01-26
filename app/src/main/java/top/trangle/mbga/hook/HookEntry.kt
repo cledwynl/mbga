@@ -17,7 +17,6 @@ class HookEntry : IYukiHookXposedInit {
             tag = "MBGA"
             isEnable = true
         }
-        isDebug = true
     }
 
     override fun onHook() = encase {

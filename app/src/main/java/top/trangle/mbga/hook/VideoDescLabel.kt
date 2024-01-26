@@ -1,6 +1,5 @@
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 
 object VideoDescLabelHooker : YukiBaseHooker() {
     override fun onHook() {
@@ -12,11 +11,6 @@ object VideoDescLabelHooker : YukiBaseHooker() {
                     returnType = Label
                 }
 
-        getLabelFromDesc.hook {
-            after {
-                YLog.debug("Label: ${reflectionToString(result)}")
-                result = null
-            }
-        }
+        getLabelFromDesc.hook { intercept() }
     }
 }

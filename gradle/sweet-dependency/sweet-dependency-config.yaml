@@ -63,3 +63,6 @@ libraries:
   junit:
     junit:
       version: 4.13.2
+  com.google.code.gson:
+    gson:
+      version: 2.10.1

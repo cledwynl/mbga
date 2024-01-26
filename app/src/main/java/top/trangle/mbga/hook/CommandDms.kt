@@ -6,6 +6,7 @@ object CommandDmsHooker : YukiBaseHooker() {
     override fun onHook() {
         hookOldVersion()
         hookNewVersion()
+        hookDmReply()
     }
 
     fun hookOldVersion() {
@@ -30,6 +31,8 @@ object CommandDmsHooker : YukiBaseHooker() {
                 clearOperationCard.get(result).call()
                 clearOperationCardNew.get(result).call()
                 YLog.debug("after: $result")
+
+                // YLog.debug("guide: ${reflectionToString(instance)}")
             }
         }
     }
@@ -48,5 +51,15 @@ object CommandDmsHooker : YukiBaseHooker() {
                 YLog.debug("new after: $result")
             }
         }
+    }
+
+    fun hookDmReply() {
+        val DmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
+        val clearActivityMeta = DmViewReply.method { name = "clearActivityMeta" }
+
+        "com.bapis.bilibili.community.service.dm.v1.DmMossKtxKt\$suspendDmView\$\$inlined\$suspendCall\$1"
+                .toClass()
+                .method { name = "onNext" }
+                .hook { before { clearActivityMeta.get(args[0]).call() } }
     }
 }
