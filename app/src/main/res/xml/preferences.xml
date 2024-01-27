@@ -28,13 +28,13 @@
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="search_disable_recommend"
-            android:title="@string/setting_search_no_recommend"
+            android:key="search_disable_history"
+            android:title="@string/setting_search_no_history"
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="search_disable_history"
-            android:title="@string/setting_search_no_history"
+            android:key="search_disable_recommend"
+            android:title="@string/setting_search_no_recommend"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
