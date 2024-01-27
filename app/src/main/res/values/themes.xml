@@ -17,6 +17,17 @@
         <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
         <item name="colorSurface">@color/md_theme_light_surface</item>
         <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="preferenceTheme">@style/ThemeOverlay.App.Preference</item>
     </style>
 
+    <style name="ThemeOverlay.App.Preference" parent="PreferenceThemeOverlay">
+        <item name="android:textAppearanceListItem">?textAppearanceSubtitle1</item>
+        <item name="android:colorAccent">?colorPrimary</item>
+        <item name="android:colorControlActivated">?colorPrimary</item>
+        <item name="switchPreferenceCompatStyle">@style/PreferenceMaterialSwitch</item>
+    </style>
+
+    <style name="PreferenceMaterialSwitch" parent="@style/Preference.SwitchPreferenceCompat.Material">
+        <item name="widgetLayout">@layout/layout_pref_switch</item>
+    </style>
 </resources>
