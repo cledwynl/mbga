@@ -4,7 +4,7 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 
-object CommandDmsHooker : YukiBaseHooker() {
+object VideoPlayerHooker : YukiBaseHooker() {
     override fun onHook() {
         hookOldVersion()
         hookNewVersion()
@@ -25,6 +25,9 @@ object CommandDmsHooker : YukiBaseHooker() {
 
         getVideoGuide.hook {
             after {
+                if (!prefs.getBoolean("vid_player_disable_command_dms")) {
+                    return@after
+                }
                 YLog.debug("before: $result")
                 clearAttention.get(result).call()
                 clearCardsSecond.get(result).call()
@@ -46,6 +49,9 @@ object CommandDmsHooker : YukiBaseHooker() {
 
         getCommand.hook {
             after {
+                if (!prefs.getBoolean("vid_player_disable_command_dms")) {
+                    return@after
+                }
                 YLog.debug("new before: $result")
                 clearCommandDms.get(result).call()
                 YLog.debug("new after: $result")
@@ -60,6 +66,13 @@ object CommandDmsHooker : YukiBaseHooker() {
         "com.bapis.bilibili.community.service.dm.v1.DmMossKtxKt\$suspendDmView\$\$inlined\$suspendCall\$1"
             .toClass()
             .method { name = "onNext" }
-            .hook { before { clearActivityMeta.get(args[0]).call() } }
+            .hook {
+                before {
+                    if (!prefs.getBoolean("vid_player_disable_activity_meta")) {
+                        return@before
+                    }
+                    clearActivityMeta.get(args[0]).call()
+                }
+            }
     }
 }

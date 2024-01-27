@@ -13,10 +13,9 @@ object SearchViewHooker : YukiBaseHooker() {
              */
 
             after {
-                if ("trending".equals(result)) {
-                    result = ""
+                if (prefs.getBoolean("search_disable_$result")) {
+                    resultNull()
                 }
-                // recommend
             }
         }
     }

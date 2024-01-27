@@ -13,15 +13,16 @@ class HookEntry : IYukiHookXposedInit {
                 tag = "MBGA"
                 isEnable = true
             }
+            isEnableHookSharedPreferences = true
         }
 
     override fun onHook() =
         encase {
             loadApp(name = "com.bilibili.app.in") {
-                loadHooker(CommandDmsHooker)
-                loadHooker(VideoDescLabelHooker)
+                loadHooker(VideoPlayerHooker)
+                loadHooker(VideoDetailHooker)
                 loadHooker(SettingEntryHooker)
-                loadHooker(CommentViewHooker)
+                loadHooker(VideoCommentHooker)
                 loadHooker(HomeViewHooker)
                 loadHooker(SearchViewHooker)
             }

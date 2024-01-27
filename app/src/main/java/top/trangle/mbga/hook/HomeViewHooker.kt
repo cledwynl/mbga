@@ -12,6 +12,9 @@ object HomeViewHooker : YukiBaseHooker() {
 
         getUri.hook {
             after {
+                if (!prefs.getBoolean("home_disable_portrait")) {
+                    return@after
+                }
                 val uri = result as String?
                 if (uri != null && uri.isNotEmpty()) {
                     if (uri.startsWith("bilibili://story/")) {

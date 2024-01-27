@@ -35,8 +35,8 @@ object SettingEntryHooker : YukiBaseHooker() {
                     intent.setComponent(
                         ComponentName(
                             "top.trangle.mbga",
-                            "top.trangle.mbga.views.SettingsActivity"
-                        )
+                            "top.trangle.mbga.views.SettingsActivity",
+                        ),
                     )
                     activity.startActivity(intent)
                 }
