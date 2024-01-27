@@ -1,6 +1,8 @@
 package top.trangle.mbga.hook
 
 import android.app.Activity
+import android.content.ComponentName
+import android.content.Intent
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
@@ -28,7 +30,16 @@ object SettingEntryHooker : YukiBaseHooker() {
                 tv.setText("MBGA!")
                 tv.gravity = Gravity.CENTER
                 tv.setPadding(16.dp(activity), 0, 16.dp(activity), 0)
-                tv.setOnClickListener { YLog.debug("click") }
+                tv.setOnClickListener {
+                    val intent = Intent()
+                    intent.setComponent(
+                        ComponentName(
+                            "top.trangle.mbga",
+                            "top.trangle.mbga.views.SettingsActivity"
+                        )
+                    )
+                    activity.startActivity(intent)
+                }
                 toolbar.addView(tv, 2, lp)
             }
         }

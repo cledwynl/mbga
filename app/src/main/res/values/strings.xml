@@ -2,5 +2,5 @@
     <string name="app_name">MBGA</string>
     <string name="xposed_desc">Make Bilibili Great Again!</string>
     <string name="about_module">This module is made by YukiHookAPI. \nLearn more https://github.com/HighCapable/YuKiHookAPI</string>
-    <string name="app_settings_title">MBGA Settings</string>
+    <string name="app_settings_title">Settings</string>
 </resources>

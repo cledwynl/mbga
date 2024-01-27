@@ -18,10 +18,25 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            versionNameSuffix = "_debug"
+            resValue(
+                "string",
+                "app_name_with_version",
+                "${property.project.name} ${defaultConfig.versionName}${versionNameSuffix}"
+            )
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+            resValue(
+                "string",
+                "app_name_with_version",
+                "${property.project.name} ${defaultConfig.versionName}"
+            )
         }
     }
     compileOptions {
@@ -31,9 +46,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
         freeCompilerArgs = listOf(
-            "-Xno-param-assertions",
-            "-Xno-call-assertions",
-            "-Xno-receiver-assertions"
+            "-Xno-param-assertions", "-Xno-call-assertions", "-Xno-receiver-assertions"
         )
     }
     buildFeatures {
@@ -58,6 +71,7 @@ dependencies {
     implementation(androidx.constraintlayout.constraintlayout)
     implementation(com.google.code.gson.gson)
     implementation(androidx.preference.preference.ktx)
+    implementation(com.hendraanggrian.material.collapsingtoolbarlayout.subtitle)
     testImplementation(junit.junit)
     androidTestImplementation(androidx.test.ext.junit)
     androidTestImplementation(androidx.test.espresso.espresso.core)

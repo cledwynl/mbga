@@ -10,13 +10,6 @@ import top.trangle.mbga.databinding.ActivitySettingsBinding
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
 
-    class MySettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.preferences, rootKey)
-        }
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,5 +22,11 @@ class SettingsActivity : AppCompatActivity() {
             .replace(R.id.settings_content, MySettingsFragment())
             .commit()
 
+    }
+
+    class MySettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.preferences, rootKey)
+        }
     }
 }
