@@ -12,16 +12,16 @@ object VideoPlayerHooker : YukiBaseHooker() {
     }
 
     private fun hookOldVersion() {
-        val ViewProgressReply = "com.bapis.bilibili.app.view.v1.ViewProgressReply".toClass()
-        val getVideoGuide = ViewProgressReply.method { name = "getVideoGuide" }
+        val clzViewProgressReply = "com.bapis.bilibili.app.view.v1.ViewProgressReply".toClass()
+        val getVideoGuide = clzViewProgressReply.method { name = "getVideoGuide" }
 
-        val VideoGuideType = "com.bapis.bilibili.app.view.v1.VideoGuide".toClass()
-        val clearAttention = VideoGuideType.method { name = "clearAttention" }
-        val clearCardsSecond = VideoGuideType.method { name = "clearCardsSecond" }
-        val clearCommandDms = VideoGuideType.method { name = "clearCommandDms" }
-        val clearContractCard = VideoGuideType.method { name = "clearContractCard" }
-        val clearOperationCard = VideoGuideType.method { name = "clearOperationCard" }
-        val clearOperationCardNew = VideoGuideType.method { name = "clearOperationCardNew" }
+        val clzVideoGuideType = "com.bapis.bilibili.app.view.v1.VideoGuide".toClass()
+        val clearAttention = clzVideoGuideType.method { name = "clearAttention" }
+        val clearCardsSecond = clzVideoGuideType.method { name = "clearCardsSecond" }
+        val clearCommandDms = clzVideoGuideType.method { name = "clearCommandDms" }
+        val clearContractCard = clzVideoGuideType.method { name = "clearContractCard" }
+        val clearOperationCard = clzVideoGuideType.method { name = "clearOperationCard" }
+        val clearOperationCardNew = clzVideoGuideType.method { name = "clearOperationCardNew" }
 
         getVideoGuide.hook {
             after {
@@ -41,11 +41,11 @@ object VideoPlayerHooker : YukiBaseHooker() {
     }
 
     private fun hookNewVersion() {
-        val DmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
-        val getCommand = DmViewReply.method { name = "getCommand" }
+        val clzDmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
+        val getCommand = clzDmViewReply.method { name = "getCommand" }
 
-        val Command = "com.bapis.bilibili.community.service.dm.v1.Command".toClass()
-        val clearCommandDms = Command.method { name = "clearCommandDms" }
+        val clzCommand = "com.bapis.bilibili.community.service.dm.v1.Command".toClass()
+        val clearCommandDms = clzCommand.method { name = "clearCommandDms" }
 
         getCommand.hook {
             after {
@@ -60,8 +60,8 @@ object VideoPlayerHooker : YukiBaseHooker() {
     }
 
     private fun hookDmReply() {
-        val DmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
-        val clearActivityMeta = DmViewReply.method { name = "clearActivityMeta" }
+        val clzDmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
+        val clearActivityMeta = clzDmViewReply.method { name = "clearActivityMeta" }
 
         "com.bapis.bilibili.community.service.dm.v1.DmMossKtxKt\$suspendDmView\$\$inlined\$suspendCall\$1"
             .toClass()

@@ -11,7 +11,8 @@ import android.content.res.Configuration
  * 系统深色模式是否开启
  * @return [Boolean] Whether to enable / 是否开启
  */
-val Context.isSystemInDarkMode get() = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+val Context.isSystemInDarkMode
+    get() = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
 /**
  * System dark mode is disable or not
@@ -19,7 +20,8 @@ val Context.isSystemInDarkMode get() = (resources.configuration.uiMode and Confi
  * 系统深色模式是否没开启
  * @return [Boolean] Whether to enable / 是否开启
  */
-inline val Context.isNotSystemInDarkMode get() = isSystemInDarkMode.not()
+inline val Context.isNotSystemInDarkMode
+    get() = isSystemInDarkMode.not()
 
 /**
  * dp to pxInt

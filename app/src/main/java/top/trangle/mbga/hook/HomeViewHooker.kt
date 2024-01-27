@@ -7,8 +7,8 @@ import top.trangle.mbga.utils.reflectionToString
 
 object HomeViewHooker : YukiBaseHooker() {
     override fun onHook() {
-        val BasicIndexItem = "com.bilibili.pegasus.api.model.BasicIndexItem".toClass()
-        val getUri = BasicIndexItem.method { name = "getUri" }
+        val clzBasicIndexItem = "com.bilibili.pegasus.api.model.BasicIndexItem".toClass()
+        val getUri = clzBasicIndexItem.method { name = "getUri" }
 
         getUri.hook {
             after {

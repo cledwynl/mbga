@@ -13,9 +13,9 @@ import top.trangle.mbga.utils.factory.dp
 
 object SettingEntryHooker : YukiBaseHooker() {
     override fun onHook() {
-        val BiliPreferencesActivity =
+        val clzBiliPreferencesActivity =
             "com.bilibili.app.preferences.BiliPreferencesActivity".toClass()
-        val onCreate = BiliPreferencesActivity.method { name = "onCreate" }
+        val onCreate = clzBiliPreferencesActivity.method { name = "onCreate" }
         onCreate.hook {
             after {
                 val activity = instance as Activity

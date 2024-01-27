@@ -5,12 +5,12 @@ import com.highcapable.yukihookapi.hook.factory.method
 
 object VideoDetailHooker : YukiBaseHooker() {
     override fun onHook() {
-        val Label = "tv.danmaku.bili.videopage.data.view.model.BiliVideoDetail\$Label".toClass()
-        val DescSection = "tv.danmaku.bili.ui.video.section.info.DescSection".toClass()
+        val clzLabel = "tv.danmaku.bili.videopage.data.view.model.BiliVideoDetail\$Label".toClass()
+        val clzDescSection = "tv.danmaku.bili.ui.video.section.info.DescSection".toClass()
         val getLabelFromDesc =
-            DescSection.method {
+            clzDescSection.method {
                 emptyParam()
-                returnType = Label
+                returnType = clzLabel
             }
 
         getLabelFromDesc.hook {

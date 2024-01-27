@@ -5,9 +5,9 @@ import com.highcapable.yukihookapi.hook.factory.method
 
 object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
-        val CommentMessageWidget =
+        val clzCommentMessageWidget =
             "com.bilibili.app.comm.comment2.phoenix.view.CommentMessageWidget".toClass()
-        val onClick = CommentMessageWidget.method { name = "q3" }
+        val onClick = clzCommentMessageWidget.method { name = "q3" }
 
         onClick.hook {
             replaceUnit {
