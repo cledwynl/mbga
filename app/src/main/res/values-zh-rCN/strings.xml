@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">MBGA</string>
-    <string name="xposed_desc">Make Bilibili Great Again!</string>
-    <string name="about_module">此模块使用 YukiHookAPI 构建。\n了解更多 https://github.com/HighCapable/YuKiHookAPI</string>
-    <string name="app_settings_title">设置</string>
-</resources>

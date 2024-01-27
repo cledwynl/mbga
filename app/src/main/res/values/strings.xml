@@ -1,6 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MBGA</string>
     <string name="xposed_desc">Make Bilibili Great Again!</string>
-    <string name="about_module">This module is made by YukiHookAPI. \nLearn more https://github.com/HighCapable/YuKiHookAPI</string>
-    <string name="app_settings_title">Settings</string>
+    <string name="about_module">此模块使用 YukiHookAPI 构建。\n了解更多 https://github.com/HighCapable/YuKiHookAPI</string>
+    <string name="app_settings_title">设置</string>
+
+    <string name="setting_home_page">首页</string>
+    <string name="setting_home_no_portrait_player">禁止竖屏播放器</string>
+    <string name="setting_home_no_portrait_player_on">打开竖屏视频时使用传统播放器</string>
+    <string name="setting_home_no_portrait_player_off">打开竖屏视频时使用新播放器（单击暂停的）</string>
+
+    <string name="setting_search_page">搜索页</string>
+    <string name="setting_search_no_trending">隐藏热搜</string>
+    <string name="setting_search_no_recommend">隐藏搜索发现</string>
+    <string name="setting_search_no_history">隐藏搜索历史</string>
+
+    <string name="setting_vid_player">播放器</string>
+    <string name="setting_vid_player_no_activity_meta">干掉云视听小电视</string>
+    <string name="setting_vid_player_no_command_dms">干掉投票、关注等弹窗（待细分）</string>
+
+    <string name="setting_vid_detail">视频详情页</string>
+    <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
+    <string name="setting_vid_detail_no_label_hint">常见标签有：热门、活动，点击会打开新页面</string>
+
+    <string name="setting_vid_comment">视频评论区</string>
+    <string name="setting_vid_comment_no_quick_reply">禁止快速回复</string>
+    <string name="setting_vid_comment_no_quick_reply_on">点击评论文字什么也不会发生</string>
+    <string name="setting_vid_comment_no_quick_reply_off">点击评论文字会弹出键盘进行回复</string>
 </resources>

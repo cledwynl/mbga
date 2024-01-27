@@ -1,13 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications" />
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        app:title="@string/setting_home_page">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="home_disable_portrait"
+            app:summaryOff="@string/setting_home_no_portrait_player_off"
+            app:summaryOn="@string/setting_home_no_portrait_player_on"
+            app:title="@string/setting_home_no_portrait_player" />
+    </PreferenceCategory>
 
-    <Preference
-        app:key="feedback"
-        app:summary="Report technical issues or suggest new features"
-        app:title="Send feedback" />
+    <PreferenceCategory
+        android:title="@string/setting_search_page"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="search_disable_trending"
+            android:title="@string/setting_search_no_trending"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="search_disable_recommend"
+            android:title="@string/setting_search_no_recommend"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="search_disable_history"
+            android:title="@string/setting_search_no_history"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/setting_vid_player"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:title="@string/setting_vid_player_no_activity_meta"
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_activity_meta" />
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:title="@string/setting_vid_player_no_command_dms"
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_command_dms" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/setting_vid_detail"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:title="@string/setting_vid_detail_no_label"
+            app:iconSpaceReserved="false"
+            app:key="vid_detail_disable_label"
+            app:summary="@string/setting_vid_detail_no_label_hint" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        app:title="@string/setting_vid_comment">
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_no_quick_reply"
+            app:summaryOff="@string/setting_vid_comment_no_quick_reply_off"
+            app:summaryOn="@string/setting_vid_comment_no_quick_reply_on"
+            app:title="@string/setting_vid_comment_no_quick_reply" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
