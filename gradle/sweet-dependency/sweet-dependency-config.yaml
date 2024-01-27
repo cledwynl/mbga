@@ -72,3 +72,6 @@ libraries:
   androidx.preference:
     preference-ktx:
       version: 1.2.0
+  com.hendraanggrian.material:
+    collapsingtoolbarlayout-subtitle:
+      version: 1.5.0

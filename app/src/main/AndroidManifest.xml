@@ -15,7 +15,7 @@
             android:name=".views.SettingsActivity"
             android:exported="true"
             android:label="@string/app_settings_title"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="xposedscope"
