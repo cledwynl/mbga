@@ -3,12 +3,18 @@ package top.trangle.mbga.hook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 
-object CommentViewHooker : YukiBaseHooker() {
+object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
         val CommentMessageWidget =
             "com.bilibili.app.comm.comment2.phoenix.view.CommentMessageWidget".toClass()
         val onClick = CommentMessageWidget.method { name = "q3" }
 
-        onClick.hook { intercept() }
+        onClick.hook {
+            replaceUnit {
+                if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
+                    callOriginal()
+                }
+            }
+        }
     }
 }

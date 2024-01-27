@@ -1,9 +1,8 @@
 package top.trangle.mbga.views
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceFragmentCompat
+import com.highcapable.yukihookapi.hook.xposed.prefs.ui.ModulePreferenceFragment
 import top.trangle.mbga.R
 import top.trangle.mbga.databinding.ActivitySettingsBinding
 
@@ -21,11 +20,13 @@ class SettingsActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.settings_content, MySettingsFragment())
             .commit()
-
     }
 
-    class MySettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    class MySettingsFragment : ModulePreferenceFragment() {
+        override fun onCreatePreferencesInModuleApp(
+            savedInstanceState: Bundle?,
+            rootKey: String?,
+        ) {
             setPreferencesFromResource(R.xml.preferences, rootKey)
         }
     }
