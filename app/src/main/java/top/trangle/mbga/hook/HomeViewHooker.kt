@@ -16,7 +16,7 @@ object HomeViewHooker : YukiBaseHooker() {
                     return@after
                 }
                 val uri = result as String?
-                if (uri != null && uri.isNotEmpty()) {
+                if (!uri.isNullOrEmpty()) {
                     if (uri.startsWith("bilibili://story/")) {
                         result = "bilibili://video/" + uri.substringAfter("bilibili://story/")
                         YLog.debug("初始化视频信息时，竖屏转横屏成功")
