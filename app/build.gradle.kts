@@ -32,6 +32,7 @@ android {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
+            isDebuggable = true
             resValue(
                 "string",
                 "app_name_with_version",
