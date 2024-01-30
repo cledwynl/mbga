@@ -27,6 +27,8 @@
 
 * [X] 视频标题左边的“热门”等标签
   ![video_detail_label](./app/src/main/res/drawable/video_detail_label.png)
+* [X] 更纯粹的链接分享
+  原来分享链接是`https://b23.tv/xxxxxxx`这样的，让它变成`https://www.bilibili.com/video/BVxxxxx`这样的
 
 ### 视频评论区
 
@@ -49,5 +51,5 @@
 
 下面仅列出测试过的版本，相近版本大概率能兼容
 
-* MBGA v1.0.0
-  * 兼容国际版3.18.2
+* MBGA v1.0.0 ~ v1.0.2
+  * 兼容国际版 未知 ~ 3.18.2 ~ 未知
