@@ -87,6 +87,15 @@
             app:iconSpaceReserved="false"
             app:key="vid_detail_disable_label"
             app:summary="@string/setting_vid_detail_no_label_hint" />
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:title="@string/setting_vid_detail_no_short_link"
+            app:iconSpaceReserved="false"
+            app:key="vid_detail_disable_short_link"
+            app:summaryOff="@string/setting_vid_detail_no_short_link_off"
+            app:summaryOn="@string/setting_vid_detail_no_short_link_on" />
     </PreferenceCategory>
 
     <PreferenceCategory
