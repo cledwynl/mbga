@@ -6,6 +6,21 @@
         app:allowDividerAbove="true"
         app:allowDividerBelow="true"
         app:iconSpaceReserved="false"
+        app:title="@string/setting_tabs">
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="tabs_disable_home"
+            app:title="@string/setting_tabs_no_home" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="tabs_disable_dynamic"
+            app:title="@string/setting_tabs_no_dynamic" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
         app:title="@string/setting_home_page">
         <SwitchPreferenceCompat
             app:defaultValue="true"
