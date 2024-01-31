@@ -8,6 +8,10 @@
     <string name="app_first_launch_goback">回到B站</string>
     <string name="app_first_launch_stay">留在这</string>
 
+    <string name="setting_tabs">底部Tab（需重启B站生效）</string>
+    <string name="setting_tabs_no_home">隐藏首页</string>
+    <string name="setting_tabs_no_dynamic">隐藏动态</string>
+
     <string name="setting_home_page">首页</string>
     <string name="setting_home_no_portrait_player">禁止竖屏播放器</string>
     <string name="setting_home_no_portrait_player_on">打开竖屏视频时使用传统播放器</string>
