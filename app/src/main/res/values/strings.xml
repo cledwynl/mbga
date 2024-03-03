@@ -29,9 +29,9 @@
     <string name="setting_vid_detail">视频详情页</string>
     <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
     <string name="setting_vid_detail_no_label_hint">常见标签有：热门、活动，点击会打开新页面</string>
-    <string name="setting_vid_detail_no_short_link">分享时禁止使用短链</string>
-    <string name="setting_vid_detail_no_short_link_on">https://www.bilibili.com/video/BVxx</string>
-    <string name="setting_vid_detail_no_short_link_off">https://b23.tv/xxxxxxx</string>
+    <string name="setting_vid_detail_no_short_link">让分享链接更纯粹</string>
+    <string name="setting_vid_detail_no_short_link_on">https://b23.tv/av10492</string>
+    <string name="setting_vid_detail_no_short_link_off">原始B站分享链接，可能有追踪参数</string>
 
     <string name="setting_vid_comment">视频评论区</string>
     <string name="setting_vid_comment_no_quick_reply">禁止快速回复</string>
