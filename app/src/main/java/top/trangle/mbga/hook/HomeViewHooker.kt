@@ -45,7 +45,14 @@ object HomeViewHooker : YukiBaseHooker() {
                     val disable_dynamic =
                         prefs.getBoolean("tabs_disable_dynamic") &&
                             "bilibili://following/home".equals(d)
-                    disable_home || disable_dynamic
+                    val disable_pegasus_channel =
+                        prefs.getBoolean("tabs_disable_pegasus_channel") &&
+                            "bilibili://pegasus/channel".equals(d)
+                    val disable_mall =
+                        prefs.getBoolean("tabs_disable_mall") &&
+                            "bilibili://mall/home-main".equals(d)
+
+                    disable_home || disable_dynamic || disable_pegasus_channel || disable_mall
                 }
             }
         }
