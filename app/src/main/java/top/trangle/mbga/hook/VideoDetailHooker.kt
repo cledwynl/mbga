@@ -36,7 +36,7 @@ object VideoDetailHooker : YukiBaseHooker() {
                     return@replaceUnit
                 }
                 val result = clzShareResult.getDeclaredConstructor().newInstance()
-                contentField.get(result).set(args[7])
+                contentField.get(result).set("https://b23.tv/av${args[2]}")
                 shareTaskCallback.get(args[17]).invoke<Any>(result)
             }
         }
