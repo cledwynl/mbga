@@ -4,7 +4,14 @@ plugins {
     autowire(libs.plugins.kotlin.ksp)
     autowire(libs.plugins.kotlin.linter)
 }
-
+fun gitBranch(): String {
+    val os = org.apache.commons.io.output.ByteArrayOutputStream()
+    project.exec {
+        commandLine = "git rev-parse --abbrev-ref HEAD".split(" ")
+        standardOutput = os
+    }
+    return String(os.toByteArray()).trim()
+}
 android {
     namespace = property.project.app.packageName
     compileSdk = property.project.android.compileSdk
@@ -17,14 +24,21 @@ android {
         versionCode = property.project.app.versionCode
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    applicationVariants.all {
+        applicationVariants.all {
+            val variant = this
+            variant.outputs
+                .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
+                .forEach { output ->
+                    output.outputFileName = "$applicationId-v$versionCode($versionName).apk"
+                }
+        }
+    }
+
     buildTypes {
         debug {
             versionNameSuffix = "_debug"
-            resValue(
-                "string",
-                "app_name_with_version",
-                "${property.project.name} ${defaultConfig.versionName}${versionNameSuffix}"
-            )
         }
         release {
             isMinifyEnabled = true
@@ -33,11 +47,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             isDebuggable = true
-            resValue(
-                "string",
-                "app_name_with_version",
-                "${property.project.name} ${defaultConfig.versionName}"
-            )
+        }
+        create("feature") {
+            initWith(getByName("release"))
+            versionNameSuffix = "_feature-" + gitBranch().split("/").last()
+        }
+        all {
+            var name = "${property.project.name} ${defaultConfig.versionName}"
+            if (versionNameSuffix != null) {
+                name += versionNameSuffix
+            }
+            resValue("string", "app_name_with_version", name)
         }
     }
     compileOptions {
