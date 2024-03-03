@@ -15,6 +15,14 @@
             app:iconSpaceReserved="false"
             app:key="tabs_disable_dynamic"
             app:title="@string/setting_tabs_no_dynamic" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="tabs_disable_pegasus_channel"
+            app:title="@string/setting_tabs_no_pegasus_channel" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="tabs_disable_mall"
+            app:title="@string/setting_tabs_no_mall" />
     </PreferenceCategory>
 
     <PreferenceCategory
