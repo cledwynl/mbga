@@ -39,20 +39,21 @@ object HomeViewHooker : YukiBaseHooker() {
                     val c = fieldC.get(tabItem).any()
                     val d = fieldD.get(c).string()
 
-                    val disable_home =
-                        prefs.getBoolean("tabs_disable_home") &&
-                            "bilibili://main/home".equals(d)
-                    val disable_dynamic =
-                        prefs.getBoolean("tabs_disable_dynamic") &&
-                            "bilibili://following/home".equals(d)
-                    val disable_pegasus_channel =
-                        prefs.getBoolean("tabs_disable_pegasus_channel") &&
-                            "bilibili://pegasus/channel".equals(d)
-                    val disable_mall =
-                        prefs.getBoolean("tabs_disable_mall") &&
-                            "bilibili://mall/home-main".equals(d)
+                    YLog.debug("首页底部Tab: ${reflectionToString(c)}")
 
-                    disable_home || disable_dynamic || disable_pegasus_channel || disable_mall
+                    val disableHome =
+                            prefs.getBoolean("tabs_disable_home") && "bilibili://main/home" == d
+                    val disableDynamic =
+                            prefs.getBoolean("tabs_disable_dynamic") &&
+                                    "bilibili://following/home" == d
+                    val disablePegasusChannel =
+                            prefs.getBoolean("tabs_disable_pegasus_channel") &&
+                                    "bilibili://pegasus/channel" == d
+                    val disableMall =
+                            prefs.getBoolean("tabs_disable_mall") &&
+                                    "bilibili://mall/home-main" == d
+
+                    disableHome || disableDynamic || disablePegasusChannel || disableMall
                 }
             }
         }
