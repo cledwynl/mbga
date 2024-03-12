@@ -28,7 +28,7 @@
 * [X] 视频标题左边的“热门”等标签
   ![video_detail_label](./app/src/main/res/drawable/video_detail_label.png)
 * [X] 更纯粹的链接分享
-  原来分享链接是`https://b23.tv/xxxxxxx`这样的，让它变成`https://www.bilibili.com/video/BVxxxxx`这样的
+  原来分享链接是`https://b23.tv/xxxxxxx`这样的短链，展开后有乱七八糟的参数，让它变成`https://b23.tv/av10492`这样干净的av号链接
 
 ### 视频评论区
 
