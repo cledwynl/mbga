@@ -72,6 +72,13 @@
             android:title="@string/setting_vid_player_no_command_dms"
             app:iconSpaceReserved="false"
             app:key="vid_player_disable_command_dms" />
+        <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:title="@string/setting_vid_player_no_segment_section"
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_segment_section" />
     </PreferenceCategory>
 
     <PreferenceCategory

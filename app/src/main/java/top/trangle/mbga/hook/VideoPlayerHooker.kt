@@ -1,6 +1,7 @@
 package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 
@@ -9,6 +10,7 @@ object VideoPlayerHooker : YukiBaseHooker() {
         hookOldVersion()
         hookNewVersion()
         hookDmReply()
+        hookProgress()
     }
 
     private fun hookOldVersion() {
@@ -74,5 +76,24 @@ object VideoPlayerHooker : YukiBaseHooker() {
                     clearActivityMeta.get(args[0]).call()
                 }
             }
+    }
+
+    private fun hookProgress() {
+        val clzSpecificPlayConfig =
+            "com.bapis.bilibili.app.distribution.setting.play.SpecificPlayConfig".toClass()
+
+        val getEnableSegmentedSection =
+            clzSpecificPlayConfig.method { name = "getEnableSegmentedSection" }
+        val fieldEnableSegmentedSection_ =
+            clzSpecificPlayConfig.field { name = "enableSegmentedSection_" }
+
+        getEnableSegmentedSection.hook {
+            before {
+                if (!prefs.getBoolean("vid_player_disable_segment_section")) {
+                    return@before
+                }
+                fieldEnableSegmentedSection_.get(instance).set(null)
+            }
+        }
     }
 }
