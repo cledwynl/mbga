@@ -23,7 +23,7 @@
   ![video_player_activity_meta](./app/src/main/res/drawable/video_player_activity_meta.png)
 * [X] 干掉播放器内展示的关注弹窗、投票弹窗等（包括UP主弹幕）
 * [X] 禁止播放器自动开启章节进度条
-  ![video_player_segment_section](./app/src/main/res/drawable/video_player_segment_section.jpg)
+  ![video_player_segment_section](./app/src/main/res/drawable/video_player_segmented_section.jpg)
 
 ### 视频详情页
 

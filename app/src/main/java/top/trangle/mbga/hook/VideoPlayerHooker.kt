@@ -10,7 +10,7 @@ object VideoPlayerHooker : YukiBaseHooker() {
         hookOldVersion()
         hookNewVersion()
         hookDmReply()
-        hookProgress()
+        hookSegmentedSection()
     }
 
     private fun hookOldVersion() {
@@ -78,7 +78,7 @@ object VideoPlayerHooker : YukiBaseHooker() {
             }
     }
 
-    private fun hookProgress() {
+    private fun hookSegmentedSection() {
         val clzSpecificPlayConfig =
             "com.bapis.bilibili.app.distribution.setting.play.SpecificPlayConfig".toClass()
 

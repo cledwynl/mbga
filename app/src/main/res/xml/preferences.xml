@@ -76,9 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="false"
-            android:title="@string/setting_vid_player_no_segment_section"
+            android:title="@string/setting_vid_player_no_segmented_section"
             app:iconSpaceReserved="false"
-            app:key="vid_player_disable_segment_section" />
+            app:key="vid_player_disable_segmented_section" />
     </PreferenceCategory>
 
     <PreferenceCategory

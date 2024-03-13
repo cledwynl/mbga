@@ -25,7 +25,7 @@
     <string name="setting_vid_player">播放器</string>
     <string name="setting_vid_player_no_activity_meta">干掉云视听小电视</string>
     <string name="setting_vid_player_no_command_dms">干掉投票、关注等弹窗（待细分）</string>
-    <string name="setting_vid_player_no_segment_section">禁止默认开启章节进度条</string>
+    <string name="setting_vid_player_no_segmented_section">禁止默认开启章节进度条</string>
 
     <string name="setting_vid_detail">视频详情页</string>
     <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
