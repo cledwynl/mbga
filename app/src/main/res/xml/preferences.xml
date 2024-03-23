@@ -117,6 +117,13 @@
             app:summaryOff="@string/setting_vid_comment_no_quick_reply_off"
             app:summaryOn="@string/setting_vid_comment_no_quick_reply_on"
             app:title="@string/setting_vid_comment_no_quick_reply" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_no_vote"
+            app:summaryOff="@string/setting_vid_comment_no_vote_off"
+            app:summaryOn="@string/setting_vid_comment_no_vote_on"
+            app:title="@string/setting_vid_comment_no_vote" />
     </PreferenceCategory>
 
 </PreferenceScreen>

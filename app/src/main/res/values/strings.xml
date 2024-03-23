@@ -38,4 +38,7 @@
     <string name="setting_vid_comment_no_quick_reply">禁止快速回复</string>
     <string name="setting_vid_comment_no_quick_reply_on">点击评论文字什么也不会发生</string>
     <string name="setting_vid_comment_no_quick_reply_off">点击评论文字会弹出键盘进行回复</string>
+    <string name="setting_vid_comment_no_vote">禁止展示投票</string>
+    <string name="setting_vid_comment_no_vote_on">评论区不会展示投票</string>
+    <string name="setting_vid_comment_no_vote_off">有些视频的评论区会有投票</string>
 </resources>
