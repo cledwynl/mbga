@@ -17,7 +17,7 @@ object SettingEntryHooker : YukiBaseHooker() {
         hookMainActivity()
     }
 
-    fun hookPreferencesActivity() {
+    private fun hookPreferencesActivity() {
         val clzBiliPreferencesActivity =
             "com.bilibili.app.preferences.BiliPreferencesActivity".toClass()
         val onCreate = clzBiliPreferencesActivity.method { name = "onCreate" }
@@ -36,14 +36,8 @@ object SettingEntryHooker : YukiBaseHooker() {
                 tv.gravity = Gravity.CENTER
                 tv.setPadding(16.dp(activity), 0, 16.dp(activity), 0)
                 tv.setOnClickListener {
-                    val intent =
-                        Intent().apply {
-                            component =
-                                ComponentName(
-                                    "top.trangle.mbga",
-                                    "top.trangle.mbga.views.SettingsActivity",
-                                )
-                        }
+                    val intent = Intent(Intent.ACTION_MAIN)
+                    intent.setClassName("top.trangle.mbga", "top.trangle.mbga.views.SettingsActivity")
                     activity.startActivity(intent)
                 }
                 toolbar.addView(tv, 2, lp)

@@ -89,9 +89,11 @@ object VideoPlayerHooker : YukiBaseHooker() {
 
         getEnableSegmentedSection.hook {
             before {
-                if (!prefs.getBoolean("vid_player_disable_segment_section")) {
+                if (!prefs.getBoolean("vid_player_disable_segmented_section")) {
+                    YLog.debug("getEnableSegmentedSection inactive")
                     return@before
                 }
+                YLog.debug("getEnableSegmentedSection active")
                 fieldEnableSegmentedSection_.get(instance).set(null)
             }
         }
