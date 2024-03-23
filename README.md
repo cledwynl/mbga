@@ -38,6 +38,8 @@
 
 * [X] 点击评论区文字不会自动弹出回复区
   ![comment_view_quick_reply](./app/src/main/res/drawable/comment_view_quick_reply.png)
+* [X] 干掉评论区顶部的投票
+  ![comment_view_vote](./app/src/main/res/drawable/comment_view_vote.png)
 
 ### 设置
 
