@@ -16,6 +16,9 @@
     <string name="setting_home_no_portrait_player">禁止竖屏播放器</string>
     <string name="setting_home_no_portrait_player_on">打开竖屏视频时使用传统播放器</string>
     <string name="setting_home_no_portrait_player_off">打开竖屏视频时使用新播放器（单击暂停的）</string>
+    <string name="setting_home_no_auto_refresh">禁止自动刷新</string>
+    <string name="setting_home_no_auto_refresh_on">切后台过一段时间回来保持之前看到的地方</string>
+    <string name="setting_home_no_auto_refresh_off">切后台过一段时间回来会自动刷新</string>
 
     <string name="setting_search_page">搜索页</string>
     <string name="setting_search_no_trending">隐藏热搜</string>

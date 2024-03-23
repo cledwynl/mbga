@@ -29,6 +29,13 @@
             app:summaryOff="@string/setting_home_no_portrait_player_off"
             app:summaryOn="@string/setting_home_no_portrait_player_on"
             app:title="@string/setting_home_no_portrait_player" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="home_disable_auto_refresh"
+            app:summaryOff="@string/setting_home_no_auto_refresh_off"
+            app:summaryOn="@string/setting_home_no_auto_refresh_on"
+            app:title="@string/setting_home_no_auto_refresh" />
     </PreferenceCategory>
 
     <PreferenceCategory

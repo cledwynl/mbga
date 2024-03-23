@@ -49,5 +49,28 @@ object HomeViewHooker : YukiBaseHooker() {
                 }
             }
         }
+
+        hookAutoRefresh()
+    }
+
+    private fun hookAutoRefresh() {
+        val clzConfig = "com.bilibili.pegasus.api.modelv2.Config".toClass()
+
+        arrayOf(
+            "getAutoRefreshTimeByActiveInterval",
+            "getAutoRefreshTimeByAppearInterval",
+            "getAutoRefreshTimeByBehaviorInterval",
+        ).forEach { methodName ->
+            clzConfig.method { name = methodName }
+                .hook {
+                    replaceAny {
+                        if (!prefs.getBoolean("home_disable_auto_refresh")) {
+                            callOriginal()
+                        } else {
+                            -1L
+                        }
+                    }
+                }
+        }
     }
 }
