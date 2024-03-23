@@ -84,15 +84,17 @@ object VideoPlayerHooker : YukiBaseHooker() {
 
         val getEnableSegmentedSection =
             clzSpecificPlayConfig.method { name = "getEnableSegmentedSection" }
-        val fieldEnableSegmentedSection_ =
+        val fieldEnableSegmentedSection =
             clzSpecificPlayConfig.field { name = "enableSegmentedSection_" }
 
         getEnableSegmentedSection.hook {
             before {
-                if (!prefs.getBoolean("vid_player_disable_segment_section")) {
+                if (!prefs.getBoolean("vid_player_disable_segmented_section")) {
+                    YLog.debug("getEnableSegmentedSection inactive")
                     return@before
                 }
-                fieldEnableSegmentedSection_.get(instance).set(null)
+                YLog.debug("getEnableSegmentedSection active")
+                fieldEnableSegmentedSection.get(instance).set(null)
             }
         }
     }
