@@ -43,4 +43,7 @@
     <string name="setting_vid_comment_no_vote">禁止展示投票</string>
     <string name="setting_vid_comment_no_vote_on">评论区不会展示投票</string>
     <string name="setting_vid_comment_no_vote_off">有些视频的评论区会有投票</string>
+    <string name="setting_vid_comment_no_follow">禁止展示关注</string>
+    <string name="setting_vid_comment_no_follow_on">评论区不会展示关注按钮</string>
+    <string name="setting_vid_comment_no_follow_off">有些评论区会有关注按钮</string>
 </resources>
