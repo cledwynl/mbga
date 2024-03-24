@@ -9,6 +9,7 @@ object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
         hookCommentClick()
         hookVote()
+        hookFollow()
     }
 
     private fun hookCommentClick() {
@@ -40,5 +41,17 @@ object VideoCommentHooker : YukiBaseHooker() {
         // 评论内容中站队信息
         "com.bilibili.app.comm.comment2.phoenix.view.CommentMountWidget".toClass()
             .method { name = "i0" }.hook(YukiHookPriority.DEFAULT, replaceHook)
+    }
+
+    private fun hookFollow() {
+        "com.bilibili.app.comm.comment2.phoenix.view.CommentFollowWidget".toClass()
+            .method { name = "i0" }
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("vid_comment_no_follow")) {
+                        callOriginal()
+                    }
+                }
+            }
     }
 }
