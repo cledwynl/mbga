@@ -124,6 +124,13 @@
             app:summaryOff="@string/setting_vid_comment_no_vote_off"
             app:summaryOn="@string/setting_vid_comment_no_vote_on"
             app:title="@string/setting_vid_comment_no_vote" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_no_follow"
+            app:summaryOff="@string/setting_vid_comment_no_follow_off"
+            app:summaryOn="@string/setting_vid_comment_no_follow_on"
+            app:title="@string/setting_vid_comment_no_follow" />
     </PreferenceCategory>
 
 </PreferenceScreen>
