@@ -40,6 +40,8 @@
   ![comment_view_quick_reply](./app/src/main/res/drawable/comment_view_quick_reply.png)
 * [X] 干掉评论区投票
   ![comment_view_vote](./app/src/main/res/drawable/comment_view_vote.png)
+* [X] 干掉评论区的关注按钮（笔记类型的评论右上角）
+  ![comment_view_follow](./app/src/main/res/drawable/comment_view_follow.png)
 
 ### 设置
 
