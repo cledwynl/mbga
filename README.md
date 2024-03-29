@@ -42,6 +42,8 @@
   ![comment_view_vote](./app/src/main/res/drawable/comment_view_vote.png)
 * [X] 干掉评论区的关注按钮（笔记类型的评论右上角）
   ![comment_view_follow](./app/src/main/res/drawable/comment_view_follow.png)
+* [X] 干掉评论内的关键词高亮搜索
+  ![comment_view_search](./app/src/main/res/drawable/comment_view_search.png)
 
 ### 设置
 
