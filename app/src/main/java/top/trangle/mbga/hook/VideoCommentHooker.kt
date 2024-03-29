@@ -3,6 +3,7 @@ package top.trangle.mbga.hook
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 
 object VideoCommentHooker : YukiBaseHooker() {
@@ -10,6 +11,7 @@ object VideoCommentHooker : YukiBaseHooker() {
         hookCommentClick()
         hookVote()
         hookFollow()
+        hookCommentUrls()
     }
 
     private fun hookCommentClick() {
@@ -53,5 +55,29 @@ object VideoCommentHooker : YukiBaseHooker() {
                     }
                 }
             }
+    }
+
+    private fun hookCommentUrls() {
+        val clzMapFieldLite = "com.google.protobuf.MapFieldLite".toClass()
+        val methodMutableCopy = clzMapFieldLite.method { name = "mutableCopy" }
+
+        val clzUrl = "com.bapis.bilibili.main.community.reply.v1.Url".toClass()
+        val fieldAppUrlSchema = clzUrl.field { name = "appUrlSchema_" }
+
+        "com.bapis.bilibili.main.community.reply.v1.Content".toClass()
+            .method { name = "internalGetUrls" }
+            .hook {
+                after {
+                    if (!prefs.getBoolean("vid_comment_no_search")) {
+                        return@after
+                    }
+                    val map = methodMutableCopy.get(result).call() as LinkedHashMap<*, *>
+                    map.entries.removeIf { (_, value) ->
+                        fieldAppUrlSchema.get(value).string().startsWith("bilibili://search")
+                    }
+                    result = map
+                }
+            }
+
     }
 }
