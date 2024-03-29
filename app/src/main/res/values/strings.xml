@@ -9,10 +9,7 @@
     <string name="app_first_launch_stay">留在这</string>
 
     <string name="setting_tabs">底部Tab（需重启B站生效）</string>
-    <string name="setting_tabs_no_home">隐藏首页</string>
-    <string name="setting_tabs_no_dynamic">隐藏动态</string>
-    <string name="setting_tabs_no_pegasus_channel">隐藏pegasus_channel</string>
-    <string name="setting_tabs_no_mall">隐藏会员购</string>
+    <string name="setting_tabs_hide">隐藏“%1$s”</string>
 
     <string name="setting_home_page">首页</string>
     <string name="setting_home_no_portrait_player">禁止竖屏播放器</string>
