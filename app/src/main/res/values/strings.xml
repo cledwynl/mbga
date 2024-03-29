@@ -46,4 +46,7 @@
     <string name="setting_vid_comment_no_follow">禁止展示关注</string>
     <string name="setting_vid_comment_no_follow_on">评论区不会展示关注按钮</string>
     <string name="setting_vid_comment_no_follow_off">有些评论区会有关注按钮</string>
+    <string name="setting_vid_comment_no_search">禁止展示评论内关键词搜索</string>
+    <string name="setting_vid_comment_no_search_on">评论内没有关键词高亮搜索（视频链接不算）</string>
+    <string name="setting_vid_comment_no_search_off">评论内关键词会高亮，点击会进入搜索页</string>
 </resources>
