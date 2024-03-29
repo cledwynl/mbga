@@ -11,7 +11,7 @@ object VideoCommentHooker : YukiBaseHooker() {
         hookCommentClick()
         hookVote()
         hookFollow()
-        hookCommentUrls()
+        hookUrls()
     }
 
     private fun hookCommentClick() {
@@ -57,7 +57,7 @@ object VideoCommentHooker : YukiBaseHooker() {
             }
     }
 
-    private fun hookCommentUrls() {
+    private fun hookUrls() {
         val clzMapFieldLite = "com.google.protobuf.MapFieldLite".toClass()
         val methodMutableCopy = clzMapFieldLite.method { name = "mutableCopy" }
 
@@ -78,6 +78,5 @@ object VideoCommentHooker : YukiBaseHooker() {
                     result = map
                 }
             }
-
     }
 }
