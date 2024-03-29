@@ -4,10 +4,23 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import top.trangle.mbga.CHANNEL_MSG_HOME_BOTTOM_TABS
+import top.trangle.mbga.CHANNEL_MSG_REQ_HOME_BOTTOM_TABS
 import top.trangle.mbga.utils.reflectionToString
 
+data class BottomTab(val name: String, val scheme: String) : java.io.Serializable
+
 object HomeViewHooker : YukiBaseHooker() {
+    private var bottomTabs: ArrayList<BottomTab>? = null
+
     override fun onHook() {
+        hookPortraitVideo()
+        hookBottomTabs()
+
+        setupTabProvider()
+    }
+
+    private fun hookPortraitVideo() {
         val clzBasicIndexItem = "com.bilibili.pegasus.api.model.BasicIndexItem".toClass()
         val getUri = clzBasicIndexItem.method { name = "getUri" }
 
@@ -26,34 +39,36 @@ object HomeViewHooker : YukiBaseHooker() {
                 YLog.debug("item: ${reflectionToString(instance)}")
             }
         }
+    }
 
+    private fun hookBottomTabs() {
         val clzTabItem = "tv.danmaku.bili.ui.main2.basic.BaseMainFrameFragment\$s".toClass()
         val fieldC = clzTabItem.field { name = "c" }
 
         val clzL = "tv.danmaku.bili.ui.main2.resource.l".toClass()
+        val fieldB = clzL.field { name = "b" }
         val fieldD = clzL.field { name = "d" }
 
         "tv.danmaku.bili.ui.main2.MainFragment\$a".toClass().method { name = "a" }.hook {
             after {
+                val newList = ArrayList<BottomTab>()
+
                 (result as ArrayList<*>).removeIf { tabItem ->
                     val c = fieldC.get(tabItem).any()
-                    val d = fieldD.get(c).string()
+                    val tabName = fieldB.get(c).string()
+                    val tabScheme = fieldD.get(c).string()
+
+                    if (tabScheme != "bilibili://user_center/mine") {
+                        newList.add(BottomTab(name = tabName, scheme = tabScheme))
+                    }
 
                     YLog.debug("首页底部Tab: ${reflectionToString(c)}")
 
-                    val disableHome =
-                            prefs.getBoolean("tabs_disable_home") && "bilibili://main/home" == d
-                    val disableDynamic =
-                            prefs.getBoolean("tabs_disable_dynamic") &&
-                                    "bilibili://following/home" == d
-                    val disablePegasusChannel =
-                            prefs.getBoolean("tabs_disable_pegasus_channel") &&
-                                    "bilibili://pegasus/channel" == d
-                    val disableMall =
-                            prefs.getBoolean("tabs_disable_mall") &&
-                                    "bilibili://mall/home-main" == d
+                    prefs.getBoolean("tabs_disable#$tabScheme")
+                }
 
-                    disableHome || disableDynamic || disablePegasusChannel || disableMall
+                if (bottomTabs == null) {
+                    bottomTabs = newList
                 }
             }
         }
@@ -80,5 +95,19 @@ object HomeViewHooker : YukiBaseHooker() {
                     }
                 }
         }
+    }
+
+    private fun setupTabProvider() {
+        dataChannel.wait(key = CHANNEL_MSG_REQ_HOME_BOTTOM_TABS) {
+            sendTabToModule()
+        }
+    }
+
+    private fun sendTabToModule() {
+        val tabs = bottomTabs ?: return
+        dataChannel.put(
+            key = CHANNEL_MSG_HOME_BOTTOM_TABS,
+            value = tabs,
+        )
     }
 }
