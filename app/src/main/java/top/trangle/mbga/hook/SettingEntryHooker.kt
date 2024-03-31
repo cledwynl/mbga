@@ -1,7 +1,6 @@
 package top.trangle.mbga.hook
 
 import android.app.Activity
-import android.content.ComponentName
 import android.content.Intent
 import android.view.Gravity
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import top.trangle.mbga.utils.factory.dp
 object SettingEntryHooker : YukiBaseHooker() {
     override fun onHook() {
         hookPreferencesActivity()
-        hookMainActivity()
     }
 
     private fun hookPreferencesActivity() {
@@ -41,27 +39,6 @@ object SettingEntryHooker : YukiBaseHooker() {
                     activity.startActivity(intent)
                 }
                 toolbar.addView(tv, 2, lp)
-            }
-        }
-    }
-
-    private fun hookMainActivity() {
-        "tv.danmaku.bili.MainActivityV2".toClass().method { name = "onCreate" }.hook {
-            after {
-                if (!prefs.isPreferencesAvailable) {
-                    val activity = instance as Activity
-
-                    val intent =
-                        Intent().apply {
-                            component =
-                                ComponentName(
-                                    "top.trangle.mbga",
-                                    "top.trangle.mbga.views.SettingsActivity",
-                                )
-                            putExtra("show_first_launch_alert", true)
-                        }
-                    activity.startActivity(intent)
-                }
             }
         }
     }

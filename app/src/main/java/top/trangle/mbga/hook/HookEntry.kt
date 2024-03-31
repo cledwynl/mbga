@@ -23,12 +23,14 @@ class HookEntry : IYukiHookXposedInit {
     override fun onHook() =
         encase {
             loadApp(name = BILI_IN_PKG_ID) {
+                loadHooker(MainActivityHooker)
                 loadHooker(VideoPlayerHooker)
                 loadHooker(VideoDetailHooker)
                 loadHooker(SettingEntryHooker)
                 loadHooker(VideoCommentHooker)
                 loadHooker(HomeViewHooker)
                 loadHooker(SearchViewHooker)
+                loadHooker(MineViewHooker)
             }
         }
 }

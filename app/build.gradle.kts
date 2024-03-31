@@ -15,6 +15,11 @@ fun gitBranch(): String {
 android {
     namespace = property.project.app.packageName
     compileSdk = property.project.android.compileSdk
+    androidResources.additionalParameters += listOf(
+        "--allow-reserved-package-id",
+        "--package-id",
+        "0x51"
+    )
 
     defaultConfig {
         applicationId = property.project.app.packageName

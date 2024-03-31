@@ -4,11 +4,13 @@
     <string name="xposed_desc">Make Bilibili Great Again!</string>
     <string name="about_module">此模块使用 YukiHookAPI 构建。\n了解更多 https://github.com/HighCapable/YuKiHookAPI</string>
     <string name="app_settings_title">设置</string>
-    <string name="app_first_launch_message">模块第一次启动，已加载默认设置，要回到B站开始浏览还是留在设置页面再看看？</string>
+    <string name="app_first_launch_message">模块第一次启动，已加载默认设置，要回到B站开始浏览还是留在设置页面再看看？如果你反复看到这个弹窗，请提issue</string>
     <string name="app_first_launch_goback">回到B站</string>
     <string name="app_first_launch_stay">留在这</string>
 
-    <string name="setting_tabs">底部Tab（需重启B站生效）</string>
+    <string name="bili_need_restart_message">您修改的设置中有需要重启B站才能生效的，请重启B站</string>
+
+    <string name="setting_tabs">底部Tab</string>
     <string name="setting_tabs_hide">隐藏“%1$s”</string>
 
     <string name="setting_home_page">首页</string>
@@ -49,4 +51,11 @@
     <string name="setting_vid_comment_no_search">禁止展示评论内关键词搜索</string>
     <string name="setting_vid_comment_no_search_on">评论内没有关键词高亮搜索（视频链接不算）</string>
     <string name="setting_vid_comment_no_search_off">评论内关键词会高亮，点击会进入搜索页</string>
+
+    <string name="setting_mine">我的</string>
+    <string name="setting_mine_add_search">增加搜索入口</string>
+    <string name="setting_mine_add_search_hint">在“更多服务”顶部添加一个搜索入口</string>
+
+    <string name="common_search">搜索</string>
+    <string name="common_got_it">知道了</string>
 </resources>
