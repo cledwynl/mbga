@@ -41,9 +41,6 @@ object MineViewHooker : YukiBaseHooker() {
                         if (fieldUri.get(list[0]).string() == SEARCH_URI) {
                             return@forEach
                         }
-                        list.forEach {
-                            YLog.debug("dd: ${reflectionToString(it)}")
-                        }
                         val newList =
                             arrayListOf(
                                 ctorMenuGroupItem.get().call().also { item ->
