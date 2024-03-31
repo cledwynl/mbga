@@ -4,6 +4,10 @@
 
 目前只支持国际版(com.bilibili.app.in)，兼容性见文末
 
+### 设置
+
+* [X] 打开B站->我的->设置->标题上有MBGA字样，点击打开设置界面
+
 ### 底部Tab
 
 * [X] 允许干掉除了“我的”以外的所有Tab
@@ -45,9 +49,10 @@
 * [X] 干掉评论内的关键词高亮搜索
   ![comment_view_search](./app/src/main/res/drawable/comment_view_search.png)
 
-### 设置
+### 我的
 
-* [X] 打开B站->我的->设置->在标题上加入MBGA字样，点击打开设置界面
+* [X] 在“更多服务”部分添加搜索入口，配合隐藏“首页”tab食用
+  ![mine_add_search_entry](./app/src/main/res/drawable/mine_add_search_entry.png)
 
 ## 感谢
 
@@ -61,5 +66,5 @@
 
 下面仅列出测试过的版本，相近版本大概率能兼容
 
-* MBGA v1.0.0 ~ v1.0.3
+* MBGA v1.0.0 ~ v1.0.4
   * 兼容国际版 未知 ~ 3.18.2 ~ 未知
