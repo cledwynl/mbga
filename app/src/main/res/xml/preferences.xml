@@ -140,4 +140,17 @@
             app:title="@string/setting_vid_comment_no_search" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        app:title="@string/setting_mine">
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="mine_add_search"
+            app:summary="@string/setting_mine_add_search_hint"
+            app:title="@string/setting_mine_add_search" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

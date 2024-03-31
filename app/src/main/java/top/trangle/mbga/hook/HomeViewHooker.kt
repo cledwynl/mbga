@@ -16,6 +16,7 @@ object HomeViewHooker : YukiBaseHooker() {
     override fun onHook() {
         hookPortraitVideo()
         hookBottomTabs()
+        hookAutoRefresh()
 
         setupTabProvider()
     }
@@ -72,8 +73,6 @@ object HomeViewHooker : YukiBaseHooker() {
                 }
             }
         }
-
-        hookAutoRefresh()
     }
 
     private fun hookAutoRefresh() {

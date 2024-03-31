@@ -1,11 +1,13 @@
 package top.trangle.mbga.views
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceCategory
 import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.highcapable.yukihookapi.hook.factory.dataChannel
 import com.highcapable.yukihookapi.hook.xposed.prefs.ui.ModulePreferenceFragment
 import top.trangle.mbga.BILI_IN_PKG_ID
@@ -15,6 +17,11 @@ import top.trangle.mbga.R
 import top.trangle.mbga.databinding.ActivitySettingsBinding
 import top.trangle.mbga.hook.BottomTab
 
+val PREFS_NEED_RESTART =
+    arrayOf(
+        "mine_add_search",
+    )
+
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
 
@@ -22,7 +29,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (intent.extras?.getBoolean("show_first_launch_alert") == true) {
-            AlertDialog.Builder(this)
+            MaterialAlertDialogBuilder(this)
                 .setMessage(R.string.app_first_launch_message)
                 .setNegativeButton(R.string.app_first_launch_goback) { _, _ -> this.finish() }
                 .setPositiveButton(R.string.app_first_launch_stay) { dialog, _ ->
@@ -42,6 +49,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class MySettingsFragment : ModulePreferenceFragment() {
+        private var needRestart = false
+
         override fun onCreatePreferencesInModuleApp(
             savedInstanceState: Bundle?,
             rootKey: String?,
@@ -55,6 +64,38 @@ class SettingsActivity : AppCompatActivity() {
         ) {
             super.onViewCreated(view, savedInstanceState)
             addBottomTabPrefs()
+            val onBackPressedDispatcher = activity?.onBackPressedDispatcher ?: return
+            onBackPressedDispatcher.addCallback {
+                val quit: () -> Unit = {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+                if (!needRestart) {
+                    quit()
+                } else {
+                    MaterialAlertDialogBuilder(view.context)
+                        .setMessage(R.string.bili_need_restart_message)
+                        .setPositiveButton(R.string.common_got_it) { _, _ ->
+                            quit()
+                        }
+                        .create()
+                        .show()
+                }
+
+            }
+        }
+
+        override fun onSharedPreferenceChanged(
+            sharedPreferences: SharedPreferences?,
+            key: String?,
+        ) {
+            super.onSharedPreferenceChanged(sharedPreferences, key)
+            if (
+                !needRestart &&
+                (key?.startsWith("tabs_disable#") == true || PREFS_NEED_RESTART.contains(key))
+            ) {
+                needRestart = true
+            }
         }
 
         private fun addBottomTabPrefs() {
