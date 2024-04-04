@@ -17,6 +17,7 @@ object HomeViewHooker : YukiBaseHooker() {
         hookPortraitVideo()
         hookBottomTabs()
         hookAutoRefresh()
+        hookTabReload()
 
         setupTabProvider()
     }
@@ -102,6 +103,22 @@ object HomeViewHooker : YukiBaseHooker() {
                     if (!prefs.getBoolean("home_disable_auto_refresh")) {
                         callOriginal()
                     }
+                }
+            }
+    }
+
+    private fun hookTabReload() {
+        val clzIndexFragmentV2 = "com.bilibili.pegasus.promo.index.IndexFeedFragmentV2".toClass()
+        val clzConfig = "com.bilibili.pegasus.api.modelv2.Config".toClass()
+        val fieldFeedTopClean = clzConfig.field { name = "feedTopClean" }
+
+        clzIndexFragmentV2.method { name = "ez" }
+            .hook {
+                before {
+                    if (!prefs.getBoolean("home_disable_feed_top_clean")) {
+                        return@before
+                    }
+                    fieldFeedTopClean.get(args[0]).set(0)
                 }
             }
     }
