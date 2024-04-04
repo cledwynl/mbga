@@ -29,6 +29,13 @@
             app:summaryOff="@string/setting_home_no_auto_refresh_off"
             app:summaryOn="@string/setting_home_no_auto_refresh_on"
             app:title="@string/setting_home_no_auto_refresh" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="home_disable_feed_top_clean"
+            app:summaryOff="@string/setting_home_no_feed_top_clean_off"
+            app:summaryOn="@string/setting_home_no_feed_top_clean_on"
+            app:title="@string/setting_home_no_feed_top_clean" />
     </PreferenceCategory>
 
     <PreferenceCategory

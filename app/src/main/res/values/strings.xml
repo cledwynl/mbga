@@ -20,6 +20,9 @@
     <string name="setting_home_no_auto_refresh">禁止自动刷新</string>
     <string name="setting_home_no_auto_refresh_on">切后台过一段时间回来保持之前看到的地方</string>
     <string name="setting_home_no_auto_refresh_off">切后台过一段时间回来会自动刷新</string>
+    <string name="setting_home_no_feed_top_clean">禁止刷新时清空之前的内容</string>
+    <string name="setting_home_no_feed_top_clean_on">刷新时会保留之前的内容（仅最上方一页）</string>
+    <string name="setting_home_no_feed_top_clean_off">点击Tab刷新时，可能会清空之前列表中的内容</string>
 
     <string name="setting_search_page">搜索页</string>
     <string name="setting_search_no_trending">隐藏热搜</string>
