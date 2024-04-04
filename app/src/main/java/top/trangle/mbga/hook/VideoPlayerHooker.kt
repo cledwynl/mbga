@@ -11,6 +11,7 @@ object VideoPlayerHooker : YukiBaseHooker() {
         hookNewVersion()
         hookDmReply()
         hookSegmentedSection()
+        hookMultiWindowFullscreen()
     }
 
     private fun hookOldVersion() {
@@ -97,5 +98,19 @@ object VideoPlayerHooker : YukiBaseHooker() {
                 fieldEnableSegmentedSection.get(instance).set(null)
             }
         }
+    }
+
+    private fun hookMultiWindowFullscreen() {
+        "tv.danmaku.bili.videopage.player.widget.control.PlayerFullscreenWidget".toClass()
+            .method { name = "V1" }
+            .hook {
+                replaceAny {
+                    if (!prefs.getBoolean("vid_player_fullscreen_when_multi_window")) {
+                        callOriginal()
+                    } else {
+                        false
+                    }
+                }
+            }
     }
 }

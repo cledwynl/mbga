@@ -6,7 +6,6 @@ import android.content.Intent
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.injectModuleAppResources
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 
 object MainActivityHooker : YukiBaseHooker() {
     override fun onHook() {
