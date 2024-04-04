@@ -94,6 +94,16 @@ object HomeViewHooker : YukiBaseHooker() {
                     }
                 }
         }
+
+        // onResume回来的调用链路上的一环
+        "com.bilibili.pegasus.promo.index.IndexFeedFragmentV2".toClass().method { name = "ny" }
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("home_disable_auto_refresh")) {
+                        callOriginal()
+                    }
+                }
+            }
     }
 
     private fun setupTabProvider() {
