@@ -81,7 +81,6 @@ class SettingsActivity : AppCompatActivity() {
                         .create()
                         .show()
                 }
-
             }
         }
 

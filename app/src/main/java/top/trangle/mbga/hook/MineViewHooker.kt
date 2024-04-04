@@ -5,9 +5,7 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.R
-import top.trangle.mbga.utils.reflectionToString
 
 const val SEARCH_URI = "bilibili://search2"
 
