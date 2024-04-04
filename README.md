@@ -30,6 +30,7 @@
 * [X] 干掉播放器内展示的关注弹窗、投票弹窗等（包括UP主弹幕）
 * [X] 禁止播放器自动开启章节进度条
   ![video_player_segment_section](./app/src/main/res/drawable/video_player_segmented_section.jpg)
+* [X] 允许在小窗、分屏模式下全屏播放（体验并不是非常好）
 
 ### 视频详情页
 
@@ -66,5 +67,5 @@
 
 下面仅列出测试过的版本，相近版本大概率能兼容
 
-* MBGA v1.0.0 ~ v1.0.4
+* MBGA v1.0.0 ~ v1.0.5
   * 兼容国际版 未知 ~ 3.18.2 ~ 未知
