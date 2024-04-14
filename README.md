@@ -24,6 +24,8 @@
 * 干掉热搜
 * 干掉搜索历史
 * 干掉搜索发现
+* 禁止在搜索框内推荐搜索词
+  ![search_no_default_words](./app/src/main/res/drawable/search_no_default_words.png)
 
 ### 视频播放器
 
@@ -69,5 +71,5 @@
 
 下面仅列出测试过的版本，相近版本大概率能兼容
 
-* MBGA v1.0.0 ~ v1.0.5
+* MBGA v1.0.0 ~ v1.0.6
   * 兼容国际版 未知 ~ 3.18.2 ~ 未知
