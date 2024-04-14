@@ -28,6 +28,7 @@
     <string name="setting_search_no_trending">隐藏热搜</string>
     <string name="setting_search_no_recommend">隐藏搜索发现</string>
     <string name="setting_search_no_history">隐藏搜索历史</string>
+    <string name="setting_search_no_default_words">禁止在搜索框内推荐搜索词</string>
 
     <string name="setting_vid_player">播放器</string>
     <string name="setting_vid_player_no_activity_meta">干掉云视听小电视</string>

@@ -58,6 +58,11 @@
             android:key="search_disable_recommend"
             android:title="@string/setting_search_no_recommend"
             app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="search_disable_default_words"
+            android:title="@string/setting_search_no_default_words"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
     <PreferenceCategory
