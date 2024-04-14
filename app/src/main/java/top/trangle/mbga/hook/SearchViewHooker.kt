@@ -5,6 +5,11 @@ import com.highcapable.yukihookapi.hook.factory.method
 
 object SearchViewHooker : YukiBaseHooker() {
     override fun onHook() {
+        hookSearchType()
+        hookDefaultSearchWords()
+    }
+
+    private fun hookSearchType() {
         "com.bilibili.search2.api.SearchSquareType".toClass().method { name = "getType" }.hook {
             /*
              * 这个钩子基于这个方法的实现：com.bilibili.search2.discover.l$a.d7
@@ -18,5 +23,19 @@ object SearchViewHooker : YukiBaseHooker() {
                 }
             }
         }
+    }
+
+    private fun hookDefaultSearchWords() {
+        "com.bapis.bilibili.app.interfaces.v1.SearchMoss".toClass()
+            .method { name = "defaultWords" }
+            .hook {
+                replaceAny {
+                    if (!prefs.getBoolean("search_disable_default_words")) {
+                        callOriginal()
+                    } else {
+                        null
+                    }
+                }
+            }
     }
 }
