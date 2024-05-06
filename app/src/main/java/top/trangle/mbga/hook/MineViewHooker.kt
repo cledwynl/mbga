@@ -5,9 +5,10 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.R
 
-const val SEARCH_URI = "bilibili://search2"
+const val SEARCH_URI = "bilibili://search"
 
 object MineViewHooker : YukiBaseHooker() {
     override fun onHook() {
@@ -22,12 +23,17 @@ object MineViewHooker : YukiBaseHooker() {
         val fieldUri = clzMenuGroupItem.field { name = "uri" }
         val fieldVisible = clzMenuGroupItem.field { name = "visible" }
 
-        "tv.danmaku.bili.ui.main2.mine.HomeUserCenterFragment".toClass().method { name = "Uw" }
+        val clzAccountMine = "tv.danmaku.bili.ui.main2.api.AccountMine".toClass()
+
+        "tv.danmaku.bili.ui.main2.mine.HomeUserCenterFragment".toClass().method {
+            param(android.content.Context::class.java, java.util.List::class.java, clzAccountMine)
+        }
             .hook {
                 before {
                     if (!prefs.getBoolean("mine_add_search")) {
                         return@before
                     }
+                    YLog.debug("add search")
                     val ctx = args[0] as Context
                     (args[1] as List<*>).forEach { menuGroup ->
                         if (fieldStyle.get(menuGroup).int() != 2) {
