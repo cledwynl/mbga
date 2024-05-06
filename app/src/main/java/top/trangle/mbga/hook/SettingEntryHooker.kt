@@ -19,10 +19,15 @@ object SettingEntryHooker : YukiBaseHooker() {
         val clzBiliPreferencesActivity =
             "com.bilibili.app.preferences.BiliPreferencesActivity".toClass()
         val onCreate = clzBiliPreferencesActivity.method { name = "onCreate" }
+
         onCreate.hook {
             after {
                 val activity = instance as Activity
-                val toolbar: ViewGroup = activity.findViewById(0x7f0929ab)
+                val toolbar: ViewGroup =
+                    activity.findViewById(
+                        activity.getResources()
+                            .getIdentifier("nav_top_bar", "id", activity.getPackageName()),
+                    )
                 YLog.debug("view: $toolbar")
                 val lp =
                     ViewGroup.LayoutParams(
@@ -35,7 +40,10 @@ object SettingEntryHooker : YukiBaseHooker() {
                 tv.setPadding(16.dp(activity), 0, 16.dp(activity), 0)
                 tv.setOnClickListener {
                     val intent = Intent(Intent.ACTION_MAIN)
-                    intent.setClassName("top.trangle.mbga", "top.trangle.mbga.views.SettingsActivity")
+                    intent.setClassName(
+                        "top.trangle.mbga",
+                        "top.trangle.mbga.views.SettingsActivity",
+                    )
                     activity.startActivity(intent)
                 }
                 toolbar.addView(tv, 2, lp)
