@@ -3,9 +3,15 @@ package top.trangle.mbga.hook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import top.trangle.mbga.utils.subHook
 
 object VideoDetailHooker : YukiBaseHooker() {
     override fun onHook() {
+        subHook(this::hookLabel)
+        subHook(this::hookShareLink)
+    }
+
+    private fun hookLabel() {
         val clzLabel = "tv.danmaku.bili.videopage.data.view.model.BiliVideoDetail\$Label".toClass()
         val clzDescSection = "tv.danmaku.bili.ui.video.section.info.DescSection".toClass()
         val getLabelFromDesc =
@@ -21,7 +27,9 @@ object VideoDetailHooker : YukiBaseHooker() {
                 }
             }
         }
+    }
 
+    private fun hookShareLink() {
         val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
         val contentField = clzShareResult.field { name = "content" }
 

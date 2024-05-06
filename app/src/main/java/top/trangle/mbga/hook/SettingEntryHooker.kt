@@ -9,10 +9,11 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.utils.factory.dp
+import top.trangle.mbga.utils.subHook
 
 object SettingEntryHooker : YukiBaseHooker() {
     override fun onHook() {
-        hookPreferencesActivity()
+        subHook(this::hookPreferencesActivity)
     }
 
     private fun hookPreferencesActivity() {

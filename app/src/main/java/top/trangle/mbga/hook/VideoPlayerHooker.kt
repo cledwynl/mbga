@@ -4,14 +4,16 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import top.trangle.mbga.utils.subHook
 
 object VideoPlayerHooker : YukiBaseHooker() {
     override fun onHook() {
-        hookOldVersion()
-        hookNewVersion()
-        hookDmReply()
-        hookSegmentedSection()
-        hookMultiWindowFullscreen()
+        subHook(this::hookOldVersion)
+        subHook(this::hookOldVersion)
+        subHook(this::hookNewVersion)
+        subHook(this::hookDmReply)
+        subHook(this::hookSegmentedSection)
+        subHook(this::hookMultiWindowFullscreen)
     }
 
     private fun hookOldVersion() {

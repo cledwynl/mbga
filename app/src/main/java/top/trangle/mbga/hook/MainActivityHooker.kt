@@ -6,9 +6,14 @@ import android.content.Intent
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.injectModuleAppResources
 import com.highcapable.yukihookapi.hook.factory.method
+import top.trangle.mbga.utils.subHook
 
 object MainActivityHooker : YukiBaseHooker() {
     override fun onHook() {
+        subHook(this::hookMainCreate)
+    }
+
+    private fun hookMainCreate() {
         "tv.danmaku.bili.MainActivityV2".toClass().method { name = "onCreate" }
             .hook {
                 after {
