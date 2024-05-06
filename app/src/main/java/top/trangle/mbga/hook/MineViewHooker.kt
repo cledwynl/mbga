@@ -7,11 +7,16 @@ import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.R
+import top.trangle.mbga.utils.subHook
 
 const val SEARCH_URI = "bilibili://search"
 
 object MineViewHooker : YukiBaseHooker() {
     override fun onHook() {
+        subHook(this::hookMoreServiceMenu)
+    }
+
+    private fun hookMoreServiceMenu() {
         val clzMenuGroup = "com.bilibili.lib.homepage.mine.MenuGroup".toClass()
         val fieldStyle = clzMenuGroup.field { name = "style" }
         val fieldItemList = clzMenuGroup.field { name = "itemList" }

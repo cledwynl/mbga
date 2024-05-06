@@ -7,6 +7,7 @@ import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.CHANNEL_MSG_HOME_BOTTOM_TABS
 import top.trangle.mbga.CHANNEL_MSG_REQ_HOME_BOTTOM_TABS
 import top.trangle.mbga.utils.reflectionToString
+import top.trangle.mbga.utils.subHook
 
 data class BottomTab(val name: String, val scheme: String) : java.io.Serializable
 
@@ -14,10 +15,10 @@ object HomeViewHooker : YukiBaseHooker() {
     private var bottomTabs: ArrayList<BottomTab>? = null
 
     override fun onHook() {
-        hookPortraitVideo()
-        hookBottomTabs()
-        hookAutoRefresh()
-        hookTabReload()
+        subHook(this::hookPortraitVideo)
+        subHook(this::hookBottomTabs)
+        subHook(this::hookAutoRefresh)
+        subHook(this::hookTabReload)
 
         setupTabProvider()
     }

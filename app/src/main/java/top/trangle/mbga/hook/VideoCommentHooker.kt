@@ -5,13 +5,14 @@ import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import top.trangle.mbga.utils.subHook
 
 object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
-        hookCommentClick()
-        hookVote()
-        hookFollow()
-        hookUrls()
+        subHook(this::hookCommentClick)
+        subHook(this::hookVote)
+        subHook(this::hookFollow)
+        subHook(this::hookUrls)
     }
 
     private fun hookCommentClick() {
