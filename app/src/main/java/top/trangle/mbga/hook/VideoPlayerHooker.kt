@@ -1,7 +1,9 @@
 package top.trangle.mbga.hook
 
+import com.highcapable.yukihookapi.hook.core.finder.members.MethodFinder
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
+import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.utils.subHook
@@ -103,16 +105,34 @@ object VideoPlayerHooker : YukiBaseHooker() {
     }
 
     private fun hookMultiWindowFullscreen() {
-        "tv.danmaku.bili.videopage.player.widget.control.PlayerFullscreenWidget".toClass()
-            .method { name = "V1" }
-            .hook {
-                replaceAny {
-                    if (!prefs.getBoolean("vid_player_fullscreen_when_multi_window")) {
-                        callOriginal()
-                    } else {
-                        false
+        val clzPlayerFullscreenWidget =
+            "tv.danmaku.bili.videopage.player.widget.control.PlayerFullscreenWidget".toClass()
+
+        var methodFound = false
+        arrayOf(
+            "V1", // bilibili v3.18.2
+            // "T0", // bilibili v3.19.0(7750300) FIXME: 没用，得重新找注入点
+        ).forEach { methodName ->
+            val cond: MethodFinder.() -> Unit = {
+                name = methodName
+            }
+            if (clzPlayerFullscreenWidget.hasMethod(cond)) {
+                methodFound = true
+                clzPlayerFullscreenWidget.method(cond).hook {
+                    replaceAny {
+                        YLog.debug("Player f")
+                        if (!prefs.getBoolean("vid_player_fullscreen_when_multi_window")) {
+                            callOriginal()
+                        } else {
+                            false
+                        }
                     }
                 }
             }
+        }
+
+        if (!methodFound) {
+            YLog.error("Unable to hookMultiWindowFullscreen")
+        }
     }
 }
