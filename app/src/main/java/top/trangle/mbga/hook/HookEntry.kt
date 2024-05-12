@@ -17,7 +17,7 @@ class HookEntry : IYukiHookXposedInit {
             }
             isEnableHookSharedPreferences = true
             isEnableDataChannel = true
-            isDebug = BuildConfig.BUILD_TYPE != "release"
+            isDebug = BuildConfig.BUILD_TYPE == "debug"
         }
 
     override fun onHook() =
