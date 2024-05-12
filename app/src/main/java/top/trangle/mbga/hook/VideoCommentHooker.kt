@@ -9,16 +9,25 @@ import top.trangle.mbga.utils.subHook
 
 object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
-        subHook(this::hookCommentClick)
+        subHook(this::hookCommentClick3d18d2)
+        subHook(this::hookCommentClick3d19d0)
         subHook(this::hookVote)
         subHook(this::hookFollow)
         subHook(this::hookUrls)
     }
 
-    private fun hookCommentClick() {
+    private fun hookCommentClick3d18d2() {
         val clzCommentMessageWidget =
             "com.bilibili.app.comm.comment2.phoenix.view.CommentMessageWidget".toClass()
-        val onClick = clzCommentMessageWidget.method { name = "q3" }
+        val onClick =
+            clzCommentMessageWidget.method {
+                modifiers {
+                    isFinal
+                }
+                param {
+                    it.size == 2 && it[1] == android.view.View::class.java
+                }
+            }
 
         onClick.hook {
             replaceUnit {
@@ -27,6 +36,28 @@ object VideoCommentHooker : YukiBaseHooker() {
                 }
             }
         }
+    }
+
+    private fun hookCommentClick3d19d0() {
+        "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
+            .method { name = "N2" } // TODO: N2要想办法识别出来
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
+                        callOriginal()
+                    } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
+                        callOriginal()
+                    } else {
+                        val isClickingRichText =
+                            Throwable().stackTrace.any {
+                                it.className.contains("CommentContentRichTextHandler")
+                            }
+                        if (isClickingRichText) {
+                            return@replaceUnit
+                        }
+                    }
+                }
+            }
     }
 
     private fun hookVote() {
