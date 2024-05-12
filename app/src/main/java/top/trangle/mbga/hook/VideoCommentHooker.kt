@@ -5,14 +5,18 @@ import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.type.java.ListClass
 import top.trangle.mbga.utils.subHook
 
 object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
         subHook(this::hookCommentClick3d18d2)
         subHook(this::hookCommentClick3d19d0)
-        subHook(this::hookVote)
-        subHook(this::hookFollow)
+        subHook(this::hookTopVote)
+        subHook(this::hookStandVote3d18d2)
+        subHook(this::hookStandVote3d19d0)
+        subHook(this::hookFollow3d18d2)
+        subHook(this::hookFollow3d19d0)
         subHook(this::hookUrls)
     }
 
@@ -21,12 +25,8 @@ object VideoCommentHooker : YukiBaseHooker() {
             "com.bilibili.app.comm.comment2.phoenix.view.CommentMessageWidget".toClass()
         val onClick =
             clzCommentMessageWidget.method {
-                modifiers {
-                    isFinal
-                }
-                param {
-                    it.size == 2 && it[1] == android.view.View::class.java
-                }
+                modifiers { isFinal }
+                param { it.size == 2 && it[1] == android.view.View::class.java }
             }
 
         onClick.hook {
@@ -60,30 +60,70 @@ object VideoCommentHooker : YukiBaseHooker() {
             }
     }
 
-    private fun hookVote() {
-        val replaceHook: (YukiMemberHookCreator.MemberHookCreator) -> Unit = {
-            it.replaceUnit {
-                if (!prefs.getBoolean("vid_comment_no_vote")) {
-                    callOriginal()
-                }
+    private val voteReplaceHook: (YukiMemberHookCreator.MemberHookCreator) -> Unit = {
+        it.replaceUnit {
+            if (!prefs.getBoolean("vid_comment_no_vote")) {
+                callOriginal()
             }
         }
-
-        // 评论区顶部的投票
-        "com.bilibili.app.comment.ext.widgets.CmtVoteWidget".toClass()
-            .method { name = "a" }.hook(YukiHookPriority.DEFAULT, replaceHook)
-        // 评论内容中站队信息
-        "com.bilibili.app.comm.comment2.phoenix.view.CommentMountWidget".toClass()
-            .method { name = "i0" }.hook(YukiHookPriority.DEFAULT, replaceHook)
     }
 
-    private fun hookFollow() {
+    private fun hookTopVote() {
+        // 评论区顶部的投票，3.18.2和3.19.0都可用
+        "com.bilibili.app.comment.ext.widgets.CmtVoteWidget".toClass()
+            .method {
+                modifiers { isFinal }
+                param { it[0].name.startsWith("com.bilibili.app.comment.ext.model.") }
+            }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
+    }
+
+    private fun hookStandVote3d18d2() {
+        // 评论内容中站队信息，3.18.2
+        "com.bilibili.app.comm.comment2.phoenix.view.CommentMountWidget".toClass().method {
+            param { it.size == 1 && it[0].name.startsWith("com.bilibili.app.comm.comment2.comments.vvmadapter.") }
+        }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
+    }
+
+    private fun hookStandVote3d19d0() {
+        // 评论内容中站队信息，3.19.0
+        "com.bilibili.app.comment.ext.widgets.CmtMountWidget".toClass()
+            .method {
+                modifiers { isFinal }
+                param { it.size == 2 && it[0].name.startsWith("com.bilibili.app.comment.ext.model.") }
+            }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
+    }
+
+    private fun hookFollow3d18d2() {
         "com.bilibili.app.comm.comment2.phoenix.view.CommentFollowWidget".toClass()
-            .method { name = "i0" }
-            .hook {
+            .method {
+                param { it.size == 1 && it[0].name.startsWith("com.bilibili.app.comm.comment2.comments.vvmadapter.") }
+            }.hook {
                 replaceUnit {
                     if (!prefs.getBoolean("vid_comment_no_follow")) {
                         callOriginal()
+                    }
+                }
+            }
+    }
+
+    private fun hookFollow3d19d0() {
+        "com.bilibili.app.comment3.ui.widget.CommentHeaderDecorativeView".toClass().method {
+            param { it.size == 2 && it[0] == ListClass }
+        }
+            .hook {
+                before {
+                    if (!prefs.getBoolean("vid_comment_no_follow")) {
+                        return@before
+                    }
+                    (args[0] as List<*>).forEach { cmtIt ->
+                        cmtIt?.javaClass?.declaredFields?.forEach { field ->
+                            if (field.type.name.startsWith("com.bilibili.app.comment3.data.model.CommentItem")) {
+                                field.isAccessible = true
+                                if (field.get(cmtIt)?.toString()?.startsWith("Follow(") == true) {
+                                    field.set(cmtIt, null)
+                                }
+                            }
+                        }
                     }
                 }
             }
