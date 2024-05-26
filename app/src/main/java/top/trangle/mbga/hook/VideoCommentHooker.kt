@@ -52,8 +52,8 @@ object VideoCommentHooker : YukiBaseHooker() {
                             Throwable().stackTrace.any {
                                 it.className.contains("CommentContentRichTextHandler")
                             }
-                        if (isClickingRichText) {
-                            return@replaceUnit
+                        if (!isClickingRichText) {
+                            callOriginal()
                         }
                     }
                 }
