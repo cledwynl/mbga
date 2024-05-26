@@ -124,7 +124,7 @@ object HomeViewHooker : YukiBaseHooker() {
         val clzConfig = "com.bilibili.pegasus.api.modelv2.Config".toClass()
         val fieldFeedTopClean = clzConfig.field { name = "feedTopClean" }
 
-        clzIndexFragmentV2.method { name = "ez" }
+        clzIndexFragmentV2.method { param(clzConfig) }
             .hook {
                 before {
                     if (!prefs.getBoolean("home_disable_feed_top_clean")) {
