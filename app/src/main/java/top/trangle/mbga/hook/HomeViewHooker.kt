@@ -4,6 +4,8 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import com.highcapable.yukihookapi.hook.type.java.IntType
+import com.highcapable.yukihookapi.hook.type.java.LongType
 import top.trangle.mbga.CHANNEL_MSG_HOME_BOTTOM_TABS
 import top.trangle.mbga.CHANNEL_MSG_REQ_HOME_BOTTOM_TABS
 import top.trangle.mbga.utils.reflectionToString
@@ -97,15 +99,24 @@ object HomeViewHooker : YukiBaseHooker() {
                 }
         }
 
-        // onResume回来的调用链路上的一环
-        "com.bilibili.pegasus.promo.index.IndexFeedFragmentV2".toClass().method { name = "ny" }
-            .hook {
-                replaceUnit {
-                    if (!prefs.getBoolean("home_disable_auto_refresh")) {
-                        callOriginal()
+        val clzIndexFeedFragmentV2 =
+            "com.bilibili.pegasus.promo.index.IndexFeedFragmentV2".toClass()
+        clzIndexFeedFragmentV2.method {
+            modifiers { isStatic }
+            param {
+                it.size == 6 && it[0] == clzIndexFeedFragmentV2 && it[1] == IntType && it[2] == LongType && it[4] == IntType
+            }
+        }.hook {
+            replaceUnit {
+                val isByOnResume =
+                    Throwable().stackTrace.any {
+                        it.methodName.contains("onResume")
                     }
+                if (!isByOnResume || !prefs.getBoolean("home_disable_auto_refresh")) {
+                    callOriginal()
                 }
             }
+        }
     }
 
     private fun hookTabReload() {
