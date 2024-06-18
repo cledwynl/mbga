@@ -98,6 +98,12 @@
             android:title="@string/setting_vid_player_fullscreen_when_multi_window"
             app:iconSpaceReserved="false"
             app:key="vid_player_fullscreen_when_multi_window" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_portrait"
+            app:summaryOff="@string/setting_vid_player_no_portrait_player_off"
+            app:summaryOn="@string/setting_vid_player_no_portrait_player_on"
+            app:title="@string/setting_vid_player_no_portrait_player" />
     </PreferenceCategory>
 
     <PreferenceCategory

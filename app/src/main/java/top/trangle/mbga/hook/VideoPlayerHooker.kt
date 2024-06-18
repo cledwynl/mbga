@@ -11,11 +11,11 @@ import top.trangle.mbga.utils.subHook
 object VideoPlayerHooker : YukiBaseHooker() {
     override fun onHook() {
         subHook(this::hookOldVersion)
-        subHook(this::hookOldVersion)
         subHook(this::hookNewVersion)
         subHook(this::hookDmReply)
         subHook(this::hookSegmentedSection)
         subHook(this::hookMultiWindowFullscreen)
+        subHook(this::hookPortraitVideo)
     }
 
     private fun hookOldVersion() {
@@ -133,6 +133,28 @@ object VideoPlayerHooker : YukiBaseHooker() {
 
         if (!methodFound) {
             YLog.error("Unable to hookMultiWindowFullscreen")
+        }
+    }
+
+    private fun hookPortraitVideo() {
+        val clzStoryEntrance =
+            "com.bapis.bilibili.app.viewunite.v1.StoryEntrance".toClass()
+        val methods =
+            arrayOf(
+                "getPlayStory",
+                "getArcPlayStory",
+                "getArcLandscapeStory",
+            )
+
+        methods.forEach {
+            clzStoryEntrance.method { name = it }
+                .hook {
+                    after {
+                        if (prefs.getBoolean("vid_player_disable_portrait")) {
+                            resultFalse()
+                        }
+                    }
+                }
         }
     }
 }
