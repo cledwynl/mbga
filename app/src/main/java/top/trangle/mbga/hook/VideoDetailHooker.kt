@@ -1,13 +1,17 @@
 package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
+import com.highcapable.yukihookapi.hook.factory.allMethods
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
+import top.trangle.mbga.hook.SearchViewHooker.hook
 import top.trangle.mbga.utils.subHook
 
 object VideoDetailHooker : YukiBaseHooker() {
     override fun onHook() {
         subHook(this::hookLabel)
+        subHook(this::hookLabel3d19d0)
         subHook(this::hookShareLink)
         subHook(this::hookShareLink3d19d0)
     }
@@ -21,7 +25,6 @@ object VideoDetailHooker : YukiBaseHooker() {
                 returnType = clzLabel
             }
 
-        // FIXME: 3.19.0 失效了
         getLabelFromDesc.hook {
             after {
                 if (prefs.getBoolean("vid_detail_disable_label")) {
@@ -29,6 +32,21 @@ object VideoDetailHooker : YukiBaseHooker() {
                 }
             }
         }
+    }
+
+    private fun hookLabel3d19d0() {
+        val clzLabel = "com.bapis.bilibili.app.viewunite.common.Label".toClass()
+        val defaultLabel = clzLabel.field { name = "DEFAULT_INSTANCE" }
+
+        val clzHeadline = "com.bapis.bilibili.app.viewunite.common.Headline".toClass()
+        clzHeadline.method { name = "getLabel" }
+            .hook {
+                after {
+                    if (prefs.getBoolean("vid_detail_disable_label")) {
+                        result = defaultLabel.get().any()
+                    }
+                }
+            }
     }
 
     private fun hookShareLink() {
@@ -61,7 +79,9 @@ object VideoDetailHooker : YukiBaseHooker() {
             "com.bilibili.app.comm.supermenu.share.v2.ShareTargetTask\$f".toClass()
         val shareTaskCallback = clzShareTargetTask.method { name = "l" }
 
-        ("com.bilibili.lib.sharewrapper.online.api.b".toClassOrNull() ?: return).method { name = "g" }.hook {
+        ("com.bilibili.lib.sharewrapper.online.api.b".toClassOrNull() ?: return).method {
+            name = "g"
+        }.hook {
             replaceUnit {
                 if (!prefs.getBoolean("vid_detail_disable_short_link")) {
                     callOriginal()
