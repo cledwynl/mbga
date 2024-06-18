@@ -1,10 +1,8 @@
 package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
-import com.highcapable.yukihookapi.hook.factory.allMethods
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.hook.SearchViewHooker.hook
 import top.trangle.mbga.utils.subHook
 

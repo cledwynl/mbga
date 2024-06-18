@@ -35,6 +35,9 @@
     <string name="setting_vid_player_no_command_dms">干掉投票、关注等弹窗（待细分）</string>
     <string name="setting_vid_player_no_segmented_section">禁止默认开启章节进度条</string>
     <string name="setting_vid_player_fullscreen_when_multi_window">允许在小窗/分屏模式下全屏播放</string>
+    <string name="setting_vid_player_no_portrait_player">干掉竖屏全屏按钮</string>
+    <string name="setting_vid_player_no_portrait_player_on">只展示传统全屏按钮</string>
+    <string name="setting_vid_player_no_portrait_player_off">展示3.19.0新出的竖屏全屏按钮</string>
 
     <string name="setting_vid_detail">视频详情页</string>
     <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
