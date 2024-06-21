@@ -47,21 +47,15 @@ object HomeViewHooker : YukiBaseHooker() {
     }
 
     private fun hookBottomTabs() {
-        val clzTabItem = "tv.danmaku.bili.ui.main2.basic.BaseMainFrameFragment\$s".toClass()
-        val fieldC = clzTabItem.field { name = "c" }
-
-        val clzL = "tv.danmaku.bili.ui.main2.resource.l".toClass()
-        val fieldB = clzL.field { name = "b" }
-        val fieldD = clzL.field { name = "d" }
-
         "tv.danmaku.bili.ui.main2.MainFragment\$a".toClass().method { name = "a" }.hook {
             after {
                 val newList = ArrayList<BottomTab>()
 
                 (result as ArrayList<*>).removeIf { tabItem ->
-                    val c = fieldC.get(tabItem).any()
-                    val tabName = fieldB.get(c).string()
-                    val tabScheme = fieldD.get(c).string()
+                    val c = tabItem.javaClass.field { name = "c" }.get(tabItem).any()
+                        ?: return@removeIf false
+                    val tabName = c.javaClass.field { name = "b" }.get(c).string()
+                    val tabScheme = c.javaClass.field { name = "d" }.get(c).string()
 
                     if (tabScheme != "bilibili://user_center/mine") {
                         newList.add(BottomTab(name = tabName, scheme = tabScheme))
