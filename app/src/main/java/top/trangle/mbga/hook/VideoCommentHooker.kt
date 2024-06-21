@@ -12,6 +12,7 @@ object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
         subHook(this::hookCommentClickV1)
         subHook(this::hookCommentClickV2)
+        subHook(this::hookCommentClickV3)
         subHook(this::hookTopVote)
         subHook(this::hookStandVoteV1)
         subHook(this::hookStandVoteV2)
@@ -39,10 +40,33 @@ object VideoCommentHooker : YukiBaseHooker() {
         }
     }
 
-    /** 3.19.0, 3.19.1 可用 */
+    /** 3.19.0 可用 */
     private fun hookCommentClickV2() {
         "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
             .method { name = "N2" } // TODO: N2要想办法识别出来
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
+                        callOriginal()
+                    } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
+                        callOriginal()
+                    } else {
+                        val isClickingRichText =
+                            Throwable().stackTrace.any {
+                                it.className.contains("CommentContentRichTextHandler")
+                            }
+                        if (!isClickingRichText) {
+                            callOriginal()
+                        }
+                    }
+                }
+            }
+    }
+
+    /** 3.19.1 可用 */
+    private fun hookCommentClickV3() {
+        "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
+            .method { name = "M2" } // TODO: 要想办法识别出来
             .hook {
                 replaceUnit {
                     if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
