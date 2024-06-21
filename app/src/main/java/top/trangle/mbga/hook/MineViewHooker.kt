@@ -5,7 +5,6 @@ import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.R
 import top.trangle.mbga.utils.subHook
 
@@ -38,7 +37,6 @@ object MineViewHooker : YukiBaseHooker() {
                     if (!prefs.getBoolean("mine_add_search")) {
                         return@before
                     }
-                    YLog.debug("add search")
                     val ctx = args[0] as Context
                     (args[1] as List<*>).forEach { menuGroup ->
                         if (fieldStyle.get(menuGroup).int() != 2) {

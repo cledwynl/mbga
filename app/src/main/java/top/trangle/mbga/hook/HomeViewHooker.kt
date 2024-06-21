@@ -41,7 +41,6 @@ object HomeViewHooker : YukiBaseHooker() {
                         YLog.debug("初始化视频信息时，竖屏转横屏成功")
                     }
                 }
-                YLog.debug("item: ${reflectionToString(instance)}")
             }
         }
     }
