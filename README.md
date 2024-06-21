@@ -35,6 +35,8 @@
 * 禁止播放器自动开启章节进度条
   ![video_player_segment_section](./app/src/main/res/drawable/video_player_segmented_section.jpg)
 * 允许在小窗、分屏模式下全屏播放（体验并不是非常好）
+* 禁止展示竖屏全屏按钮
+  ![video_player_portrait_btn](./app/src/main/res/drawable/video_player_portrait_btn.png)
 
 ### 视频详情页
 
@@ -74,4 +76,4 @@
 * MBGA v1.0.0 ~ v1.0.6
   * 兼容国际版 未知 ~ 3.18.2
 * MBGA v1.1.0 ~
-  * 兼容国际版 未知 ~ 3.19.0(7750300)
+  * 兼容国际版 未知 ~ 3.19.1
