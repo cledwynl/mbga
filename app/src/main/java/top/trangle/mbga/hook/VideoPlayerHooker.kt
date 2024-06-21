@@ -1,9 +1,7 @@
 package top.trangle.mbga.hook
 
-import com.highcapable.yukihookapi.hook.core.finder.members.MethodFinder
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
-import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.utils.subHook
@@ -105,40 +103,23 @@ object VideoPlayerHooker : YukiBaseHooker() {
     }
 
     private fun hookMultiWindowFullscreen() {
-        val clzPlayerFullscreenWidget =
-            "tv.danmaku.bili.videopage.player.widget.control.PlayerFullscreenWidget".toClass()
-
-        var methodFound = false
-        arrayOf(
-            "V1", // bilibili v3.18.2
-            // "T0", // bilibili v3.19.0(7750300) FIXME: 没用，得重新找注入点
-        ).forEach { methodName ->
-            val cond: MethodFinder.() -> Unit = {
-                name = methodName
-            }
-            if (clzPlayerFullscreenWidget.hasMethod(cond)) {
-                methodFound = true
-                clzPlayerFullscreenWidget.method(cond).hook {
-                    replaceAny {
-                        YLog.debug("Player f")
-                        if (!prefs.getBoolean("vid_player_fullscreen_when_multi_window")) {
-                            callOriginal()
-                        } else {
-                            false
-                        }
-                    }
+        "android.app.Activity".toClass().method { name = "isInMultiWindowMode" }.hook {
+            after {
+                if (!prefs.getBoolean("vid_player_fullscreen_when_multi_window")) {
+                    return@after
+                }
+                val callStack = Throwable().stackTrace
+                if (callStack.any { it.className.contains("GeminiPlayerFullscreenWidget") }) {
+                    resultFalse()
+                } else if (callStack.any { it.className.contains("PlayerFullscreenWidget") }) {
+                    resultFalse()
                 }
             }
-        }
-
-        if (!methodFound) {
-            YLog.error("Unable to hookMultiWindowFullscreen")
         }
     }
 
     private fun hookPortraitVideo() {
-        val clzStoryEntrance =
-            "com.bapis.bilibili.app.viewunite.v1.StoryEntrance".toClass()
+        val clzStoryEntrance = "com.bapis.bilibili.app.viewunite.v1.StoryEntrance".toClass()
         val methods =
             arrayOf(
                 "getPlayStory",
@@ -147,14 +128,13 @@ object VideoPlayerHooker : YukiBaseHooker() {
             )
 
         methods.forEach {
-            clzStoryEntrance.method { name = it }
-                .hook {
-                    after {
-                        if (prefs.getBoolean("vid_player_disable_portrait")) {
-                            resultFalse()
-                        }
+            clzStoryEntrance.method { name = it }.hook {
+                after {
+                    if (prefs.getBoolean("vid_player_disable_portrait")) {
+                        resultFalse()
                     }
                 }
+            }
         }
     }
 }
