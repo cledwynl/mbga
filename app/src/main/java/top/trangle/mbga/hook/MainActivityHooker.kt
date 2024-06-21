@@ -10,7 +10,26 @@ import top.trangle.mbga.utils.subHook
 
 object MainActivityHooker : YukiBaseHooker() {
     override fun onHook() {
+        subHook(this::injectResources)
         subHook(this::hookMainCreate)
+    }
+
+    private fun injectResources() {
+        val clzActivity = "android.app.Activity".toClass()
+        clzActivity.method { name = "onConfigurationChanged" }
+            .hook {
+                before {
+                    val activity = instance as Activity
+                    activity.injectModuleAppResources()
+                }
+            }
+        clzActivity.method { name = "onCreate" }
+            .hook {
+                before {
+                    val activity = instance as Activity
+                    activity.injectModuleAppResources()
+                }
+            }
     }
 
     private fun hookMainCreate() {
@@ -18,7 +37,6 @@ object MainActivityHooker : YukiBaseHooker() {
             .hook {
                 after {
                     val activity = instance as Activity
-                    activity.injectModuleAppResources()
 
                     if (!prefs.isPreferencesAvailable) {
                         val intent =
