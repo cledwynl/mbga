@@ -1,5 +1,6 @@
 package top.trangle.mbga.hook
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.view.Gravity
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.utils.factory.dp
 import top.trangle.mbga.utils.subHook
 
@@ -24,19 +24,22 @@ object SettingEntryHooker : YukiBaseHooker() {
         onCreate.hook {
             after {
                 val activity = instance as Activity
+
+                @SuppressLint("DiscouragedApi")
                 val toolbar: ViewGroup =
                     activity.findViewById(
-                        activity.getResources()
-                            .getIdentifier("nav_top_bar", "id", activity.getPackageName()),
+                        activity.resources
+                            .getIdentifier("nav_top_bar", "id", activity.packageName),
                     )
-                YLog.debug("view: $toolbar")
                 val lp =
                     ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                     )
                 val tv = TextView(instance as Activity)
-                tv.setText("MBGA!")
+
+                @SuppressLint("SetTextI18n")
+                tv.text = "MBGA!"
                 tv.gravity = Gravity.CENTER
                 tv.setPadding(16.dp(activity), 0, 16.dp(activity), 0)
                 tv.setOnClickListener {

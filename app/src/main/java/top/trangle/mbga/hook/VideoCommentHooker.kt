@@ -10,17 +10,18 @@ import top.trangle.mbga.utils.subHook
 
 object VideoCommentHooker : YukiBaseHooker() {
     override fun onHook() {
-        subHook(this::hookCommentClick3d18d2)
-        subHook(this::hookCommentClick3d19d0)
+        subHook(this::hookCommentClickV1)
+        subHook(this::hookCommentClickV2)
         subHook(this::hookTopVote)
-        subHook(this::hookStandVote3d18d2)
-        subHook(this::hookStandVote3d19d0)
-        subHook(this::hookFollow3d18d2)
-        subHook(this::hookFollow3d19d0)
+        subHook(this::hookStandVoteV1)
+        subHook(this::hookStandVoteV2)
+        subHook(this::hookFollowV1)
+        subHook(this::hookFollowV2)
         subHook(this::hookUrls)
     }
 
-    private fun hookCommentClick3d18d2() {
+    /** 3.18.2 可用 */
+    private fun hookCommentClickV1() {
         val clzCommentMessageWidget =
             "com.bilibili.app.comm.comment2.phoenix.view.CommentMessageWidget".toClass()
         val onClick =
@@ -38,7 +39,8 @@ object VideoCommentHooker : YukiBaseHooker() {
         }
     }
 
-    private fun hookCommentClick3d19d0() {
+    /** 3.19.0, 3.19.1 可用 */
+    private fun hookCommentClickV2() {
         "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
             .method { name = "N2" } // TODO: N2要想办法识别出来
             .hook {
@@ -68,8 +70,8 @@ object VideoCommentHooker : YukiBaseHooker() {
         }
     }
 
+    /** 评论区顶部的投票，3.18.2和3.19.0都可用 */
     private fun hookTopVote() {
-        // 评论区顶部的投票，3.18.2和3.19.0都可用
         "com.bilibili.app.comment.ext.widgets.CmtVoteWidget".toClass()
             .method {
                 modifiers { isFinal }
@@ -77,15 +79,15 @@ object VideoCommentHooker : YukiBaseHooker() {
             }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
     }
 
-    private fun hookStandVote3d18d2() {
-        // 评论内容中站队信息，3.18.2
+    /** 评论内容中站队信息，3.18.2 可用 */
+    private fun hookStandVoteV1() {
         "com.bilibili.app.comm.comment2.phoenix.view.CommentMountWidget".toClass().method {
             param { it.size == 1 && it[0].name.startsWith("com.bilibili.app.comm.comment2.comments.vvmadapter.") }
         }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
     }
 
-    private fun hookStandVote3d19d0() {
-        // 评论内容中站队信息，3.19.0
+    /** 评论内容中站队信息，3.19.0, 3.19.1 可用 */
+    private fun hookStandVoteV2() {
         "com.bilibili.app.comment.ext.widgets.CmtMountWidget".toClass()
             .method {
                 modifiers { isFinal }
@@ -93,7 +95,8 @@ object VideoCommentHooker : YukiBaseHooker() {
             }.hook(YukiHookPriority.DEFAULT, voteReplaceHook)
     }
 
-    private fun hookFollow3d18d2() {
+    /** 3.18.2 可用 */
+    private fun hookFollowV1() {
         "com.bilibili.app.comm.comment2.phoenix.view.CommentFollowWidget".toClass()
             .method {
                 param { it.size == 1 && it[0].name.startsWith("com.bilibili.app.comm.comment2.comments.vvmadapter.") }
@@ -106,7 +109,8 @@ object VideoCommentHooker : YukiBaseHooker() {
             }
     }
 
-    private fun hookFollow3d19d0() {
+    /** 3.19.0, 3.19.1 可用 */
+    private fun hookFollowV2() {
         "com.bilibili.app.comment3.ui.widget.CommentHeaderDecorativeView".toClass().method {
             param { it.size == 2 && it[0] == ListClass }
         }

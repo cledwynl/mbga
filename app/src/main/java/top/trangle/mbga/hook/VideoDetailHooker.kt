@@ -3,19 +3,19 @@ package top.trangle.mbga.hook
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
-import top.trangle.mbga.hook.SearchViewHooker.hook
 import top.trangle.mbga.utils.subHook
 
 object VideoDetailHooker : YukiBaseHooker() {
     override fun onHook() {
-        subHook(this::hookLabel)
-        subHook(this::hookLabel3d19d0)
-        subHook(this::hookShareLink)
-        subHook(this::hookShareLink3d19d0)
-        subHook(this::hookShareLink3d19d1)
+        subHook(this::hookLabelV1)
+        subHook(this::hookLabelV2)
+        subHook(this::hookShareLinkV1)
+        subHook(this::hookShareLinkV2)
+        subHook(this::hookShareLinkV3)
     }
 
-    private fun hookLabel() {
+    /** 3.18.2 可用 */
+    private fun hookLabelV1() {
         val clzLabel = "tv.danmaku.bili.videopage.data.view.model.BiliVideoDetail\$Label".toClass()
         val clzDescSection = "tv.danmaku.bili.ui.video.section.info.DescSection".toClass()
         val getLabelFromDesc =
@@ -33,7 +33,8 @@ object VideoDetailHooker : YukiBaseHooker() {
         }
     }
 
-    private fun hookLabel3d19d0() {
+    /** 3.19.0, 3.19.1 可用 */
+    private fun hookLabelV2() {
         val clzLabel = "com.bapis.bilibili.app.viewunite.common.Label".toClass()
         val defaultLabel = clzLabel.field { name = "DEFAULT_INSTANCE" }
 
@@ -48,7 +49,8 @@ object VideoDetailHooker : YukiBaseHooker() {
             }
     }
 
-    private fun hookShareLink() {
+    /** 3.18.2 可用 */
+    private fun hookShareLinkV1() {
         val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
         val contentField = clzShareResult.field { name = "content" }
 
@@ -70,7 +72,8 @@ object VideoDetailHooker : YukiBaseHooker() {
     }
 
     // TODO: 没有优雅的注入点，考虑用DexKit进行特征搜索
-    private fun hookShareLink3d19d0() {
+    /** 3.19.0 可用 */
+    private fun hookShareLinkV2() {
         val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
         val contentField = clzShareResult.field { name = "content" }
 
@@ -94,7 +97,8 @@ object VideoDetailHooker : YukiBaseHooker() {
     }
 
     // TODO: 没有优雅的注入点，考虑用DexKit进行特征搜索
-    private fun hookShareLink3d19d1() {
+    /** 3.19.1 可用 */
+    private fun hookShareLinkV3() {
         val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
         val contentField = clzShareResult.field { name = "content" }
 
