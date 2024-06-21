@@ -52,8 +52,9 @@ object HomeViewHooker : YukiBaseHooker() {
                 val newList = ArrayList<BottomTab>()
 
                 (result as ArrayList<*>).removeIf { tabItem ->
-                    val c = tabItem.javaClass.field { name = "c" }.get(tabItem).any()
-                        ?: return@removeIf false
+                    val c =
+                        tabItem.javaClass.field { name = "c" }.get(tabItem).any()
+                            ?: return@removeIf false
                     val tabName = c.javaClass.field { name = "b" }.get(c).string()
                     val tabScheme = c.javaClass.field { name = "d" }.get(c).string()
 
