@@ -18,6 +18,8 @@
 * 禁止切后台一段时间回来后自动刷新视频列表
 * 防止刷新推荐视频时之前的列表被自动清除  
   ![home_no_feed_clean_top](./app/src/main/res/drawable/home_no_feed_clean_top.png)
+* 支持过滤非UGC，只展示用户上传的视频
+* 支持过滤过短的视频
 
 ### 搜索页
 
