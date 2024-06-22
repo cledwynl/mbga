@@ -36,6 +36,19 @@
             app:summaryOff="@string/setting_home_no_feed_top_clean_off"
             app:summaryOn="@string/setting_home_no_feed_top_clean_on"
             app:title="@string/setting_home_no_feed_top_clean" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="home_show_only_ugc"
+            app:summaryOff="@string/setting_home_only_ugc_off"
+            app:summaryOn="@string/setting_home_only_ugc_on"
+            app:title="@string/setting_home_only_ugc" />
+        <top.trangle.mbga.views.IntEditTextPreference
+            app:defaultValue="0"
+            app:dialogMessage="@string/setting_home_duration_min_dialog_message"
+            app:iconSpaceReserved="false"
+            app:key="home_duration_min"
+            app:summary="@string/setting_home_duration_min_hint"
+            app:title="@string/setting_home_duration_min" />
     </PreferenceCategory>
 
     <PreferenceCategory

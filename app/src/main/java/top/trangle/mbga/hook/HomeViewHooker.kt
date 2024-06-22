@@ -21,6 +21,7 @@ object HomeViewHooker : YukiBaseHooker() {
         subHook(this::hookBottomTabs)
         subHook(this::hookAutoRefresh)
         subHook(this::hookTabReload)
+        subHook(this::hookIndexFeedList)
 
         setupTabProvider()
     }
@@ -125,6 +126,52 @@ object HomeViewHooker : YukiBaseHooker() {
                         return@before
                     }
                     fieldFeedTopClean.get(args[0]).set(0)
+                }
+            }
+    }
+
+    private fun hookIndexFeedList() {
+        val clzJsonArray = "com.alibaba.fastjson.JSONArray".toClass()
+
+        val clzBasicIndexItem = "com.bilibili.pegasus.api.model.BasicIndexItem".toClass()
+        val fieldCardGoto = clzBasicIndexItem.field { name = "cardGoto" }
+        val fieldPlayerArgs = clzBasicIndexItem.field { name = "playerArgs" }
+
+        val clzPlayerArgs = "com.bilibili.app.comm.list.common.api.model.PlayerArgs".toClass()
+        val fieldDuration = clzPlayerArgs.field { name = "fakeDuration" }
+
+        "com.bilibili.pegasus.api.BaseTMApiParser".toClass()
+            .method {
+                param(clzJsonArray)
+                returnType = ArrayList::class.java
+            }
+            .hook {
+                after {
+                    val keepOnlyUgc = prefs.getBoolean("home_show_only_ugc")
+                    val durationMin = prefs.getInt("home_duration_min", 0)
+
+                    if (!keepOnlyUgc && durationMin <= 0) {
+                        return@after
+                    }
+
+                    (result as ArrayList<*>).removeIf {
+                        if (keepOnlyUgc && fieldCardGoto.get(it).string() != "av") {
+                            YLog.debug("feed item removed because it's not ugc: ${reflectionToString(it)}")
+                            return@removeIf true
+                        }
+                        if (durationMin > 0) {
+                            val playerArgs =
+                                fieldPlayerArgs.get(it).any()
+                                    ?: return@removeIf false
+                            val duration =
+                                fieldDuration.get(playerArgs).int()
+                            if (duration < durationMin) {
+                                YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
+                                return@removeIf true
+                            }
+                        }
+                        false
+                    }
                 }
             }
     }
