@@ -37,6 +37,8 @@
 * 允许在小窗、分屏模式下全屏播放（体验并不是非常好）
 * 禁止展示竖屏全屏按钮
   ![video_player_portrait_btn](./app/src/main/res/drawable/video_player_portrait_btn.png)
+* 禁止点击弹幕
+  ![video_player_dm_click](./app/src/main/res/drawable/video_player_dm_click.png)
 
 ### 视频详情页
 
