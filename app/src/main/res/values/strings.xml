@@ -23,6 +23,12 @@
     <string name="setting_home_no_feed_top_clean">禁止刷新时清空之前的内容</string>
     <string name="setting_home_no_feed_top_clean_on">刷新时会保留之前的内容（仅最上方一页）</string>
     <string name="setting_home_no_feed_top_clean_off">点击Tab刷新时，可能会清空之前列表中的内容</string>
+    <string name="setting_home_only_ugc">只显示UGC</string>
+    <string name="setting_home_only_ugc_on">只展示用户上传的作品</string>
+    <string name="setting_home_only_ugc_off">首页推荐视频列表原封不动</string>
+	<string name="setting_home_duration_min">内容最短时长</string>
+    <string name="setting_home_duration_min_hint">时长过短的内容会被过滤掉</string>
+    <string name="setting_home_duration_min_dialog_message">单位为秒，时长达不到的视频会被过滤掉，不填或填0禁用</string>
 
     <string name="setting_search_page">搜索页</string>
     <string name="setting_search_no_trending">隐藏热搜</string>
