@@ -1,5 +1,7 @@
 package top.trangle.mbga.hook
 
+import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
+import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
@@ -14,6 +16,7 @@ object VideoPlayerHooker : YukiBaseHooker() {
         subHook(this::hookSegmentedSection)
         subHook(this::hookMultiWindowFullscreen)
         subHook(this::hookPortraitVideo)
+        subHook(this::hookDmClick)
     }
 
     private fun hookOldVersion() {
@@ -136,5 +139,25 @@ object VideoPlayerHooker : YukiBaseHooker() {
                 }
             }
         }
+    }
+
+    private val dmClickHook: (YukiMemberHookCreator.MemberHookCreator) -> Unit = {
+        it.before {
+            if (prefs.getBoolean("vid_player_disable_dm_click")) {
+                args[0] = floatArrayOf(-1f, -1f)
+            }
+        }
+    }
+
+    private fun hookDmClick() {
+        "tv.danmaku.biliplayerv2.service.interact.biz.chronos.chronosrpc.methods.send.GestureEventReceived\$Request"
+            .toClass()
+            .method { name = "setLocation" }
+            .hook(YukiHookPriority.DEFAULT, dmClickHook)
+
+        "tv.danmaku.biliplayerv2.service.interact.biz.chronos.chronosrpc.methods.send.TouchEventReceive\$Request"
+            .toClass()
+            .method { name = "setLocation" }
+            .hook(YukiHookPriority.DEFAULT, dmClickHook)
     }
 }

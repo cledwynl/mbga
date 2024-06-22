@@ -38,6 +38,9 @@
     <string name="setting_vid_player_no_portrait_player">干掉竖屏全屏按钮</string>
     <string name="setting_vid_player_no_portrait_player_on">只展示传统全屏按钮</string>
     <string name="setting_vid_player_no_portrait_player_off">展示3.19.0新出的竖屏全屏按钮</string>
+    <string name="setting_vid_player_no_dm_click">不让点击弹幕</string>
+    <string name="setting_vid_player_no_dm_click_on">点击弹幕时什么事也不会发生</string>
+    <string name="setting_vid_player_no_dm_click_off">点击弹幕时会弹出“点赞、复制、举报”浮窗</string>
 
     <string name="setting_vid_detail">视频详情页</string>
     <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
