@@ -104,6 +104,12 @@
             app:summaryOff="@string/setting_vid_player_no_portrait_player_off"
             app:summaryOn="@string/setting_vid_player_no_portrait_player_on"
             app:title="@string/setting_vid_player_no_portrait_player" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_dm_click"
+            app:summaryOff="@string/setting_vid_player_no_dm_click_off"
+            app:summaryOn="@string/setting_vid_player_no_dm_click_on"
+            app:title="@string/setting_vid_player_no_dm_click" />
     </PreferenceCategory>
 
     <PreferenceCategory
