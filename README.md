@@ -16,7 +16,7 @@
 
 * 干掉竖屏
 * 禁止切后台一段时间回来后自动刷新视频列表
-* 防止刷新推荐视频时之前的列表被自动清除
+* 防止刷新推荐视频时之前的列表被自动清除  
   ![home_no_feed_clean_top](./app/src/main/res/drawable/home_no_feed_clean_top.png)
 
 ### 搜索页
@@ -24,43 +24,43 @@
 * 干掉热搜
 * 干掉搜索历史
 * 干掉搜索发现
-* 禁止在搜索框内推荐搜索词
+* 禁止在搜索框内推荐搜索词  
   ![search_no_default_words](./app/src/main/res/drawable/search_no_default_words.png)
 
 ### 视频播放器
 
-* 干掉播放器内展示的“云视听小电视”等activityMeta（不确定未来这个字段里还会塞些什么乱七八糟的东西，目前要么没有要么就是这个云视听，直接全部干掉了）
+* 干掉播放器内展示的“云视听小电视”等activityMeta（不确定未来这个字段里还会塞些什么乱七八糟的东西，目前要么没有要么就是这个云视听，直接全部干掉了）  
   ![video_player_activity_meta](./app/src/main/res/drawable/video_player_activity_meta.png)
 * 干掉播放器内展示的关注弹窗、投票弹窗等（包括UP主弹幕）
-* 禁止播放器自动开启章节进度条
+* 禁止播放器自动开启章节进度条  
   ![video_player_segment_section](./app/src/main/res/drawable/video_player_segmented_section.jpg)
 * 允许在小窗、分屏模式下全屏播放（体验并不是非常好）
-* 禁止展示竖屏全屏按钮
+* 禁止展示竖屏全屏按钮  
   ![video_player_portrait_btn](./app/src/main/res/drawable/video_player_portrait_btn.png)
-* 禁止点击弹幕
+* 禁止点击弹幕  
   ![video_player_dm_click](./app/src/main/res/drawable/video_player_dm_click.png)
 
 ### 视频详情页
 
-* 视频标题左边的“热门”等标签
+* 视频标题左边的“热门”等标签  
   ![video_detail_label](./app/src/main/res/drawable/video_detail_label.png)
-* 更纯粹的链接分享
+* 更纯粹的链接分享  
   原来分享链接是`https://b23.tv/xxxxxxx`这样的短链，展开后有乱七八糟的参数，让它变成`https://b23.tv/av10492`这样干净的av号链接
 
 ### 视频评论区
 
-* 点击评论区文字不会自动弹出回复区
+* 点击评论区文字不会自动弹出回复区  
   ![comment_view_quick_reply](./app/src/main/res/drawable/comment_view_quick_reply.png)
-* 干掉评论区投票
+* 干掉评论区投票  
   ![comment_view_vote](./app/src/main/res/drawable/comment_view_vote.png)
-* 干掉评论区的关注按钮（笔记类型的评论右上角）
+* 干掉评论区的关注按钮（笔记类型的评论右上角）  
   ![comment_view_follow](./app/src/main/res/drawable/comment_view_follow.png)
-* 干掉评论内的关键词高亮搜索
+* 干掉评论内的关键词高亮搜索  
   ![comment_view_search](./app/src/main/res/drawable/comment_view_search.png)
 
 ### 我的
 
-* 在“更多服务”部分添加搜索入口，配合隐藏“首页”tab食用
+* 在“更多服务”部分添加搜索入口，配合隐藏“首页”tab食用  
   ![mine_add_search_entry](./app/src/main/res/drawable/mine_add_search_entry.png)
 
 ## 感谢
