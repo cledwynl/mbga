@@ -26,7 +26,7 @@
     <string name="setting_home_only_ugc">只显示UGC</string>
     <string name="setting_home_only_ugc_on">只展示用户上传的作品</string>
     <string name="setting_home_only_ugc_off">首页推荐视频列表原封不动</string>
-	<string name="setting_home_duration_min">内容最短时长</string>
+    <string name="setting_home_duration_min">内容最短时长</string>
     <string name="setting_home_duration_min_hint">时长过短的内容会被过滤掉</string>
     <string name="setting_home_duration_min_dialog_message">单位为秒，时长达不到的视频会被过滤掉，不填或填0禁用</string>
 
