@@ -2,22 +2,26 @@ package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.type.java.ListClass
-import top.trangle.mbga.utils.subHook
+import com.highcapable.yukihookapi.hook.type.java.UnitType
+import top.trangle.mbga.BILI_IN_VER_3_18_2
+import top.trangle.mbga.BILI_IN_VER_3_19_0
+import top.trangle.mbga.BILI_IN_VER_3_19_1
+import top.trangle.mbga.utils.MyHooker
 
-object VideoCommentHooker : YukiBaseHooker() {
+object VideoCommentHooker : MyHooker() {
     override fun onHook() {
-        subHook(this::hookCommentClickV1)
-        subHook(this::hookCommentClickV2)
-        subHook(this::hookCommentClickV3)
+        versionSpecifiedSubHook(this::hookCommentClickV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
+        versionSpecifiedSubHook(this::hookCommentClickV2, BILI_IN_VER_3_19_0..BILI_IN_VER_3_19_0)
+        versionSpecifiedSubHook(this::hookCommentClickV3, BILI_IN_VER_3_19_1..Long.MAX_VALUE)
         subHook(this::hookTopVote)
-        subHook(this::hookStandVoteV1)
-        subHook(this::hookStandVoteV2)
-        subHook(this::hookFollowV1)
-        subHook(this::hookFollowV2)
+        versionSpecifiedSubHook(this::hookStandVoteV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
+        versionSpecifiedSubHook(this::hookStandVoteV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
+        versionSpecifiedSubHook(this::hookFollowV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
+        versionSpecifiedSubHook(this::hookFollowV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
         subHook(this::hookUrls)
     }
 
@@ -43,7 +47,10 @@ object VideoCommentHooker : YukiBaseHooker() {
     /** 3.19.0 可用 */
     private fun hookCommentClickV2() {
         "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
-            .method { name = "N2" } // TODO: N2要想办法识别出来
+            .method {
+                name = "N2"
+                returnType = UnitType
+            } // NOTE: 更新后容易失效的
             .hook {
                 replaceUnit {
                     if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
@@ -51,11 +58,15 @@ object VideoCommentHooker : YukiBaseHooker() {
                     } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
                         callOriginal()
                     } else {
-                        val isClickingRichText =
+                        val isClickReplyBtn =
                             Throwable().stackTrace.any {
-                                it.className.contains("CommentContentRichTextHandler")
+                                it.className.contains("CommentActionBarHandler") ||
+                                        it.className.contains(
+                                            "CommentViewModel\$dispatchAction\$1",
+                                        )
                             }
-                        if (!isClickingRichText) {
+                        YLog.debug(Throwable().stackTraceToString())
+                        if (isClickReplyBtn) {
                             callOriginal()
                         }
                     }
@@ -63,10 +74,13 @@ object VideoCommentHooker : YukiBaseHooker() {
             }
     }
 
-    /** 3.19.1 可用 */
+    /** 3.19.1, 3.19.2 可用 */
     private fun hookCommentClickV3() {
         "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
-            .method { name = "M2" } // TODO: 要想办法识别出来
+            .method {
+                name = "M2"
+                returnType = UnitType
+            } // NOTE: 更新后容易失效的
             .hook {
                 replaceUnit {
                     if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
@@ -74,11 +88,14 @@ object VideoCommentHooker : YukiBaseHooker() {
                     } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
                         callOriginal()
                     } else {
-                        val isClickingRichText =
+                        val isClickReplyBtn =
                             Throwable().stackTrace.any {
-                                it.className.contains("CommentContentRichTextHandler")
+                                it.className.contains("CommentActionBarHandler") ||
+                                        it.className.contains(
+                                            "CommentViewModel\$dispatchAction\$1",
+                                        )
                             }
-                        if (!isClickingRichText) {
+                        if (isClickReplyBtn) {
                             callOriginal()
                         }
                     }
@@ -133,7 +150,7 @@ object VideoCommentHooker : YukiBaseHooker() {
             }
     }
 
-    /** 3.19.0, 3.19.1 可用 */
+    /** 3.19.0, 3.19.1, 3.19.2 可用 */
     private fun hookFollowV2() {
         "com.bilibili.app.comment3.ui.widget.CommentHeaderDecorativeView".toClass().method {
             param { it.size == 2 && it[0] == ListClass }
