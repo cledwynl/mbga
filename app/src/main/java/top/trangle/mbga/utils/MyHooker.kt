@@ -13,16 +13,13 @@ abstract class MyHooker : YukiBaseHooker() {
         block: () -> Unit,
         versionRange: LongRange,
     ) {
-        onAppLifecycle {
-            onCreate {
-                val pkgInfo =
-                    appContext?.packageManager?.getPackageInfo(packageName, 0)
-                        ?: return@onCreate YLog.error("Unable to get host info, versionSpecifiedSubHook not hooked")
-                val version = PackageInfoCompat.getLongVersionCode(pkgInfo)
-                if (version in versionRange) {
-                    runCatching(block).onFailure { e -> YLog.error(e.toString()) }
-                }
-            }
+        val pkgInfo =
+            appContext?.packageManager?.getPackageInfo(packageName, 0)
+                ?: return YLog.error("Unable to get host info, versionSpecifiedSubHook not hooked")
+        val version = PackageInfoCompat.getLongVersionCode(pkgInfo)
+        if (version in versionRange) {
+            YLog.debug("loading version specified hook: $block")
+            runCatching(block).onFailure { e -> YLog.error(e.toString()) }
         }
     }
 }
