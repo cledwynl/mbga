@@ -61,11 +61,10 @@ object VideoCommentHooker : MyHooker() {
                         val isClickReplyBtn =
                             Throwable().stackTrace.any {
                                 it.className.contains("CommentActionBarHandler") ||
-                                        it.className.contains(
-                                            "CommentViewModel\$dispatchAction\$1",
-                                        )
+                                    it.className.contains(
+                                        "CommentViewModel\$dispatchAction\$1",
+                                    )
                             }
-                        YLog.debug(Throwable().stackTraceToString())
                         if (isClickReplyBtn) {
                             callOriginal()
                         }
@@ -91,9 +90,9 @@ object VideoCommentHooker : MyHooker() {
                         val isClickReplyBtn =
                             Throwable().stackTrace.any {
                                 it.className.contains("CommentActionBarHandler") ||
-                                        it.className.contains(
-                                            "CommentViewModel\$dispatchAction\$1",
-                                        )
+                                    it.className.contains(
+                                        "CommentViewModel\$dispatchAction\$1",
+                                    )
                             }
                         if (isClickReplyBtn) {
                             callOriginal()
