@@ -13,7 +13,6 @@ abstract class MyHooker : YukiBaseHooker() {
         block: () -> Unit,
         versionRange: LongRange,
     ) {
-        val a = 1..2
         onAppLifecycle {
             onCreate {
                 val pkgInfo =
@@ -21,9 +20,8 @@ abstract class MyHooker : YukiBaseHooker() {
                         ?: return@onCreate YLog.error("Unable to get host info, versionSpecifiedSubHook not hooked")
                 val version = PackageInfoCompat.getLongVersionCode(pkgInfo)
                 if (version in versionRange) {
-                    return@onCreate
+                    runCatching(block).onFailure { e -> YLog.error(e.toString()) }
                 }
-                runCatching(block).onFailure { e -> YLog.error(e.toString()) }
             }
         }
     }
