@@ -1,6 +1,5 @@
 package top.trangle.mbga.hook
 
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
@@ -8,12 +7,12 @@ import com.highcapable.yukihookapi.hook.type.java.IntType
 import com.highcapable.yukihookapi.hook.type.java.LongType
 import top.trangle.mbga.CHANNEL_MSG_HOME_BOTTOM_TABS
 import top.trangle.mbga.CHANNEL_MSG_REQ_HOME_BOTTOM_TABS
+import top.trangle.mbga.utils.MyHooker
 import top.trangle.mbga.utils.reflectionToString
-import top.trangle.mbga.utils.subHook
 
 data class BottomTab(val name: String, val scheme: String) : java.io.Serializable
 
-object HomeViewHooker : YukiBaseHooker() {
+object HomeViewHooker : MyHooker() {
     private var bottomTabs: ArrayList<BottomTab>? = null
 
     override fun onHook() {

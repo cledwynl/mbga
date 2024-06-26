@@ -1,16 +1,15 @@
 package top.trangle.mbga.hook
 
 import android.content.Context
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import top.trangle.mbga.R
-import top.trangle.mbga.utils.subHook
+import top.trangle.mbga.utils.MyHooker
 
 const val SEARCH_URI = "bilibili://search"
 
-object MineViewHooker : YukiBaseHooker() {
+object MineViewHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookMoreServiceMenu)
     }

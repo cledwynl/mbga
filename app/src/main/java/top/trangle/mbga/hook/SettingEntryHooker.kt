@@ -6,12 +6,11 @@ import android.content.Intent
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
+import top.trangle.mbga.utils.MyHooker
 import top.trangle.mbga.utils.factory.dp
-import top.trangle.mbga.utils.subHook
 
-object SettingEntryHooker : YukiBaseHooker() {
+object SettingEntryHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookPreferencesActivity)
     }
