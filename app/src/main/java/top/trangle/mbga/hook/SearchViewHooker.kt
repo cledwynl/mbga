@@ -1,10 +1,9 @@
 package top.trangle.mbga.hook
 
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.method
-import top.trangle.mbga.utils.subHook
+import top.trangle.mbga.utils.MyHooker
 
-object SearchViewHooker : YukiBaseHooker() {
+object SearchViewHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookSearchType)
         subHook(this::hookDefaultSearchWords)

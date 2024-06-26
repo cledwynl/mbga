@@ -2,13 +2,12 @@ package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
-import top.trangle.mbga.utils.subHook
+import top.trangle.mbga.utils.MyHooker
 
-object VideoPlayerHooker : YukiBaseHooker() {
+object VideoPlayerHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookOldVersion)
         subHook(this::hookNewVersion)

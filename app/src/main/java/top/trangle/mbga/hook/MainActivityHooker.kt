@@ -3,12 +3,11 @@ package top.trangle.mbga.hook
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Intent
-import com.highcapable.yukihookapi.hook.entity.YukiBaseHooker
 import com.highcapable.yukihookapi.hook.factory.injectModuleAppResources
 import com.highcapable.yukihookapi.hook.factory.method
-import top.trangle.mbga.utils.subHook
+import top.trangle.mbga.utils.MyHooker
 
-object MainActivityHooker : YukiBaseHooker() {
+object MainActivityHooker : MyHooker() {
     override fun onHook() {
         subHook(this::injectResources)
         subHook(this::hookMainCreate)
