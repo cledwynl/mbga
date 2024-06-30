@@ -123,6 +123,11 @@
             app:summaryOff="@string/setting_vid_player_no_dm_click_off"
             app:summaryOn="@string/setting_vid_player_no_dm_click_on"
             app:title="@string/setting_vid_player_no_dm_click" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_qoe"
+            app:summary="@string/setting_vid_player_no_qoe_hint"
+            app:title="@string/setting_vid_player_no_qoe" />
     </PreferenceCategory>
 
     <PreferenceCategory
