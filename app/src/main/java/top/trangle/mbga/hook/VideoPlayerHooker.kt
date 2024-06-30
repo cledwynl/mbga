@@ -69,16 +69,19 @@ object VideoPlayerHooker : MyHooker() {
     private fun hookDmReply() {
         val clzDmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
         val clearActivityMeta = clzDmViewReply.method { name = "clearActivityMeta" }
+        val clearQoe = clzDmViewReply.method { name = "clearQoe" }
 
         "com.bapis.bilibili.community.service.dm.v1.DmMossKtxKt\$suspendDmView\$\$inlined\$suspendCall\$1"
             .toClass()
             .method { name = "onNext" }
             .hook {
                 before {
-                    if (!prefs.getBoolean("vid_player_disable_activity_meta")) {
-                        return@before
+                    if (prefs.getBoolean("vid_player_disable_activity_meta")) {
+                        clearActivityMeta.get(args[0]).call()
                     }
-                    clearActivityMeta.get(args[0]).call()
+                    if (prefs.getBoolean("vid_player_disable_qoe")) {
+                        clearQoe.get(args[0]).call()
+                    }
                 }
             }
     }
