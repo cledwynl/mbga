@@ -61,6 +61,8 @@
   ![comment_view_follow](./app/src/main/res/drawable/comment_view_follow.png)
 * 干掉评论内的关键词高亮搜索  
   ![comment_view_search](./app/src/main/res/drawable/comment_view_search.png)
+* 没有评论时禁止一键发送评论  
+  ![comment_view_empty_page](./app/src/main/res/drawable/comment_view_empty_page.png)
 
 ### 我的
 
