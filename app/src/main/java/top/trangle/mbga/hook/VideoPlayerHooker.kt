@@ -3,6 +3,7 @@ package top.trangle.mbga.hook
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.factory.field
+import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.utils.MyHooker
@@ -69,7 +70,12 @@ object VideoPlayerHooker : MyHooker() {
     private fun hookDmReply() {
         val clzDmViewReply = "com.bapis.bilibili.community.service.dm.v1.DmViewReply".toClass()
         val clearActivityMeta = clzDmViewReply.method { name = "clearActivityMeta" }
-        val clearQoe = clzDmViewReply.method { name = "clearQoe" }
+        val clearQoe =
+            if (clzDmViewReply.hasMethod { name = "clearQoe" }) {
+                clzDmViewReply.method { name = "clearQoe" }
+            } else {
+                null
+            }
 
         "com.bapis.bilibili.community.service.dm.v1.DmMossKtxKt\$suspendDmView\$\$inlined\$suspendCall\$1"
             .toClass()
@@ -80,7 +86,7 @@ object VideoPlayerHooker : MyHooker() {
                         clearActivityMeta.get(args[0]).call()
                     }
                     if (prefs.getBoolean("vid_player_disable_qoe")) {
-                        clearQoe.get(args[0]).call()
+                        clearQoe?.get(args[0])?.call()
                     }
                 }
             }
