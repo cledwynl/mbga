@@ -187,6 +187,13 @@
             app:summaryOff="@string/setting_vid_comment_no_search_off"
             app:summaryOn="@string/setting_vid_comment_no_search_on"
             app:title="@string/setting_vid_comment_no_search" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_no_empty_page"
+            app:summaryOff="@string/setting_vid_comment_no_empty_page_off"
+            app:summaryOn="@string/setting_vid_comment_no_empty_page_on"
+            app:title="@string/setting_vid_comment_no_empty_page" />
     </PreferenceCategory>
 
     <PreferenceCategory
