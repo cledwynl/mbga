@@ -41,6 +41,8 @@
   ![video_player_portrait_btn](./app/src/main/res/drawable/video_player_portrait_btn.png)
 * 禁止点击弹幕  
   ![video_player_dm_click](./app/src/main/res/drawable/video_player_dm_click.png)
+* 禁止展示反馈弹窗  
+  ![video_player_qoe](./app/src/main/res/drawable/video_player_qoe.png)
 
 ### 视频详情页
 
