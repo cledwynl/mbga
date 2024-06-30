@@ -22,6 +22,8 @@ object VideoCommentHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookFollowV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookFollowV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
         subHook(this::hookUrls)
+        versionSpecifiedSubHook(this::hookEmptyPageV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
+        versionSpecifiedSubHook(this::hookEmptyPageV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
     }
 
     /** 3.18.2 可用 */
@@ -191,6 +193,38 @@ object VideoCommentHooker : MyHooker() {
                         fieldAppUrlSchema.get(value).string().startsWith("bilibili://search")
                     }
                     result = map
+                }
+            }
+    }
+
+    private fun hookEmptyPageV1() {
+        val clzEmptyPage = "com.bapis.bilibili.main.community.reply.v1.EmptyPage".toClass()
+        val defaultEmptyPage = clzEmptyPage.field { name = "DEFAULT_INSTANCE" }
+
+        "com.bapis.bilibili.main.community.reply.v1.SubjectControl".toClass()
+            .method {
+                name = "getEmptyPage"
+            }.hook {
+                after {
+                    if (prefs.getBoolean("vid_comment_no_empty_page")) {
+                        result = defaultEmptyPage.get().any()
+                    }
+                }
+            }
+    }
+
+    private fun hookEmptyPageV2() {
+        val clzEmptyPage = "com.bapis.bilibili.main.community.reply.v2.EmptyPage".toClass()
+        val defaultEmptyPage = clzEmptyPage.field { name = "DEFAULT_INSTANCE" }
+
+        "com.bapis.bilibili.main.community.reply.v2.SubjectDescriptionReply".toClass()
+            .method {
+                name = "getEmptyPage"
+            }.hook {
+                after {
+                    if (prefs.getBoolean("vid_comment_no_empty_page")) {
+                        result = defaultEmptyPage.get().any()
+                    }
                 }
             }
     }

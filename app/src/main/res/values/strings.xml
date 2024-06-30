@@ -70,6 +70,9 @@
     <string name="setting_vid_comment_no_search">禁止展示评论内关键词搜索</string>
     <string name="setting_vid_comment_no_search_on">评论内没有关键词高亮搜索（视频链接不算）</string>
     <string name="setting_vid_comment_no_search_off">评论内关键词会高亮，点击会进入搜索页</string>
+    <string name="setting_vid_comment_no_empty_page">禁止一键发送评论</string>
+    <string name="setting_vid_comment_no_empty_page_on">视频没有评论时，什么都不展示</string>
+    <string name="setting_vid_comment_no_empty_page_off">视频没有评论时，展示“发一条xxx吧”“说点别的”“一键发送”</string>
 
     <string name="setting_mine">我的</string>
     <string name="setting_mine_add_search">增加搜索入口</string>
