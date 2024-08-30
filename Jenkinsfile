@@ -26,6 +26,7 @@ node('android-34') {
                    passwordVariable: 'KEY_PASSWORD'
                 )
             ]) {
+                sh 'printenv'
                 sh "./gradlew assemble${target}"
             }
             archiveArtifacts(artifacts: 'app/build/outputs/apk/**')
