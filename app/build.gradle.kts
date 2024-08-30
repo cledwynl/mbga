@@ -1,3 +1,6 @@
+import org.jmailen.gradle.kotlinter.tasks.FormatTask
+import org.jmailen.gradle.kotlinter.tasks.LintTask
+
 plugins {
     autowire(libs.plugins.android.application)
     autowire(libs.plugins.kotlin.android)
@@ -5,6 +8,10 @@ plugins {
     autowire(libs.plugins.kotlin.linter)
 }
 fun gitBranch(): String {
+    val envBranch = System.getenv("BRANCH_NAME")
+    if (envBranch != null) {
+        return envBranch
+    }
     val os = org.apache.commons.io.output.ByteArrayOutputStream()
     project.exec {
         commandLine = "git rev-parse --abbrev-ref HEAD".split(" ")
@@ -26,7 +33,7 @@ android {
         minSdk = property.project.android.minSdk
         targetSdk = property.project.android.targetSdk
         versionName = property.project.app.versionName
-        versionCode = property.project.app.versionCode
+        versionCode = System.getenv("BUILD_ID")?.toIntOrNull() ?: 1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,6 +59,18 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
             isDebuggable = true
+            val keystorePath = System.getenv("KEYSTORE")
+            if (keystorePath != null) {
+                signingConfigs {
+                    create("config") {
+                        keyAlias = System.getenv("KEY_ALIAS")
+                        keyPassword = System.getenv("KEY_PASSWORD")
+                        storeFile = file(keystorePath)
+                        storePassword = System.getenv("STORE_PASSWORD")
+                    }
+                }
+            }
+
         }
         create("feature") {
             initWith(getByName("release"))
@@ -101,4 +120,14 @@ dependencies {
     testImplementation(junit.junit)
     androidTestImplementation(androidx.test.ext.junit)
     androidTestImplementation(androidx.test.espresso.espresso.core)
+}
+
+tasks.register<LintTask>("ktLint") {
+    group = "verification"
+    source(files("src"))
+}
+
+tasks.register<FormatTask>("ktFormat") {
+    group = "formatting"
+    source(files("src"))
 }
