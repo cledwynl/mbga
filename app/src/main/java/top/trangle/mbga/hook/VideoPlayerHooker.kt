@@ -17,6 +17,7 @@ object VideoPlayerHooker : MyHooker() {
         subHook(this::hookMultiWindowFullscreen)
         subHook(this::hookPortraitVideo)
         subHook(this::hookDmClick)
+        subHook(this::hookOnlineInfo)
     }
 
     private fun hookOldVersion() {
@@ -167,5 +168,18 @@ object VideoPlayerHooker : MyHooker() {
             .toClass()
             .method { name = "setLocation" }
             .hook(YukiHookPriority.DEFAULT, dmClickHook)
+    }
+
+    private fun hookOnlineInfo() {
+        "tv.danmaku.biliplayerv2.service.interact.biz.chronos.chronosrpc.methods.send.DanmakuOnlineCountConfig\$Request"
+            .toClass()
+            .method { name = "setShowOnlineCount" }
+            .hook {
+                before {
+                    if (prefs.getBoolean("vid_player_disable_online_count")) {
+                        args[0] = false
+                    }
+                }
+            }
     }
 }
