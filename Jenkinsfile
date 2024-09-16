@@ -4,7 +4,7 @@ node('android-34') {
             checkout scm
         }
         stage('Prepare') {
-            env.BUILD_ID = sh(returnStdout: true, script: 'curl https://jenkins.lan/id-gen/cledwynl/mbga').trim()
+            env.BUILD_ID = sh(returnStdout: true, script: 'curl https://jenkins.cled.top/id-gen/cledwynl/mbga').trim()
             currentBuild.displayName = "#${env.BUILD_ID}"
         }
         stage('Check') {
