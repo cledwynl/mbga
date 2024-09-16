@@ -128,6 +128,10 @@
             app:key="vid_player_disable_qoe"
             app:summary="@string/setting_vid_player_no_qoe_hint"
             app:title="@string/setting_vid_player_no_qoe" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_player_disable_online_count"
+            app:title="@string/setting_vid_player_no_online_count" />
     </PreferenceCategory>
 
     <PreferenceCategory
