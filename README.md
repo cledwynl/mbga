@@ -43,6 +43,8 @@
   ![video_player_dm_click](./app/src/main/res/drawable/video_player_dm_click.png)
 * 禁止展示反馈弹窗  
   ![video_player_qoe](./app/src/main/res/drawable/video_player_qoe.png)
+* 全屏时禁止展示在线人数  
+  ![video_player_online_count](./app/src/main/res/drawable/video_player_online_count.png)
 
 ### 视频详情页
 
