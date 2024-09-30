@@ -1,12 +1,13 @@
 import org.jmailen.gradle.kotlinter.tasks.FormatTask
 import org.jmailen.gradle.kotlinter.tasks.LintTask
 
-plugins {
-    autowire(libs.plugins.android.application)
-    autowire(libs.plugins.kotlin.android)
-    autowire(libs.plugins.kotlin.ksp)
-    autowire(libs.plugins.kotlin.linter)
-}
+val projectName = "MBGA"
+val androidCompileSdk = 34
+val androidMinSdk = 27
+val androidTargetSdk = 34
+val appPackageName = "top.trangle.mbga"
+val appVersionName = "1.1.0"
+
 fun gitBranch(): String {
     val envBranch = System.getenv("BRANCH_NAME")
     if (envBranch != null) {
@@ -19,9 +20,23 @@ fun gitBranch(): String {
     }
     return String(os.toByteArray()).trim()
 }
+
+repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+    maven { url = uri("https://api.xposed.info/") }
+    maven { url = uri("https://jitpack.io") }
+}
+plugins {
+    id("com.android.application") version "8.6.1"
+    id("org.jetbrains.kotlin.android") version "2.0.0"
+    id("com.google.devtools.ksp") version "2.0.0-1.0.22"
+    id("org.jmailen.kotlinter") version "4.2.0"
+}
 android {
-    namespace = property.project.app.packageName
-    compileSdk = property.project.android.compileSdk
+    namespace = appPackageName
+    compileSdk = androidCompileSdk
     androidResources.additionalParameters += listOf(
         "--allow-reserved-package-id",
         "--package-id",
@@ -29,10 +44,10 @@ android {
     )
 
     defaultConfig {
-        applicationId = property.project.app.packageName
-        minSdk = property.project.android.minSdk
-        targetSdk = property.project.android.targetSdk
-        versionName = property.project.app.versionName
+        applicationId = appPackageName
+        minSdk = androidMinSdk
+        targetSdk = androidTargetSdk
+        versionName = appVersionName
         versionCode = System.getenv("BUILD_ID")?.toIntOrNull() ?: 1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,7 +91,7 @@ android {
             versionNameSuffix = "_feature-" + gitBranch().split("/").last()
         }
         all {
-            var name = "${property.project.name} ${defaultConfig.versionName}"
+            var name = "$projectName ${defaultConfig.versionName}"
             if (versionNameSuffix != null) {
                 name += versionNameSuffix
             }
@@ -98,27 +113,18 @@ android {
         viewBinding = true
     }
     lint { checkReleaseBuilds = false }
-    // TODO Please visit https://highcapable.github.io/YukiHookAPI/en/api/special-features/host-inject
-    // TODO 请参考 https://highcapable.github.io/YukiHookAPI/zh-cn/api/special-features/host-inject
-    // androidResources.additionalParameters += listOf("--allow-reserved-package-id", "--package-id", "0x64")
 }
 
 dependencies {
     implementation("androidx.preference:preference-ktx:1.2.1")
-    compileOnly(de.robv.android.xposed.api)
-    implementation(com.highcapable.yukihookapi.api)
-    ksp(com.highcapable.yukihookapi.ksp.xposed)
-    implementation(com.github.duanhong169.drawabletoolbox)
-    implementation(androidx.core.core.ktx)
-    implementation(androidx.appcompat.appcompat)
-    implementation(com.google.android.material.material)
-    implementation(androidx.constraintlayout.constraintlayout)
-    implementation(com.google.code.gson.gson)
-    implementation(androidx.preference.preference.ktx)
-    implementation(com.hendraanggrian.material.collapsingtoolbarlayout.subtitle)
-    testImplementation(junit.junit)
-    androidTestImplementation(androidx.test.ext.junit)
-    androidTestImplementation(androidx.test.espresso.espresso.core)
+    compileOnly("de.robv.android.xposed:api:82")
+    implementation("com.highcapable.yukihookapi:api:1.2.1")
+    ksp("com.highcapable.yukihookapi:ksp-xposed:1.2.1")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.5.0")
 }
 
 tasks.register<LintTask>("ktLint") {
