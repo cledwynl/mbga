@@ -1,5 +1,9 @@
 package top.trangle.mbga.hook
 
+import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
+import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
+import com.highcapable.yukihookapi.hook.core.finder.members.FieldFinder
+import com.highcapable.yukihookapi.hook.core.finder.members.MethodFinder
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import top.trangle.mbga.BILI_IN_VER_3_18_2
@@ -51,6 +55,35 @@ object VideoDetailHooker : MyHooker() {
             }
     }
 
+    private fun generateShareLinkHook(
+        clzShareResult: Class<*>,
+        contentField: FieldFinder.Result,
+        shareTaskCallback: MethodFinder.Result,
+    ): (YukiMemberHookCreator.MemberHookCreator) -> Unit =
+        {
+            it.replaceUnit {
+                if (!prefs.getBoolean("vid_detail_disable_short_link")) {
+                    callOriginal()
+                    return@replaceUnit
+                }
+                val result = clzShareResult.getDeclaredConstructor().newInstance()
+                val shareObjType = args[3] as Int
+                val shareObjId = args[2] as String
+                val link =
+                    when (shareObjType) {
+                        1 -> "https://b23.tv/av$shareObjId"
+                        3 -> "https://m.bilibili.com/opus/$shareObjId"
+                        4 -> "https://live.bilibili.com/$shareObjId"
+                        else -> {
+                            callOriginal()
+                            return@replaceUnit
+                        }
+                    }
+                contentField.get(result).set(link)
+                shareTaskCallback.get(args[17]).invoke<Any>(result)
+            }
+        }
+
     /** 3.18.2 可用 */
     private fun hookShareLinkV1() {
         val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
@@ -60,17 +93,14 @@ object VideoDetailHooker : MyHooker() {
             "com.bilibili.app.comm.supermenu.share.v2.ShareTargetTask\$f".toClass()
         val shareTaskCallback = clzShareTargetTask.method { name = "l" }
 
-        ("ah1.c".toClassOrNull() ?: return).method { name = "c" }.hook {
-            replaceUnit {
-                if (!prefs.getBoolean("vid_detail_disable_short_link")) {
-                    callOriginal()
-                    return@replaceUnit
-                }
-                val result = clzShareResult.getDeclaredConstructor().newInstance()
-                contentField.get(result).set("https://b23.tv/av${args[2]}")
-                shareTaskCallback.get(args[17]).invoke<Any>(result)
-            }
-        }
+        ("ah1.c".toClassOrNull() ?: return).method { name = "c" }.hook(
+            YukiHookPriority.DEFAULT,
+            generateShareLinkHook(
+                clzShareResult,
+                contentField,
+                shareTaskCallback,
+            ),
+        )
     }
 
     /** 3.19.0 可用 */
@@ -85,17 +115,14 @@ object VideoDetailHooker : MyHooker() {
 
         ("com.bilibili.lib.sharewrapper.online.api.b".toClassOrNull() ?: return).method {
             name = "g"
-        }.hook {
-            replaceUnit {
-                if (!prefs.getBoolean("vid_detail_disable_short_link")) {
-                    callOriginal()
-                    return@replaceUnit
-                }
-                val result = clzShareResult.getDeclaredConstructor().newInstance()
-                contentField.get(result).set("https://b23.tv/av${args[2]}")
-                shareTaskCallback.get(args[17]).invoke<Any>(result)
-            }
-        }
+        }.hook(
+            YukiHookPriority.DEFAULT,
+            generateShareLinkHook(
+                clzShareResult,
+                contentField,
+                shareTaskCallback,
+            ),
+        )
     }
 
     /** 3.19.1, 3.19.2 可用 */
@@ -110,16 +137,13 @@ object VideoDetailHooker : MyHooker() {
 
         ("com.bilibili.lib.sharewrapper.online.api.b".toClassOrNull() ?: return).method {
             name = "d"
-        }.hook {
-            replaceUnit {
-                if (!prefs.getBoolean("vid_detail_disable_short_link")) {
-                    callOriginal()
-                    return@replaceUnit
-                }
-                val result = clzShareResult.getDeclaredConstructor().newInstance()
-                contentField.get(result).set("https://b23.tv/av${args[2]}")
-                shareTaskCallback.get(args[17]).invoke<Any>(result)
-            }
-        }
+        }.hook(
+            YukiHookPriority.DEFAULT,
+            generateShareLinkHook(
+                clzShareResult,
+                contentField,
+                shareTaskCallback,
+            ),
+        )
     }
 }
