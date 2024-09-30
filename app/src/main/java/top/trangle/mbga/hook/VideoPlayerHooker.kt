@@ -6,6 +6,8 @@ import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
+import top.trangle.mbga.BILI_IN_VER_3_18_2
+import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.utils.MyHooker
 
 object VideoPlayerHooker : MyHooker() {
@@ -17,7 +19,8 @@ object VideoPlayerHooker : MyHooker() {
         subHook(this::hookMultiWindowFullscreen)
         subHook(this::hookPortraitVideo)
         subHook(this::hookDmClick)
-        subHook(this::hookOnlineInfo)
+        versionSpecifiedSubHook(this::hookOnlineCountV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
+        versionSpecifiedSubHook(this::hookOnlineCountV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
     }
 
     private fun hookOldVersion() {
@@ -170,16 +173,25 @@ object VideoPlayerHooker : MyHooker() {
             .hook(YukiHookPriority.DEFAULT, dmClickHook)
     }
 
-    private fun hookOnlineInfo() {
+    private val onlineCountHook: (YukiMemberHookCreator.MemberHookCreator) -> Unit = {
+        it.before {
+            if (prefs.getBoolean("vid_player_disable_online_count")) {
+                args[0] = false
+            }
+        }
+    }
+
+    private fun hookOnlineCountV1() {
+        "tv.danmaku.biliplayerv2.service.interact.biz.chronos.chronosrpc.methods.send.DanmakuConfigChange\$Request"
+            .toClass()
+            .method { name = "setShowOnlineCount" }
+            .hook(YukiHookPriority.DEFAULT, onlineCountHook)
+    }
+
+    private fun hookOnlineCountV2() {
         "tv.danmaku.biliplayerv2.service.interact.biz.chronos.chronosrpc.methods.send.DanmakuOnlineCountConfig\$Request"
             .toClass()
             .method { name = "setShowOnlineCount" }
-            .hook {
-                before {
-                    if (prefs.getBoolean("vid_player_disable_online_count")) {
-                        args[0] = false
-                    }
-                }
-            }
+            .hook(YukiHookPriority.DEFAULT, onlineCountHook)
     }
 }
