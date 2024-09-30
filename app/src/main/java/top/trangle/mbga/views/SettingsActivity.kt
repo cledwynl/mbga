@@ -1,5 +1,6 @@
 package top.trangle.mbga.views
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -50,6 +51,19 @@ class SettingsActivity : AppCompatActivity() {
 
     class MySettingsFragment : ModulePreferenceFragment() {
         private var needRestart = false
+
+        override fun onCreatePreferences(
+            savedInstanceState: Bundle?,
+            rootKey: String?,
+        ) {
+            // FIXME: 临时解决方案，待Yukihook更新后删除
+            @Suppress("DEPRECATION", "WorldReadableFiles")
+            requireActivity().getSharedPreferences(
+                "${activity?.packageName}_preferences",
+                Context.MODE_WORLD_READABLE,
+            )
+            super.onCreatePreferences(savedInstanceState, rootKey)
+        }
 
         override fun onCreatePreferencesInModuleApp(
             savedInstanceState: Bundle?,
