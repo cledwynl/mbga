@@ -38,7 +38,6 @@ object HomeViewHooker : MyHooker() {
                 if (!uri.isNullOrEmpty()) {
                     if (uri.startsWith("bilibili://story/")) {
                         result = "bilibili://video/" + uri.substringAfter("bilibili://story/")
-                        YLog.debug("初始化视频信息时，竖屏转横屏成功")
                     }
                 }
             }
@@ -61,7 +60,9 @@ object HomeViewHooker : MyHooker() {
                         newList.add(BottomTab(name = tabName, scheme = tabScheme))
                     }
 
-                    YLog.debug("首页底部Tab: ${reflectionToString(c)}")
+                    if (prefs.getBoolean("dev_log_bottom_tabs")) {
+                        YLog.debug("首页底部Tab: ${reflectionToString(c)}")
+                    }
 
                     prefs.getBoolean("tabs_disable#$tabScheme")
                 }
@@ -155,7 +156,9 @@ object HomeViewHooker : MyHooker() {
 
                     (result as ArrayList<*>).removeIf {
                         if (keepOnlyUgc && fieldCardGoto.get(it).string() != "av") {
-                            YLog.debug("feed item removed because it's not ugc: ${reflectionToString(it)}")
+                            if (prefs.getBoolean("dev_log_feed_removal")) {
+                                YLog.debug("feed item removed because it's not ugc: ${reflectionToString(it)}")
+                            }
                             return@removeIf true
                         }
                         if (durationMin > 0) {
@@ -165,7 +168,9 @@ object HomeViewHooker : MyHooker() {
                             val duration =
                                 fieldDuration.get(playerArgs).int()
                             if (duration < durationMin) {
-                                YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
+                                if (prefs.getBoolean("dev_log_feed_removal")) {
+                                    YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
+                                }
                                 return@removeIf true
                             }
                         }
