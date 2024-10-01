@@ -65,6 +65,8 @@
   ![comment_view_search](./app/src/main/res/drawable/comment_view_search.png)
 * 没有评论时禁止一键发送评论  
   ![comment_view_empty_page](./app/src/main/res/drawable/comment_view_empty_page.png)
+* 禁止展示反馈问卷  
+  ![comment_view_qoe](./app/src/main/res/drawable/comment_view_qoe.png)
 
 ### 我的
 
