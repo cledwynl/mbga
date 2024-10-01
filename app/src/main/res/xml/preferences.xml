@@ -218,4 +218,26 @@
             app:title="@string/setting_mine_add_search" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false"
+        app:title="@string/setting_dev">
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="dev_log_main_list"
+            app:title="@string/setting_dev_log_main_list" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="dev_log_bottom_tabs"
+            app:title="@string/setting_dev_log_bottom_tabs" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="dev_log_feed_removal"
+            app:title="@string/setting_dev_log_feed_removal" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

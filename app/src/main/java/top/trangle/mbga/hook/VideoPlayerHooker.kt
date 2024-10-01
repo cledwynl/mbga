@@ -5,7 +5,6 @@ import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
-import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.BILI_IN_VER_3_18_2
 import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.utils.MyHooker
@@ -40,14 +39,12 @@ object VideoPlayerHooker : MyHooker() {
                 if (!prefs.getBoolean("vid_player_disable_command_dms")) {
                     return@after
                 }
-                YLog.debug("before: $result")
                 clearAttention.get(result).call()
                 clearCardsSecond.get(result).call()
                 clearCommandDms.get(result).call()
                 clearContractCard.get(result).call()
                 clearOperationCard.get(result).call()
                 clearOperationCardNew.get(result).call()
-                YLog.debug("after: $result")
             }
         }
     }
@@ -64,9 +61,7 @@ object VideoPlayerHooker : MyHooker() {
                 if (!prefs.getBoolean("vid_player_disable_command_dms")) {
                     return@after
                 }
-                YLog.debug("new before: $result")
                 clearCommandDms.get(result).call()
-                YLog.debug("new after: $result")
             }
         }
     }
@@ -108,10 +103,8 @@ object VideoPlayerHooker : MyHooker() {
         getEnableSegmentedSection.hook {
             before {
                 if (!prefs.getBoolean("vid_player_disable_segmented_section")) {
-                    YLog.debug("getEnableSegmentedSection inactive")
                     return@before
                 }
-                YLog.debug("getEnableSegmentedSection active")
                 fieldEnableSegmentedSection.get(instance).set(null)
             }
         }

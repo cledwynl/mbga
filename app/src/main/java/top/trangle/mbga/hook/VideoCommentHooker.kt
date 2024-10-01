@@ -4,6 +4,7 @@ import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
 import com.highcapable.yukihookapi.hook.type.java.ListClass
 import com.highcapable.yukihookapi.hook.type.java.UnitType
 import top.trangle.mbga.BILI_IN_VER_3_18_2
@@ -239,6 +240,9 @@ object VideoCommentHooker : MyHooker() {
             .method { name = "onNext" }
             .hook {
                 before {
+                    if (prefs.getBoolean("dev_log_main_list")) {
+                        YLog.debug(args[0].toString())
+                    }
                     if (prefs.getBoolean("vid_comment_no_qoe")) {
                         clearQoe.get(args[0]).call()
                     }
