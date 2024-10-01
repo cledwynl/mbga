@@ -24,6 +24,7 @@ object VideoCommentHooker : MyHooker() {
         subHook(this::hookUrls)
         versionSpecifiedSubHook(this::hookEmptyPageV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookEmptyPageV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
+        subHook(this::hookMainList)
     }
 
     /** 3.18.2 可用 */
@@ -224,6 +225,22 @@ object VideoCommentHooker : MyHooker() {
                 after {
                     if (prefs.getBoolean("vid_comment_no_empty_page")) {
                         result = defaultEmptyPage.get().any()
+                    }
+                }
+            }
+    }
+
+    private fun hookMainList() {
+        val clzDmViewReply = "com.bapis.bilibili.main.community.reply.v1.MainListReply".toClass()
+        val clearQoe = clzDmViewReply.method { name = "clearQoe" }
+
+        "com.bapis.bilibili.main.community.reply.v1.ReplyMossKtxKt\$suspendMainList\$\$inlined\$suspendCall\$1"
+            .toClass()
+            .method { name = "onNext" }
+            .hook {
+                before {
+                    if (prefs.getBoolean("vid_comment_no_qoe")) {
+                        clearQoe.get(args[0]).call()
                     }
                 }
             }
