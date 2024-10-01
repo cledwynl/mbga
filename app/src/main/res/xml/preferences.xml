@@ -226,6 +226,11 @@
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:iconSpaceReserved="false"
+            app:key="dev_log_dm_view"
+            app:title="@string/setting_dev_log_dm_view" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
             app:key="dev_log_main_list"
             app:title="@string/setting_dev_log_main_list" />
         <SwitchPreferenceCompat

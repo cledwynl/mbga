@@ -5,6 +5,7 @@ import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.hasMethod
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.BILI_IN_VER_3_18_2
 import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.utils.MyHooker
@@ -81,6 +82,9 @@ object VideoPlayerHooker : MyHooker() {
             .method { name = "onNext" }
             .hook {
                 before {
+                    if (prefs.getBoolean("dev_log_dm_view")) {
+                        YLog.debug(args[0].toString())
+                    }
                     if (prefs.getBoolean("vid_player_disable_activity_meta")) {
                         clearActivityMeta.get(args[0]).call()
                     }
