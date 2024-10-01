@@ -80,9 +80,9 @@
     <string name="setting_mine_add_search">增加搜索入口</string>
     <string name="setting_mine_add_search_hint">在“更多服务”顶部添加一个搜索入口</string>
 
-    <string name="setting_dev">开发者选项</string>
-    <string name="setting_dev_log_dm_view">记录弹幕日志</string>
-    <string name="setting_dev_log_main_list">记录评论区日志</string>
+    <string name="setting_dev">开发者选项（会些微影响性能）</string>
+    <string name="setting_dev_log_dm_view">记录DmViewReply</string>
+    <string name="setting_dev_log_main_list">记录MainListReply</string>
     <string name="setting_dev_log_bottom_tabs">记录底部Tab日志</string>
     <string name="setting_dev_log_feed_removal">记录首页信息流过滤日志</string>
 
