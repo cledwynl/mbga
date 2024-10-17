@@ -61,17 +61,20 @@ object VideoCommentHooker : MyHooker() {
                     } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
                         callOriginal()
                     } else {
-                        val isClickReplyBtn =
-                            Throwable().stackTrace.any {
-                                it.className.contains("CommentActionBarHandler") ||
-                                    it.className.contains(
-                                        "CommentViewModel\$dispatchAction\$1",
-                                    ) ||
-                                    it.className.contains(
-                                        "CommentMainLayer",
-                                    )
+                        val allowClickFrom =
+                            arrayOf(
+                                "CommentActionBarHandler",
+                                "CommentViewModel\$dispatchAction\$1",
+                                "CommentMainLayer",
+                                "CommentDetailLayer",
+                            )
+                        val isAllowed =
+                            Throwable().stackTrace.any { st ->
+                                allowClickFrom.any { fr ->
+                                    st.className.contains(fr)
+                                }
                             }
-                        if (isClickReplyBtn) {
+                        if (isAllowed) {
                             callOriginal()
                         }
                     }
@@ -93,17 +96,20 @@ object VideoCommentHooker : MyHooker() {
                     } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
                         callOriginal()
                     } else {
-                        val isClickReplyBtn =
-                            Throwable().stackTrace.any {
-                                it.className.contains("CommentActionBarHandler") ||
-                                    it.className.contains(
-                                        "CommentViewModel\$dispatchAction\$1",
-                                    ) ||
-                                    it.className.contains(
-                                        "CommentMainLayer",
-                                    )
+                        val allowClickFrom =
+                            arrayOf(
+                                "CommentActionBarHandler",
+                                "CommentViewModel\$dispatchAction\$1",
+                                "CommentMainLayer",
+                                "CommentDetailLayer",
+                            )
+                        val isAllowed =
+                            Throwable().stackTrace.any { st ->
+                                allowClickFrom.any { fr ->
+                                    st.className.contains(fr)
+                                }
                             }
-                        if (isClickReplyBtn) {
+                        if (isAllowed) {
                             callOriginal()
                         }
                     }
