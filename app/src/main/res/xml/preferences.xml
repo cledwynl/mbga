@@ -164,6 +164,11 @@
         app:iconSpaceReserved="false"
         app:title="@string/setting_vid_comment">
         <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_disable"
+            app:title="@string/setting_vid_comment_disable" />
+        <SwitchPreferenceCompat
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="vid_comment_no_quick_reply"
