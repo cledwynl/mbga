@@ -66,6 +66,9 @@ object VideoCommentHooker : MyHooker() {
                                 it.className.contains("CommentActionBarHandler") ||
                                     it.className.contains(
                                         "CommentViewModel\$dispatchAction\$1",
+                                    ) ||
+                                    it.className.contains(
+                                        "CommentMainLayer",
                                     )
                             }
                         if (isClickReplyBtn) {
@@ -95,6 +98,9 @@ object VideoCommentHooker : MyHooker() {
                                 it.className.contains("CommentActionBarHandler") ||
                                     it.className.contains(
                                         "CommentViewModel\$dispatchAction\$1",
+                                    ) ||
+                                    it.className.contains(
+                                        "CommentMainLayer",
                                     )
                             }
                         if (isClickReplyBtn) {
