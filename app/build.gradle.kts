@@ -6,7 +6,7 @@ val androidCompileSdk = 34
 val androidMinSdk = 27
 val androidTargetSdk = 34
 val appPackageName = "top.trangle.mbga"
-val appVersionName = "1.2.0"
+val appVersionName = "1.2.1"
 
 fun gitBranch(): String {
     val envBranch = System.getenv("BRANCH_NAME")
