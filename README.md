@@ -55,6 +55,7 @@
 
 ### 视频评论区
 
+* 完全隐藏评论区
 * 点击评论区文字不会自动弹出回复区  
   ![comment_view_quick_reply](./app/src/main/res/drawable/comment_view_quick_reply.png)
 * 干掉评论区投票  
