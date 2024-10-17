@@ -67,8 +67,13 @@ object VideoDetailHooker : MyHooker() {
                     return@replaceUnit
                 }
                 val result = clzShareResult.getDeclaredConstructor().newInstance()
-                val shareObjType = args[3] as Int
                 val shareObjId = args[2] as String
+                val shareObjType = args[3] as Int
+                val shareChannel = args[5] as String
+                if (shareChannel != "COPY") {
+                    callOriginal()
+                    return@replaceUnit
+                }
                 val link =
                     when (shareObjType) {
                         1 -> "https://b23.tv/av$shareObjId"
