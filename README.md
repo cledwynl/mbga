@@ -68,6 +68,8 @@
   ![comment_view_empty_page](./app/src/main/res/drawable/comment_view_empty_page.png)
 * 禁止展示反馈问卷  
   ![comment_view_qoe](./app/src/main/res/drawable/comment_view_qoe.png)
+* 禁止展示评论区顶部推广内容  
+  ![comment_view_qoe](./app/src/main/res/drawable/comment_view_operation.png)
 
 ### 我的
 
