@@ -2,6 +2,7 @@ package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
+import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
@@ -26,6 +27,7 @@ object VideoCommentHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookEmptyPageV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookEmptyPageV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
         subHook(this::hookMainList)
+        subHook(this::hookCommentProvider)
     }
 
     /** 3.18.2 可用 */
@@ -257,6 +259,25 @@ object VideoCommentHooker : MyHooker() {
                     }
                     if (prefs.getBoolean("vid_comment_no_qoe")) {
                         clearQoe.get(args[0]).call()
+                    }
+                }
+            }
+    }
+
+    private fun hookCommentProvider() {
+        "com.bilibili.ship.theseus.united.page.tab.TheseusTabPagerService".toClass()
+            .constructor()
+            .give()?.let { ctor ->
+                ctor.parameters[6].type.constructor().hook {
+                    before {
+                        if (!prefs.getBoolean("vid_comment_disable")) {
+                            return@before
+                        }
+                        args[0] =
+                            (args[0] as List<*>).filter { listItem ->
+                                listItem != null &&
+                                    !listItem.javaClass.typeName.contains("CommentTabPageProvider")
+                            }
                     }
                 }
             }
