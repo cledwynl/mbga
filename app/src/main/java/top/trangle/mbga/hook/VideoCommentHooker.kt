@@ -248,6 +248,8 @@ object VideoCommentHooker : MyHooker() {
     private fun hookMainList() {
         val clzDmViewReply = "com.bapis.bilibili.main.community.reply.v1.MainListReply".toClass()
         val clearQoe = clzDmViewReply.method { name = "clearQoe" }
+        val clearOperation = clzDmViewReply.method { name = "clearOperation" }
+        val clearOperationV2 = clzDmViewReply.method { name = "clearOperationV2" }
 
         "com.bapis.bilibili.main.community.reply.v1.ReplyMossKtxKt\$suspendMainList\$\$inlined\$suspendCall\$1"
             .toClass()
@@ -259,6 +261,10 @@ object VideoCommentHooker : MyHooker() {
                     }
                     if (prefs.getBoolean("vid_comment_no_qoe")) {
                         clearQoe.get(args[0]).call()
+                    }
+                    if (prefs.getBoolean("vid_comment_no_operation")) {
+                        clearOperation.get(args[0]).call()
+                        clearOperationV2.get(args[0]).call()
                     }
                 }
             }

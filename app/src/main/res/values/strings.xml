@@ -76,6 +76,8 @@
     <string name="setting_vid_comment_no_empty_page_on">视频没有评论时，什么都不展示</string>
     <string name="setting_vid_comment_no_empty_page_off">视频没有评论时，展示“发一条xxx吧”“说点别的”“一键发送”</string>
     <string name="setting_vid_comment_no_qoe">禁止展示反馈问卷</string>
+    <string name="setting_vid_comment_no_operation">禁止展示评论区顶部推广内容</string>
+    <string name="setting_vid_comment_no_operation_hint">如“大家都在搜”、“看看UP主写了什么”</string>
 
     <string name="setting_mine">我的</string>
     <string name="setting_mine_add_search">增加搜索入口</string>
