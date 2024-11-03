@@ -6,6 +6,7 @@ import com.highcapable.yukihookapi.hook.core.finder.members.FieldFinder
 import com.highcapable.yukihookapi.hook.core.finder.members.MethodFinder
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
+import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.BILI_IN_VER_3_18_2
 import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.BILI_IN_VER_3_19_1
@@ -67,19 +68,20 @@ object VideoDetailHooker : MyHooker() {
                     return@replaceUnit
                 }
                 val result = clzShareResult.getDeclaredConstructor().newInstance()
+                val shareId = args[1] as String
                 val shareObjId = args[2] as String
-                val shareObjType = args[3] as Int
                 val shareChannel = args[5] as String
                 if (shareChannel != "COPY") {
                     callOriginal()
                     return@replaceUnit
                 }
                 val link =
-                    when (shareObjType) {
-                        1 -> "https://b23.tv/av$shareObjId"
-                        3 -> "https://m.bilibili.com/opus/$shareObjId"
-                        4 -> "https://live.bilibili.com/$shareObjId"
+                    when {
+                        shareId.startsWith("main.") -> "https://b23.tv/av$shareObjId"
+                        shareId.startsWith("dt.") -> "https://m.bilibili.com/opus/$shareObjId"
+                        shareId.startsWith("live.") -> "https://live.bilibili.com/$shareObjId"
                         else -> {
+                            YLog.info("shareId not supported: $shareId")
                             callOriginal()
                             return@replaceUnit
                         }
