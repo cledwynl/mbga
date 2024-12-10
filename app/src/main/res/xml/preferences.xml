@@ -156,6 +156,10 @@
             app:key="vid_detail_disable_short_link"
             app:summaryOff="@string/setting_vid_detail_no_short_link_off"
             app:summaryOn="@string/setting_vid_detail_no_short_link_on" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_detail_no_relates"
+            app:title="@string/setting_vid_detail_no_relates" />
     </PreferenceCategory>
 
     <PreferenceCategory
