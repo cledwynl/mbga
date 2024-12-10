@@ -57,6 +57,7 @@
     <string name="setting_vid_detail_no_short_link">让分享链接更纯粹</string>
     <string name="setting_vid_detail_no_short_link_on">https://b23.tv/av10492</string>
     <string name="setting_vid_detail_no_short_link_off">原始B站分享链接，可能有追踪参数</string>
+    <string name="setting_vid_detail_no_relates">干掉相关视频</string>
 
     <string name="setting_vid_comment">视频评论区</string>
     <string name="setting_vid_comment_disable">完全隐藏评论区</string>

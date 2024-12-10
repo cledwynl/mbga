@@ -19,6 +19,7 @@ object VideoDetailHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookShareLinkV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookShareLinkV2, BILI_IN_VER_3_19_0..BILI_IN_VER_3_19_0)
         versionSpecifiedSubHook(this::hookShareLinkV3, BILI_IN_VER_3_19_1..Long.MAX_VALUE)
+        subHook(this::hookRelates)
     }
 
     /** 3.18.2 可用 */
@@ -152,5 +153,19 @@ object VideoDetailHooker : MyHooker() {
                 shareTaskCallback,
             ),
         )
+    }
+
+    private fun hookRelates() {
+        val clzRelates = "com.bapis.bilibili.app.viewunite.common.Relates".toClass()
+        val defaultRelates = clzRelates.field { name = "DEFAULT_INSTANCE" }
+
+        "com.bapis.bilibili.app.viewunite.common.Module".toClass().method { name = "getRelates" }
+            .hook {
+                after {
+                    if (prefs.getBoolean("vid_detail_no_relates")) {
+                        result = defaultRelates.get().any()
+                    }
+                }
+            }
     }
 }
