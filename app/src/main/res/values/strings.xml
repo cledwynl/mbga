@@ -29,6 +29,9 @@
     <string name="setting_home_duration_min">内容最短时长</string>
     <string name="setting_home_duration_min_hint">时长过短的内容会被过滤掉</string>
     <string name="setting_home_duration_min_dialog_message">单位为秒，时长达不到的视频会被过滤掉，不填或填0禁用</string>
+    <string name="setting_home_pure_vid_card">干净的视频卡片</string>
+    <string name="setting_home_pure_vid_card_on">只展示视频标题和UP名称</string>
+    <string name="setting_home_pure_vid_card_off">展示“竖屏”“1万点赞”“已关注”这些</string>
 
     <string name="setting_search_page">搜索页</string>
     <string name="setting_search_no_trending">隐藏热搜</string>

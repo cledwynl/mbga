@@ -49,6 +49,12 @@
             app:key="home_duration_min"
             app:summary="@string/setting_home_duration_min_hint"
             app:title="@string/setting_home_duration_min" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="home_pure_vid_card"
+            app:summaryOff="@string/setting_home_pure_vid_card_off"
+            app:summaryOn="@string/setting_home_pure_vid_card_on"
+            app:title="@string/setting_home_pure_vid_card" />
     </PreferenceCategory>
 
     <PreferenceCategory
