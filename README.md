@@ -20,6 +20,7 @@
   ![home_no_feed_clean_top](./app/src/main/res/drawable/home_no_feed_clean_top.png)
 * 支持过滤非UGC，只展示用户上传的视频
 * 支持过滤过短的视频
+* 干净的视频卡片：干掉那些“竖屏”“1万点赞”“已关注”推荐理由，只给老子展示UP主名字
 
 ### 搜索页
 
