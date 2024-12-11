@@ -79,6 +79,9 @@
     <string name="setting_vid_comment_no_qoe">禁止展示反馈问卷</string>
     <string name="setting_vid_comment_no_operation">禁止展示评论区顶部推广内容</string>
     <string name="setting_vid_comment_no_operation_hint">如“大家都在搜”、“看看UP主写了什么”</string>
+    <string name="setting_vid_comment_filter_keyword">关键词过滤</string>
+    <string name="setting_vid_comment_filter_keyword_hint">仅过滤评论，不过滤评论下方的回复</string>
+    <string name="setting_vid_comment_filter_keyword_dialog_message">每行一个关键词，出现了关键词的评论会被过滤。</string>
 
     <string name="setting_mine">我的</string>
     <string name="setting_mine_add_search">增加搜索入口</string>

@@ -218,6 +218,12 @@
             app:key="vid_comment_no_operation"
             app:summary="@string/setting_vid_comment_no_operation_hint"
             app:title="@string/setting_vid_comment_no_operation" />
+        <top.trangle.mbga.views.KeywordListPreference
+            app:iconSpaceReserved="false"
+            app:key="vid_comment_filter_keyword"
+            app:dialogMessage="@string/setting_vid_comment_filter_keyword_dialog_message"
+            app:summary="@string/setting_vid_comment_filter_keyword_hint"
+            app:title="@string/setting_vid_comment_filter_keyword" />
     </PreferenceCategory>
 
     <PreferenceCategory
