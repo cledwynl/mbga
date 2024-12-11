@@ -71,6 +71,7 @@
   ![comment_view_qoe](./app/src/main/res/drawable/comment_view_qoe.png)
 * 禁止展示评论区顶部推广内容  
   ![comment_view_qoe](./app/src/main/res/drawable/comment_view_operation.png)
+* 支持根据关键词过滤评论，[这里](https://github.com/cledwynl/mbga/issues/79)提供了一些常见的灌水内容
 
 ### 我的
 

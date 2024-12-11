@@ -28,6 +28,7 @@ object VideoCommentHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookEmptyPageV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
         subHook(this::hookMainList)
         subHook(this::hookCommentProvider)
+        subHook(this::hookGetReplies)
     }
 
     /** 3.18.2 可用 */
@@ -284,6 +285,33 @@ object VideoCommentHooker : MyHooker() {
                                 listItem != null &&
                                     !listItem.javaClass.typeName.contains("CommentTabPageProvider")
                             }
+                    }
+                }
+            }
+    }
+
+    private fun hookGetReplies() {
+        val clzReplyInfo = "com.bapis.bilibili.main.community.reply.v1.ReplyInfo".toClass()
+        val fieldContent = clzReplyInfo.field { name = "content_" }
+
+        val clzContent = "com.bapis.bilibili.main.community.reply.v1.Content".toClass()
+        val fieldMessage = clzContent.field { name = "message_" }
+
+        "com.bapis.bilibili.main.community.reply.v1.MainListReply".toClass()
+            .method { name = "getRepliesList" }
+            .hook {
+                after {
+                    val keywords = prefs.getStringSet("vid_comment_filter_keyword")
+                    if (keywords.isNotEmpty()) {
+                        val replies = arrayListOf(*(result as List<*>).toTypedArray())
+                        replies.removeIf { reply ->
+                            val content = fieldContent.get(reply).any()
+                            val message = fieldMessage.get(content).string()
+                            keywords.any { keyword ->
+                                message.contains(keyword)
+                            }
+                        }
+                        result = replies
                     }
                 }
             }
