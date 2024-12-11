@@ -1,5 +1,6 @@
 package top.trangle.mbga.hook
 
+import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
 import com.highcapable.yukihookapi.hook.log.YLog
@@ -136,9 +137,24 @@ object HomeViewHooker : MyHooker() {
         val clzBasicIndexItem = "com.bilibili.pegasus.api.model.BasicIndexItem".toClass()
         val fieldCardGoto = clzBasicIndexItem.field { name = "cardGoto" }
         val fieldPlayerArgs = clzBasicIndexItem.field { name = "playerArgs" }
+        val fieldArgs = clzBasicIndexItem.field { name = "args" }
 
         val clzPlayerArgs = "com.bilibili.app.comm.list.common.api.model.PlayerArgs".toClass()
         val fieldDuration = clzPlayerArgs.field { name = "fakeDuration" }
+
+        val clzArgs = "com.bilibili.pegasus.api.modelv2.Args".toClass()
+        val fieldUpName = clzArgs.field { name = "upName" }
+        val fieldUpId = clzArgs.field { name = "upId" }
+
+        val clzSmallCoverV2Item = "com.bilibili.pegasus.api.modelv2.SmallCoverV2Item".toClass()
+        val fieldRcmdReason = clzSmallCoverV2Item.field { name = "rcmdReason" }
+        val fieldGotoIcon = clzSmallCoverV2Item.field { name = "storyCardIcon" }
+        val fieldDescButton = clzSmallCoverV2Item.field { name = "descButton" }
+
+        val clzDescButton = "com.bilibili.pegasus.api.modelv2.DescButton".toClass()
+        val cntrDescButton = clzDescButton.constructor { paramCount(0) }
+        val fieldText = clzDescButton.field { name = "text" }
+        val fieldUri = clzDescButton.field { name = "uri" }
 
         "com.bilibili.pegasus.api.BaseTMApiParser".toClass()
             .method {
@@ -150,31 +166,49 @@ object HomeViewHooker : MyHooker() {
                     val keepOnlyUgc = prefs.getBoolean("home_show_only_ugc")
                     val durationMin = prefs.getInt("home_duration_min", 0)
 
-                    if (!keepOnlyUgc && durationMin <= 0) {
-                        return@after
-                    }
-
-                    (result as ArrayList<*>).removeIf {
-                        if (keepOnlyUgc && fieldCardGoto.get(it).string() != "av") {
-                            if (prefs.getBoolean("dev_log_feed_removal")) {
-                                YLog.debug("feed item removed because it's not ugc: ${reflectionToString(it)}")
-                            }
-                            return@removeIf true
-                        }
-                        if (durationMin > 0) {
-                            val playerArgs =
-                                fieldPlayerArgs.get(it).any()
-                                    ?: return@removeIf false
-                            val duration =
-                                fieldDuration.get(playerArgs).int()
-                            if (duration < durationMin) {
+                    if (keepOnlyUgc || durationMin > 0) {
+                        (result as ArrayList<*>).removeIf {
+                            if (keepOnlyUgc && fieldCardGoto.get(it).string() != "av") {
                                 if (prefs.getBoolean("dev_log_feed_removal")) {
-                                    YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
+                                    YLog.debug("feed item removed because it's not ugc: ${reflectionToString(it)}")
                                 }
                                 return@removeIf true
                             }
+                            if (durationMin > 0) {
+                                val playerArgs =
+                                    fieldPlayerArgs.get(it).any()
+                                        ?: return@removeIf false
+                                val duration =
+                                    fieldDuration.get(playerArgs).int()
+                                if (duration < durationMin) {
+                                    if (prefs.getBoolean("dev_log_feed_removal")) {
+                                        YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
+                                    }
+                                    return@removeIf true
+                                }
+                            }
+                            false
                         }
-                        false
+                    }
+
+                    val pureVidCard = prefs.getBoolean("home_pure_vid_card")
+                    if (pureVidCard) {
+                        (result as List<*>).forEach {
+                            if (clzSmallCoverV2Item.isInstance(it)) {
+                                fieldRcmdReason.get(it).setNull()
+                                fieldGotoIcon.get(it).setNull()
+                                val args = fieldArgs.get(it).any()
+                                val upName = fieldUpName.get(args).string()
+                                val upId = fieldUpId.get(args).long()
+                                val descButton = fieldDescButton.get(it)
+                                if (descButton.any() == null) {
+                                    val newBtn = cntrDescButton.give()?.newInstance()
+                                    fieldText.get(newBtn).set(upName)
+                                    fieldUri.get(newBtn).set("bilibili://space/$upId")
+                                    descButton.set(newBtn)
+                                }
+                            }
+                        }
                     }
                 }
             }
