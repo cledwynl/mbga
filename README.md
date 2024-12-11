@@ -52,6 +52,7 @@
   ![video_detail_label](./app/src/main/res/drawable/video_detail_label.png)
 * 更纯粹的链接分享  
   原来分享链接是`https://b23.tv/xxxxxxx`这样的短链，展开后有乱七八糟的参数，让它变成`https://b23.tv/av10492`这样干净的av号链接
+* 干掉下方相关视频
 
 ### 视频评论区
 
