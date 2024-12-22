@@ -21,6 +21,7 @@ import top.trangle.mbga.hook.BottomTab
 val PREFS_NEED_RESTART =
     arrayOf(
         "mine_add_search",
+        "home_dense_vid_card",
     )
 
 class SettingsActivity : AppCompatActivity() {

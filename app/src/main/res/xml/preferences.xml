@@ -55,6 +55,10 @@
             app:summaryOff="@string/setting_home_pure_vid_card_off"
             app:summaryOn="@string/setting_home_pure_vid_card_on"
             app:title="@string/setting_home_pure_vid_card" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="home_dense_vid_card"
+            app:title="@string/setting_home_dense_vid_card" />
     </PreferenceCategory>
 
     <PreferenceCategory

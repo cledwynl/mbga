@@ -20,7 +20,7 @@ object HomeViewHooker : MyHooker() {
         subHook(this::hookPortraitVideo)
         subHook(this::hookBottomTabs)
         subHook(this::hookAutoRefresh)
-        subHook(this::hookTabReload)
+        subHook(this::hookFeedConfig)
         subHook(this::hookIndexFeedList)
 
         setupTabProvider()
@@ -115,18 +115,23 @@ object HomeViewHooker : MyHooker() {
         }
     }
 
-    private fun hookTabReload() {
+    private fun hookFeedConfig() {
         val clzIndexFragmentV2 = "com.bilibili.pegasus.promo.index.IndexFeedFragmentV2".toClass()
+
         val clzConfig = "com.bilibili.pegasus.api.modelv2.Config".toClass()
         val fieldFeedTopClean = clzConfig.field { name = "feedTopClean" }
+        val fieldRatio = clzConfig.field { name = "smallCoverWhRatio" }
 
         clzIndexFragmentV2.method { param(clzConfig) }
             .hook {
                 before {
-                    if (!prefs.getBoolean("home_disable_feed_top_clean")) {
-                        return@before
+                    val cfg = args[0]
+                    if (prefs.getBoolean("home_disable_feed_top_clean")) {
+                        fieldFeedTopClean.get(cfg).set(0)
                     }
-                    fieldFeedTopClean.get(args[0]).set(0)
+                    if (prefs.getBoolean("home_dense_vid_card")) {
+                        fieldRatio.get(cfg).set(1.77777777f)
+                    }
                 }
             }
     }
