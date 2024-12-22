@@ -32,6 +32,7 @@
     <string name="setting_home_pure_vid_card">干净的视频卡片</string>
     <string name="setting_home_pure_vid_card_on">只展示视频标题和UP名称</string>
     <string name="setting_home_pure_vid_card_off">展示“竖屏”“1万点赞”“已关注”这些</string>
+    <string name="setting_home_dense_vid_card">强制视频封面比例为16:9</string>
 
     <string name="setting_search_page">搜索页</string>
     <string name="setting_search_no_trending">隐藏热搜</string>
