@@ -143,6 +143,7 @@ object HomeViewHooker : MyHooker() {
         val fieldCardGoto = clzBasicIndexItem.field { name = "cardGoto" }
         val fieldPlayerArgs = clzBasicIndexItem.field { name = "playerArgs" }
         val fieldArgs = clzBasicIndexItem.field { name = "args" }
+        val fieldTitle = clzBasicIndexItem.field { name = "title" }
 
         val clzPlayerArgs = "com.bilibili.app.comm.list.common.api.model.PlayerArgs".toClass()
         val fieldDuration = clzPlayerArgs.field { name = "fakeDuration" }
@@ -170,8 +171,9 @@ object HomeViewHooker : MyHooker() {
                 after {
                     val keepOnlyUgc = prefs.getBoolean("home_show_only_ugc")
                     val durationMin = prefs.getInt("home_duration_min", 0)
+                    val filterKeywords = prefs.getStringSet("home_vid_filter_keyword")
 
-                    if (keepOnlyUgc || durationMin > 0) {
+                    if (keepOnlyUgc || durationMin > 0 || filterKeywords.isNotEmpty()) {
                         (result as ArrayList<*>).removeIf {
                             if (keepOnlyUgc && fieldCardGoto.get(it).string() != "av") {
                                 if (prefs.getBoolean("dev_log_feed_removal")) {
@@ -190,6 +192,17 @@ object HomeViewHooker : MyHooker() {
                                         YLog.debug("feed item removed because it's too short: ${reflectionToString(it)}")
                                     }
                                     return@removeIf true
+                                }
+                            }
+                            if (filterKeywords.isNotEmpty()) {
+                                val title = fieldTitle.get(it).string()
+                                filterKeywords.forEach { keyword ->
+                                    if (title.contains(keyword)) {
+                                        if (prefs.getBoolean("dev_log_feed_removal")) {
+                                            YLog.debug("feed item removed because keyword $keyword: ${reflectionToString(it)}")
+                                        }
+                                        return@removeIf true
+                                    }
                                 }
                             }
                             false
