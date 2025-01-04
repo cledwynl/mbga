@@ -59,6 +59,11 @@
             app:iconSpaceReserved="false"
             app:key="home_dense_vid_card"
             app:title="@string/setting_home_dense_vid_card" />
+        <top.trangle.mbga.views.KeywordListPreference
+            app:iconSpaceReserved="false"
+            app:key="home_vid_filter_keyword"
+            app:dialogMessage="@string/setting_home_vid_filter_keyword_dialog_message"
+            app:title="@string/setting_home_vid_filter_keyword" />
     </PreferenceCategory>
 
     <PreferenceCategory
