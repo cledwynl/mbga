@@ -1,6 +1,7 @@
 package top.trangle.mbga.hook
 
 import android.content.Context
+import android.view.View
 import com.highcapable.yukihookapi.hook.factory.constructor
 import com.highcapable.yukihookapi.hook.factory.field
 import com.highcapable.yukihookapi.hook.factory.method
@@ -12,6 +13,7 @@ const val SEARCH_URI = "bilibili://search"
 object MineViewHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookMoreServiceMenu)
+        subHook(this::hookFragmentResume)
     }
 
     private fun hookMoreServiceMenu() {
@@ -64,5 +66,28 @@ object MineViewHooker : MyHooker() {
                     }
                 }
             }
+    }
+
+    private fun hookFragmentResume() {
+        val clzMineVipEntranceView = "tv.danmaku.bili.ui.main2.mine.widgets.MineVipEntranceView".toClass()
+
+        val clzHomeUserCenterFragment = "tv.danmaku.bili.ui.main2.mine.HomeUserCenterFragment".toClass()
+        val fieldMineVipEntranceView = clzHomeUserCenterFragment.field { type = clzMineVipEntranceView }
+
+        clzHomeUserCenterFragment.method {
+            name = "onResume"
+        }.hook {
+            before {
+                if (prefs.getBoolean("mine_remove_vip")) {
+                    val vipView = fieldMineVipEntranceView.get(instance).any() as View
+                    vipView.visibility =
+                        if (prefs.getBoolean("mine_keep_vip_space")) {
+                            View.INVISIBLE
+                        } else {
+                            View.GONE
+                        }
+                }
+            }
+        }
     }
 }

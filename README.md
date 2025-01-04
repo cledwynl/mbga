@@ -80,6 +80,7 @@
 
 * 在“更多服务”部分添加搜索入口，配合隐藏“首页”tab食用  
   ![mine_add_search_entry](./app/src/main/res/drawable/mine_add_search_entry.png)
+* 隐藏大会员入口
 
 ## 感谢
 
