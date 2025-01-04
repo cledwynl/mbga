@@ -252,6 +252,19 @@
             app:key="mine_add_search"
             app:summary="@string/setting_mine_add_search_hint"
             app:title="@string/setting_mine_add_search" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="mine_remove_vip"
+            app:title="@string/setting_mine_remove_vip" />
+        <SwitchPreferenceCompat
+            android:dependency="mine_remove_vip"
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="mine_keep_vip_space"
+            app:summaryOff="@string/setting_mine_keep_vip_space_off"
+            app:summaryOn="@string/setting_mine_keep_vip_space_on"
+            app:title="@string/setting_mine_keep_vip_space" />
     </PreferenceCategory>
 
     <PreferenceCategory
