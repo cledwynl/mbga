@@ -21,6 +21,7 @@ import top.trangle.mbga.hook.BottomTab
 val PREFS_NEED_RESTART =
     arrayOf(
         "mine_add_search",
+        "mine_add_im",
         "home_dense_vid_card",
     )
 

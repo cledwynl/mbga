@@ -92,6 +92,8 @@
     <string name="setting_mine">我的</string>
     <string name="setting_mine_add_search">增加搜索入口</string>
     <string name="setting_mine_add_search_hint">在“更多服务”顶部添加一个搜索入口</string>
+    <string name="setting_mine_add_im">增加消息入口</string>
+    <string name="setting_mine_add_im_hint">在“更多服务”顶部添加一个消息入口</string>
     <string name="setting_mine_remove_vip">隐藏大会员入口</string>
     <string name="setting_mine_keep_vip_space">保留大会员入口的空白区域</string>
     <string name="setting_mine_keep_vip_space_on">隐藏大会员入口后下面的内容位置保持不变</string>
@@ -105,4 +107,5 @@
 
     <string name="common_search">搜索</string>
     <string name="common_got_it">知道了</string>
+    <string name="common_im">消息</string>
 </resources>

@@ -9,6 +9,7 @@ import top.trangle.mbga.R
 import top.trangle.mbga.utils.MyHooker
 
 const val SEARCH_URI = "bilibili://search"
+const val IM_URI = "activity://link/im-home"
 
 object MineViewHooker : MyHooker() {
     override fun onHook() {
@@ -35,7 +36,9 @@ object MineViewHooker : MyHooker() {
         }
             .hook {
                 before {
-                    if (!prefs.getBoolean("mine_add_search")) {
+                    val addSearch = prefs.getBoolean("mine_add_search")
+                    val addIm = prefs.getBoolean("mine_add_im")
+                    if (!(addSearch || addIm)) {
                         return@before
                     }
                     val ctx = args[0] as Context
@@ -46,11 +49,9 @@ object MineViewHooker : MyHooker() {
                         @Suppress("UNCHECKED_CAST")
                         val list =
                             fieldItemList.get(menuGroup).any() as? ArrayList<Any?> ?: return@forEach
-                        if (fieldUri.get(list[0]).string() == SEARCH_URI) {
-                            return@forEach
-                        }
-                        val newList =
-                            arrayListOf(
+                        val newList = ArrayList<Any?>()
+                        if (addSearch) {
+                            newList.add(
                                 ctorMenuGroupItem.get().call().also { item ->
                                     fieldIconResId.get(item).set(R.drawable.ic_search_pink)
                                     fieldTitle.get(item)
@@ -59,6 +60,19 @@ object MineViewHooker : MyHooker() {
                                     fieldVisible.get(item).set(1)
                                 },
                             )
+                        }
+                        if (addIm) {
+                            newList.add(
+                                ctorMenuGroupItem.get().call().also { item ->
+                                    fieldIconResId.get(item).set(R.drawable.ic_im_pink)
+                                    fieldTitle.get(item)
+                                        .set(ctx.resources.getString(R.string.common_im))
+                                    fieldUri.get(item).set(IM_URI)
+                                    fieldVisible.get(item).set(1)
+                                },
+                            )
+                        }
+
                         newList.addAll(
                             list,
                         )
