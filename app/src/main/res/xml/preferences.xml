@@ -255,6 +255,12 @@
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:iconSpaceReserved="false"
+            app:key="mine_add_im"
+            app:summary="@string/setting_mine_add_im_hint"
+            app:title="@string/setting_mine_add_im" />
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
             app:key="mine_remove_vip"
             app:title="@string/setting_mine_remove_vip" />
         <SwitchPreferenceCompat
