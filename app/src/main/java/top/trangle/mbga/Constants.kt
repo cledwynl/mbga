@@ -9,3 +9,5 @@ const val BILI_IN_VER_3_18_2 = 7420600L
 const val BILI_IN_VER_3_19_0 = 7750300L
 const val BILI_IN_VER_3_19_1 = 7750500L
 const val BILI_IN_VER_3_19_2 = 7750600L
+const val BILI_IN_VER_3_20_0 = 8230300L
+const val BILI_IN_VER_3_20_1 = 8230500L
