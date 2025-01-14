@@ -1,12 +1,15 @@
 package top.trangle.mbga.hook
 
 import com.highcapable.yukihookapi.hook.factory.method
+import top.trangle.mbga.BILI_IN_VER_3_19_2
+import top.trangle.mbga.BILI_IN_VER_3_20_0
 import top.trangle.mbga.utils.MyHooker
 
 object SearchViewHooker : MyHooker() {
     override fun onHook() {
         subHook(this::hookSearchType)
-        subHook(this::hookDefaultSearchWords)
+        versionSpecifiedSubHook(this::hookDefaultSearchWordsV1, Long.MIN_VALUE..BILI_IN_VER_3_19_2)
+        versionSpecifiedSubHook(this::hookDefaultSearchWordsV2, BILI_IN_VER_3_20_0..Long.MAX_VALUE)
     }
 
     private fun hookSearchType() {
@@ -25,9 +28,23 @@ object SearchViewHooker : MyHooker() {
         }
     }
 
-    private fun hookDefaultSearchWords() {
+    private fun hookDefaultSearchWordsV1() {
         "com.bapis.bilibili.app.interfaces.v1.SearchMoss".toClass()
             .method { name = "defaultWords" }
+            .hook {
+                replaceAny {
+                    if (!prefs.getBoolean("search_disable_default_words")) {
+                        callOriginal()
+                    } else {
+                        null
+                    }
+                }
+            }
+    }
+
+    private fun hookDefaultSearchWordsV2() {
+        "com.bapis.bilibili.app.interfaces.v1.SearchMoss".toClass()
+            .method { name = "executeDefaultWords" }
             .hook {
                 replaceAny {
                     if (!prefs.getBoolean("search_disable_default_words")) {
