@@ -11,13 +11,18 @@ import com.highcapable.yukihookapi.hook.type.java.UnitType
 import top.trangle.mbga.BILI_IN_VER_3_18_2
 import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.BILI_IN_VER_3_19_1
+import top.trangle.mbga.BILI_IN_VER_3_19_2
+import top.trangle.mbga.BILI_IN_VER_3_20_0
+import top.trangle.mbga.BILI_IN_VER_3_20_1
 import top.trangle.mbga.utils.MyHooker
 
 object VideoCommentHooker : MyHooker() {
     override fun onHook() {
         versionSpecifiedSubHook(this::hookCommentClickV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookCommentClickV2, BILI_IN_VER_3_19_0..BILI_IN_VER_3_19_0)
-        versionSpecifiedSubHook(this::hookCommentClickV3, BILI_IN_VER_3_19_1..Long.MAX_VALUE)
+        versionSpecifiedSubHook(this::hookCommentClickV3, BILI_IN_VER_3_19_1..BILI_IN_VER_3_19_2)
+        versionSpecifiedSubHook(this::hookCommentClickV4, BILI_IN_VER_3_20_0..BILI_IN_VER_3_20_0)
+        versionSpecifiedSubHook(this::hookCommentClickV5, BILI_IN_VER_3_20_1..Long.MAX_VALUE)
         subHook(this::hookTopVote)
         versionSpecifiedSubHook(this::hookStandVoteV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookStandVoteV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
@@ -110,6 +115,90 @@ object VideoCommentHooker : MyHooker() {
                             Throwable().stackTrace.any { st ->
                                 allowClickFrom.any { fr ->
                                     st.className.contains(fr)
+                                }
+                            }
+                        if (isAllowed) {
+                            callOriginal()
+                        }
+                    }
+                }
+            }
+    }
+
+    /** 3.20.0 可用 */
+    private fun hookCommentClickV4() {
+        "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
+            .method {
+                name = "l3"
+                returnType = UnitType
+            } // NOTE: 更新后容易失效的
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
+                        callOriginal()
+                    } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
+                        callOriginal()
+                    } else {
+                        YLog.debug(Throwable().stackTraceToString())
+                        val allowClickFrom =
+                            arrayOf(
+                                // 得放，不然同一个评论，第二次点击回复会没反应
+                                "CommentViewModel\$dispatchAction\$1",
+                                // 底部
+                                "CommentMainLayer",
+                                // 楼中楼底部
+                                "CommentDetailLayer",
+                                // 回复按钮
+                                "CommentContentHolder.p4",
+                                // 长按或点击点点点弹出选择回复
+                                "CommentMoreMenuDialog",
+                            )
+                        val isAllowed =
+                            Throwable().stackTrace.any { st ->
+                                allowClickFrom.any { fr ->
+                                    "${st.className}.${st.methodName}".contains(fr)
+                                }
+                            }
+                        if (isAllowed) {
+                            callOriginal()
+                        }
+                    }
+                }
+            }
+    }
+
+    /** 3.20.1 可用 */
+    private fun hookCommentClickV5() {
+        "com.bilibili.app.comment3.viewmodel.CommentViewModel".toClass()
+            .method {
+                name = "k3"
+                returnType = UnitType
+            } // NOTE: 更新后容易失效的
+            .hook {
+                replaceUnit {
+                    if (!prefs.getBoolean("vid_comment_no_quick_reply")) {
+                        callOriginal()
+                    } else if (!args[0].toString().startsWith("ShowPublishDialog")) {
+                        callOriginal()
+                    } else {
+                        YLog.debug(Throwable().stackTraceToString())
+                        val allowClickFrom =
+                            arrayOf(
+                                // 得放，不然同一个评论，第二次点击回复会没反应
+                                "CommentViewModel\$dispatchAction\$1",
+                                // 底部
+                                "CommentMainLayer",
+                                // 楼中楼底部
+                                "CommentDetailLayer",
+                                // 回复按钮
+                                "CommentContentHolder.p4",
+                                // 长按或点击点点点弹出选择回复
+                                "CommentMoreMenuDialog",
+                            )
+                        val isAllowed =
+                            Throwable().stackTrace.any { st ->
+                                allowClickFrom.any { fr ->
+                                    "${st.className}.${st.methodName}".contains(fr)
                                 }
                             }
                         if (isAllowed) {
