@@ -1,5 +1,8 @@
 package top.trangle.mbga.hook
 
+import android.app.Activity
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import com.highcapable.yukihookapi.hook.core.YukiMemberHookCreator
 import com.highcapable.yukihookapi.hook.core.api.priority.YukiHookPriority
 import com.highcapable.yukihookapi.hook.core.finder.members.FieldFinder
@@ -20,6 +23,7 @@ object VideoDetailHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookShareLinkV2, BILI_IN_VER_3_19_0..BILI_IN_VER_3_19_0)
         versionSpecifiedSubHook(this::hookShareLinkV3, BILI_IN_VER_3_19_1..Long.MAX_VALUE)
         subHook(this::hookRelates)
+        subHook(this::hookUnitedBizDetailActivity)
     }
 
     /** 3.18.2 可用 */
@@ -167,5 +171,30 @@ object VideoDetailHooker : MyHooker() {
                     }
                 }
             }
+    }
+
+    private val statusBarHook: (YukiMemberHookCreator.MemberHookCreator) -> Unit = {
+        it.after {
+            if (!prefs.getBoolean("vid_detail_hide_status_bar")) {
+                return@after
+            }
+            val activity = instance as Activity
+
+            val controller = activity.window.insetsController
+            controller?.hide(WindowInsets.Type.statusBars())
+            controller?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    private fun hookUnitedBizDetailActivity() {
+        val clzUnitedBizDetailsActivity = "com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity".toClass()
+
+        clzUnitedBizDetailsActivity.method {
+            name = "onWindowFocusChanged"
+        }.hook(YukiHookPriority.DEFAULT, statusBarHook)
+
+        clzUnitedBizDetailsActivity.method {
+            name = "onBackPressed"
+        }.hook(YukiHookPriority.DEFAULT, statusBarHook)
     }
 }
