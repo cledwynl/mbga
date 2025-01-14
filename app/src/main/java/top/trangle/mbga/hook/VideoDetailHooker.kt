@@ -13,6 +13,9 @@ import com.highcapable.yukihookapi.hook.log.YLog
 import top.trangle.mbga.BILI_IN_VER_3_18_2
 import top.trangle.mbga.BILI_IN_VER_3_19_0
 import top.trangle.mbga.BILI_IN_VER_3_19_1
+import top.trangle.mbga.BILI_IN_VER_3_19_2
+import top.trangle.mbga.BILI_IN_VER_3_20_0
+import top.trangle.mbga.BILI_IN_VER_3_20_1
 import top.trangle.mbga.utils.MyHooker
 
 object VideoDetailHooker : MyHooker() {
@@ -21,7 +24,9 @@ object VideoDetailHooker : MyHooker() {
         versionSpecifiedSubHook(this::hookLabelV2, BILI_IN_VER_3_19_0..Long.MAX_VALUE)
         versionSpecifiedSubHook(this::hookShareLinkV1, Long.MIN_VALUE..BILI_IN_VER_3_18_2)
         versionSpecifiedSubHook(this::hookShareLinkV2, BILI_IN_VER_3_19_0..BILI_IN_VER_3_19_0)
-        versionSpecifiedSubHook(this::hookShareLinkV3, BILI_IN_VER_3_19_1..Long.MAX_VALUE)
+        versionSpecifiedSubHook(this::hookShareLinkV3, BILI_IN_VER_3_19_1..BILI_IN_VER_3_19_2)
+        versionSpecifiedSubHook(this::hookShareLinkV4, BILI_IN_VER_3_20_0..BILI_IN_VER_3_20_0)
+        versionSpecifiedSubHook(this::hookShareLinkV5, BILI_IN_VER_3_20_1..Long.MAX_VALUE)
         subHook(this::hookRelates)
         subHook(this::hookUnitedBizDetailActivity)
     }
@@ -149,6 +154,50 @@ object VideoDetailHooker : MyHooker() {
 
         ("com.bilibili.lib.sharewrapper.online.api.b".toClassOrNull() ?: return).method {
             name = "d"
+        }.hook(
+            YukiHookPriority.DEFAULT,
+            generateShareLinkHook(
+                clzShareResult,
+                contentField,
+                shareTaskCallback,
+            ),
+        )
+    }
+
+    /** 3.20.0 可用 */
+    private fun hookShareLinkV4() {
+        val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
+        val contentField = clzShareResult.field { name = "content" }
+
+        // NOTE: 更新后容易失效的
+        val clzShareTargetTask =
+            "com.bilibili.app.comm.supermenu.share.v2.ShareTargetTask\$f".toClass()
+        val shareTaskCallback = clzShareTargetTask.method { name = "l" }
+
+        ("im1.d".toClassOrNull() ?: return).method {
+            name = "f"
+        }.hook(
+            YukiHookPriority.DEFAULT,
+            generateShareLinkHook(
+                clzShareResult,
+                contentField,
+                shareTaskCallback,
+            ),
+        )
+    }
+
+    /** 3.20.1 可用 */
+    private fun hookShareLinkV5() {
+        val clzShareResult = "com.bilibili.lib.sharewrapper.online.api.ShareClickResult".toClass()
+        val contentField = clzShareResult.field { name = "content" }
+
+        // NOTE: 更新后容易失效的
+        val clzShareTargetTask =
+            "com.bilibili.app.comm.supermenu.share.v2.ShareTargetTask\$f".toClass()
+        val shareTaskCallback = clzShareTargetTask.method { name = "l" }
+
+        ("hm1.d".toClassOrNull() ?: return).method {
+            name = "b"
         }.hook(
             YukiHookPriority.DEFAULT,
             generateShareLinkHook(
