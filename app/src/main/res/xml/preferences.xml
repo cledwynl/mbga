@@ -175,6 +175,11 @@
             app:iconSpaceReserved="false"
             app:key="vid_detail_no_relates"
             app:title="@string/setting_vid_detail_no_relates" />
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="vid_detail_hide_status_bar"
+            app:title="@string/setting_vid_detail_hide_status_bar"
+            app:summary="@string/setting_vid_detail_hide_status_bar_hint" />
     </PreferenceCategory>
 
     <PreferenceCategory
