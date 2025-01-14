@@ -46,7 +46,8 @@
   ![video_player_dm_click](./app/src/main/res/drawable/video_player_dm_click.png)
 * 禁止展示反馈弹窗  
   ![video_player_qoe](./app/src/main/res/drawable/video_player_qoe.png)
-* 全屏时禁止展示在线人数  
+* ~全屏时禁止展示在线人数~ 该功能已移除，因为  
+  B站本来就支持，可在通过这个途径设置：B站设置->播放设置->其他（播放）设置->全屏播放画面展示同时在看人数  
   ![video_player_online_count](./app/src/main/res/drawable/video_player_online_count.png)
 
 ### 视频详情页
