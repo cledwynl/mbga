@@ -55,7 +55,6 @@
     <string name="setting_vid_player_no_dm_click_off">点击弹幕时会弹出“点赞、复制、举报”浮窗</string>
     <string name="setting_vid_player_no_qoe">禁止展示反馈弹窗</string>
     <string name="setting_vid_player_no_qoe_hint">禁止展示“对音量均衡功能满意吗”此类的弹窗</string>
-    <string name="setting_vid_player_no_online_count">全屏时禁止展示在线人数</string>
 
     <string name="setting_vid_detail">视频详情页</string>
     <string name="setting_vid_detail_no_label">干掉标题左侧标签</string>
